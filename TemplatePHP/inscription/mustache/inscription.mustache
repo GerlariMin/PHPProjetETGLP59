@@ -1,0 +1,40 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="card w-50 mx-auto mt-5">
+    <div class="card-header text-center">
+        <p><i class="fa-solid fa-user-plus"></i> Formulaire d'inscription<p>
+    </div>
+    <div class="card-body">
+        {{#form}}
+            <form action="{{form_action}}" method="{{form_method}}">
+                {{#div}}
+                    <div class="{{div_class}}">
+                        <input class="{{input_class}}" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" {{#input_required}}required="{{input_required}}"{{/input_required}} {{#input_role}}role="{{input_role}}"{{/input_role}} type="{{input_type}}">
+                        <label for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}}</label>
+                    </div>
+                {{/div}}
+
+                <div class="row">
+                    <div class="col">
+                        {{#divcgu}}
+
+                            <div class="{{div_class}}">
+                                <input class="{{input_class}}" id="{{input_id}}" name="{{input_name}}" required="{{input_required}}" role="{{input_role}}" type="{{input_type}}">
+                                <label for="{{label_for}}">{{label_text}} {{#label_a}}<a href="{{label_a_href}}" class="{{label_a_class}}">{{label_a_text}} <i class="{{label_a_i_class}}"></i></a>{{/label_a}}</label>
+                            </div>
+
+                        {{/divcgu}}
+                    </div>
+
+                    <div class="col">
+                        {{#button}}
+                            <button class="{{button_class}}" type="{{button_type}}"><i class="{{button_i_class}}"></i> {{button_text}}</button>
+                        {{/button}}
+                    </div>
+                </div>
+            </form>
+        {{/form}}
+    </div>
+</div>
