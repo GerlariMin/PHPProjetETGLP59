@@ -33,15 +33,23 @@
             </div>
         </div>
 
-        <div class="col">
-            <div class="card text-white bg-dark mb-3">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Dark card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        {{#repertoire}}
+            <div class="col">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header">Fichiers</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {{#fichiers}}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
+                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
+                                </li>
+                            {{/fichiers}}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        {{/repertoire}}
 
         <div class="col">
             <div class="card text-white bg-dark mb-3">

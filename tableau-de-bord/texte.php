@@ -15,9 +15,19 @@ class TexteTableauDeBord
      */
     private array $config;
 
+    private array $fichiers = array();
+
     public function __construct(array $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @param array $fichiers
+     */
+    public function setFichiers(array $fichiers): void
+    {
+        $this->fichiers = $fichiers;
     }
 
     /**
@@ -92,6 +102,8 @@ class TexteTableauDeBord
     {
         return
             [
+                "repertoire" => true,
+                "fichiers" => $this->fichiers,
                 "statistiques" => $this->texteStatistiques()
             ];
         $data['utilisateur'] = $_SESSION['login'];

@@ -35,7 +35,8 @@ class TraitementTableauDeBord
     public function traitementFichiers(): void
     {
         $repertoires = str_split($_SESSION['identifiant'], 5);
-        $repertoireUtilisateur = $config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
+        $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
+        $fichiers = array();
         if(is_dir($repertoireUtilisateur))
         {
             if($iteration = opendir($repertoireUtilisateur))
@@ -44,12 +45,19 @@ class TraitementTableauDeBord
                 {
                     if($fichier != "." && $fichier != ".." && $fichier != "Thumbs.db")
                     {
-                        echo '<a href="' . $repertoireUtilisateur . $fichier . '" target="_blank" >' . $fichier . ' ' . filesize($repertoireUtilisateur . $fichier) . '</a><br />'."\n";
+                        $fichiers[] =
+                            [
+                                'href' => $repertoireUtilisateur . $fichier,
+                                'text' => $fichier,
+                                'taille' => filesize($repertoireUtilisateur . $fichier)
+                            ];
+                        //echo '<a href="' . $repertoireUtilisateur . $fichier . '" target="_blank" >' . $fichier . ' ' . filesize($repertoireUtilisateur . $fichier) . '</a><br />'."\n";
                     }
                 }
                 closedir($iteration);
             }
         }
+        $this->texte->setFichiers($fichiers);
     }
 
     /**
@@ -57,6 +65,7 @@ class TraitementTableauDeBord
      */
     public function traitementRendu($codeErreur = ''): void
     {
+        $this->traitementFichiers();
         $data = $this->texte->texteFinal();
 
         $data['chemin'] = $this->config['variables']['chemin'];
