@@ -41,7 +41,7 @@
         public function actionRendu(array $data = [])
         {
             //On extrait les données à afficher
-            extract($data);
+            extract($data, EXTR_OVERWRITE);
             if(isset($_SESSION['login'])) {
                 $data['connecte'] = true;
             }

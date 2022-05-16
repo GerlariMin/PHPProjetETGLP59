@@ -7,32 +7,36 @@
         {{>accueil}}
     {{/accueil}}
 
-    {{#cgu}}
-        {{>cgu}}
-    {{/cgu}}
+    <div class="container mt-2">
 
-    {{#connexion}}
-        {{>connexion}}
-    {{/connexion}}
+        {{#cgu}}
+            {{>cgu}}
+        {{/cgu}}
 
-    {{#dashboard}}
-        {{>dashboard}}
-    {{/dashboard}}
+        {{#connexion}}
+            {{>connexion}}
+        {{/connexion}}
 
-    {{#erreur}}
-        {{>erreur}}
-    {{/erreur}}
+        {{#dashboard}}
+            {{>dashboard}}
+        {{/dashboard}}
 
-    {{#inscription}}
-        {{>inscription}}
-    {{/inscription}}
+        {{#erreur}}
+            {{>erreur}}
+        {{/erreur}}
 
-    {{#profil}}
-        {{>profil}}
-    {{/profil}}
+        {{#inscription}}
+            {{>inscription}}
+        {{/inscription}}
 
-    {{#tableau-de-bord}}
-        {{>tableau-de-bord}}
-    {{/tableau-de-bord}}
+        {{#profil}}
+            {{>profil}}
+        {{/profil}}
+
+        {{#tableau-de-bord}}
+            {{>tableau-de-bord}}
+        {{/tableau-de-bord}}
+
+    </div>
 
 {{>Footer}}

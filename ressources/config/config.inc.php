@@ -6,6 +6,7 @@
      * Variables utiles *
      **                **/
 
+    $config['variables']['application']['nom'] = 'Maquette PHP';
     $config['variables']['chemin'] = "../";
     $config['variables']['repertoires']['utilisateurs'] = 'c:/wamp64/www/utilisateurs/';
 

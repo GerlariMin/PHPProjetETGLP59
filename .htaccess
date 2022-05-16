@@ -9,7 +9,7 @@ Options All -Indexes
 IndexIgnore *
 
 # Pages d'erreurs personnalisées
-ErrorDocument 401 http://127.0.0.1/TemplateWeb/erreur/index.php?erreur=401
-ErrorDocument 403 http://127.0.0.1/TemplateWeb/erreur/index.php?erreur=403
-ErrorDocument 404 http://127.0.0.1/TemplateWeb/erreur/index.php?erreur=404
-ErrorDocument 500 http://127.0.0.1/TemplateWeb/erreur/index.php?erreur=500
+ErrorDocument 401 http://127.0.0.1/TemplatePHP/erreur/index.php?erreur=401
+ErrorDocument 403 http://127.0.0.1/TemplatePHP/erreur/index.php?erreur=403
+ErrorDocument 404 http://127.0.0.1/TemplatePHP/erreur/index.php?erreur=404
+ErrorDocument 500 http://127.0.0.1/TemplatePHP/erreur/index.php?erreur=500

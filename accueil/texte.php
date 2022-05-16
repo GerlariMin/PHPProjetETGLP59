@@ -21,7 +21,7 @@
         /**
          * @var String line_left_content
          */
-        private String $line_left_content = "line_left_content";
+        private String $line_left_content = "line_left_content"; lineLeftContent
         /**
          * @var String line_right_content
          */
@@ -56,8 +56,8 @@
                     0 =>
                         [
                             $this->line_id => "1",
-                            $this->line_left_content => "Template PHP",
-                            $this->line_right_content => "Template PHP",
+                            $this->line_left_content => $this->config['variables']['application']['nom'],
+                            $this->line_right_content => $this->config['variables']['application']['nom'],
                             $this->line_span_class => $this->spanSlow
                         ],
                     1 =>

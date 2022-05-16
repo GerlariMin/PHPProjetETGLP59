@@ -38,7 +38,7 @@
         public function traitementRendu(): void
         {
             $data = $this->texte->texteFinal();
-            
+
             $data['chemin'] = $this->config['variables']['chemin'];
             $data['accueil'] = true;
 
