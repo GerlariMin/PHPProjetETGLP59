@@ -21,7 +21,7 @@
         /**
          * @var String line_left_content
          */
-        private String $line_left_content = "line_left_content"; lineLeftContent
+        private String $line_left_content = "line_left_content";
         /**
          * @var String line_right_content
          */
