@@ -21,13 +21,7 @@
                     'loader' => new Mustache_Loader_CascadingLoader(
                         [
                             new Mustache_Loader_FilesystemLoader($chemin . 'ressources/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'accueil/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'cgu/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'connexion/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'erreur/mustache'),
                             new Mustache_Loader_FilesystemLoader($chemin . 'inscription/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'profil/mustache'),
-                            new Mustache_Loader_FilesystemLoader($chemin . 'tableau-de-bord/mustache'),
                         ]
                     )
                 ]
