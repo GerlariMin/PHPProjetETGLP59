@@ -50,10 +50,10 @@
             return self::$instance;
         }
 
-        public function recupererUtilisateur(String $email, String $identifiant)
+        public function recupererUtilisateur(string $login, string $identifiant)
         {
-            $req = $this->bdd->prepare("SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE emailUtilisateur = :email AND identifiantUtilisateur = :identifiant;");
-            $req->bindValue(":email", $email);
+            $req = $this->bdd->prepare("SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE (emailUtilisateur = :login OR loginUtilisateur = :login) AND identifiantUtilisateur = :identifiant;");
+            $req->bindValue(":login", $login);
             $req->bindValue(":identifiant", $identifiant);
 
             $req->execute();
@@ -61,54 +61,24 @@
             return $req->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function recupererIdentifiant(String $email)
+        public function recupererIdentifiant(String $login): mixed
         {
-            $req = $this->bdd->prepare("SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :email;");
-            $req->bindValue(":email", $email);
+            $req = $this->bdd->prepare("SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :login OR loginUtilisateur = :login;");
+            $req->bindValue(":login", $login);
 
             $req->execute();
-
+            
             return $req->fetch(PDO::FETCH_ASSOC)['IDENTIFIANT'];
         }
 
-        public function recupererMotDePassCourant(String $identifiant)
+        public function recupererMotDePasseCourant(String $identifiant)
         {
-            $req = $this->bdd->prepare("SELECT motDePasseChiffre AS PHRASE FROM motsdepasse WHERE utilisateurLie = :identifiant AND motDePasseCourant = true;");
+            $req = $this->bdd->prepare("SELECT motDePasseChiffreUtilisateur AS PHRASE FROM utilisateurs WHERE identifiantUtilisateur = :identifiant AND motDePasseOublie = false;");
             $req->bindValue(":identifiant", $identifiant);
 
             $req->execute();
 
             return $req->fetch(PDO::FETCH_ASSOC)['PHRASE'];
-        }
-
-        public function verifierEmail(String $email)
-        {
-            $req = $this->bdd->prepare("SELECT emailUtilisateur AS EMAIL FROM projetetglp59.utilisateurs WHERE emailUtilisateur IN (:email);");
-            $req->bindValue(":email", $email);
-
-            $req->execute();
-
-            return $req->fetch(PDO::FETCH_ASSOC);
-        }
-
-        public function insererUtilisateur(String $identifiant,String $nom, String $prenom, String $login, String $email): bool
-        {
-            $req = $this->bdd->prepare("INSERT INTO utilisateurs(identifiantUtilisateur, nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, abonnementUtilisateur) VALUES (:identifiant, :nom, :prenom, :login, :email, true)");
-            $req->bindValue(":identifiant", $identifiant);
-            $req->bindValue(":nom", $nom);
-            $req->bindValue(":prenom", $prenom);
-            $req->bindValue(":login", $login);
-            $req->bindValue(":email", $email);
-            return $req->execute();
-        }
-
-        public function insererMotDePasse(String $motDePasseChiffre,String $identifiantUtilisateur): bool
-        {
-            $req = $this->bdd->prepare("INSERT INTO motsdepasse(motDePasseChiffre, motDePasseCourant, utilisateurLie) VALUES (:motDePasseChiffre, true, :identifiantUtilisateur);");
-            $req->bindValue(":motDePasseChiffre", $motDePasseChiffre);
-            $req->bindValue(":identifiantUtilisateur", $identifiantUtilisateur);
-
-            return $req->execute();
         }
 
     }
