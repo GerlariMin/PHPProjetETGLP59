@@ -19,7 +19,7 @@ session_start();
 
             case 'tableau-de-bord':
                 if(isset($_SESSION['login'])) {
-                    header("Location: ./tableau-de-bord/");
+                    header("Location: ./tableauDeBord/");
                 } else {
                     header("Location: ./connexion/");
                 }
@@ -32,7 +32,7 @@ session_start();
     }
     else
     {
-        header("Location: ./accueil/");
+        header("Location: ./connexion/");
         exit();
     }
 

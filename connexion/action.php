@@ -3,8 +3,10 @@
 
     require_once('../ressources/config/config.inc.php');
     require_once('../ressources/php/Logs.php');
+    require_once('requetes.php');
     global $config;
     $logs = new Logs($config);
+    $requetes = new RequetesConnexion($config);
     // On récupère le formulaire
     $formulaire = $_POST;
     $login = $formulaire['login'];
@@ -12,21 +14,18 @@
     // Si les champs sont bien présent et non vides
     if(isset($login, $password)) {
         session_regenerate_id();
-        // Récupération de la classe Model
-        include($config['variables']['chemin'] . "ressources/php/Model.php");
-        $model = Model::get_model($config);
         // On récupère l'identifiant associé en base
-        $identifiant = $model->recupererIdentifiant($login);
+        $identifiant = $requetes->recupererIdentifiant($login);
         // On s'assure de pouvoir récupérer un profil à partir du mail (qui est unique en base)
         if($identifiant) {
             // On récupère le mot de passe courant associé à cet identifiant
-            $motDePasseCourant = $model->recupererMotDePasseCourant(identifiant: $identifiant);
+            $motDePasseCourant = $requetes->recupererMotDePasseCourant(identifiant: $identifiant);
             // Si on obtient bien un mot de passe chiffré et que le mot de passe saisi correspond
             if($motDePasseCourant && password_verify($password, $motDePasseCourant)) {
                 // On supprime les variables liées au mot de passe
                 unset($password, $motDePasseCourant);
                 // On tente de récupérer l'utilisateur lié à l'adresse e-mail saisi et à l'identifiant récupéré
-                $utilisateur = $model->recupererUtilisateur(login: $login, identifiant: $identifiant);
+                $utilisateur = $requetes->recupererUtilisateur(login: $login, identifiant: $identifiant);
                 // Si on récupère bien des valeurs
                 if($utilisateur) {
                     $logs->messageLog('Utilisateur ' . $identifiant . ' trouvé.', $logs->typeNotice);
@@ -34,7 +33,7 @@
                     $_SESSION['identifiant'] = $identifiant;
                     $_SESSION['login'] = $utilisateur['LOGIN'];
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
-                    header("Location: ../tableau-de-bord/");
+                    header("Location: ../tableauDeBord/");
                 } else {
                     $logs->messageLog('Utilisateur introuvable.', $logs->typeError);
                     header("Location: ./?erreur=4");

@@ -34,7 +34,7 @@
                                 //new Mustache_Loader_FilesystemLoader($chemin . 'erreur/mustache'),
                                 //new Mustache_Loader_FilesystemLoader($chemin . 'inscription/mustache'),
                                 //new Mustache_Loader_FilesystemLoader($chemin . 'profil/mustache'),
-                                //new Mustache_Loader_FilesystemLoader($chemin . 'tableau-de-bord/mustache'),
+                                new Mustache_Loader_FilesystemLoader($chemin . 'tableauDeBord/mustache'),
                             ]
                         )
                     ]

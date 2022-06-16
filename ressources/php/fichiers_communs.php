@@ -13,3 +13,10 @@
     $logs = new Logs($config);
     // Initialisation de la classe Render
     $render = new Render($logs, $config['variables']['chemin']);
+    // variable dédiée au code d'erreur
+    $erreur = '';
+    // Si il existe une clé erreur dans le lien
+    if(isset($_GET['erreur'])) {
+        // On affecte la valeur associée à la clé à la variable dédiée
+        $erreur = $_GET['erreur'];
+    }

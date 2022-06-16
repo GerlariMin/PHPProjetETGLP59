@@ -2,7 +2,7 @@
 
     /**
      * Classe Model
-     * Elle permet d'assurer la connexion à une base de données et d'assurer les différentes requêtes à effectuer.
+     * Elle permet d'assurer la connexion à une base de données et d'assurer les différentes requêtes communes aux différents modules à effectuer.
      * Particularité: elle n'est pas directement instanciable via un new Model() car son constructeur est privé.
      * Il faut utiliser la méthode get_model(), qui permet d'instancier la classe, une seule instance sera créée (donc une seule connexion à la base).
      */
@@ -10,7 +10,7 @@
         /**
          * @var PDO
          */
-        private PDO $bdd;
+        protected PDO $bdd;
         /**
          * @var array
          */
@@ -48,37 +48,6 @@
                 self::$instance = new Model($config);
             }
             return self::$instance;
-        }
-
-        public function recupererUtilisateur(string $login, string $identifiant)
-        {
-            $req = $this->bdd->prepare("SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE (emailUtilisateur = :login OR loginUtilisateur = :login) AND identifiantUtilisateur = :identifiant;");
-            $req->bindValue(":login", $login);
-            $req->bindValue(":identifiant", $identifiant);
-
-            $req->execute();
-
-            return $req->fetch(PDO::FETCH_ASSOC);
-        }
-
-        public function recupererIdentifiant(String $login): mixed
-        {
-            $req = $this->bdd->prepare("SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :login OR loginUtilisateur = :login;");
-            $req->bindValue(":login", $login);
-
-            $req->execute();
-            
-            return $req->fetch(PDO::FETCH_ASSOC)['IDENTIFIANT'];
-        }
-
-        public function recupererMotDePasseCourant(String $identifiant)
-        {
-            $req = $this->bdd->prepare("SELECT motDePasseChiffreUtilisateur AS PHRASE FROM utilisateurs WHERE identifiantUtilisateur = :identifiant AND motDePasseOublie = false;");
-            $req->bindValue(":identifiant", $identifiant);
-
-            $req->execute();
-
-            return $req->fetch(PDO::FETCH_ASSOC)['PHRASE'];
         }
 
     }
