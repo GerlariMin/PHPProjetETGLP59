@@ -6,7 +6,7 @@
     require_once('requetes.php');
     global $config;
     $logs = new Logs($config);
-    $requetes = new RequetesConnexion($config);
+    $requetes = new RequetesConnexion($config, $logs);
     // On récupère le formulaire
     $formulaire = $_POST;
     $login = $formulaire['login'];
