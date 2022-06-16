@@ -26,7 +26,7 @@ session_start();
                 break;
 
             default:
-                header("Location: ./erreur/");
+                header("Location: ./connexion/?erreur=indexRacine");
                 break;
         }
     }

@@ -8,14 +8,14 @@
 
     $config['variables']['application']['nom'] = 'OCR Square';
     $config['variables']['chemin'] = "../";
-    $config['variables']['repertoires']['utilisateurs']['linux'] = '';
+    $config['variables']['repertoires']['utilisateurs']['linux'] = '/home/user/utilisateurs/';
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
 
     // BDD
     $config['bdd']['dbname'] = 'projetetglp59';
     $config['bdd']['host'] = 'localhost';
-    $config['bdd']['username'] = 'root';
-    $config['bdd']['password'] = '';
+    $config['bdd']['username'] = 'etglp59';
+    $config['bdd']['password'] = 'paf@Du#!5iVK@a&n';
     $config['bdd']['dsn'] = 'mysql:host=' . $config['bdd']['host'] . ';port=3306;dbname=' . $config['bdd']['dbname'];
 
     /**                  **
@@ -36,7 +36,7 @@
     /**
      * Logs
      */
-     $config['logs']['emplacement']['linux'] = '';
+     $config['logs']['emplacement']['linux'] = '/home/user/logs/';
      $config['logs']['emplacement']['windows'] = 'c:/wamp64/www/logs/';
      $config['logs']['fichier'] = 'ocr-square-logs';
 
