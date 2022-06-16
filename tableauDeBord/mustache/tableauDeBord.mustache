@@ -1,0 +1,116 @@
+{{#blocDeveloppement}}
+    {{>blocDeveloppement}}
+{{/blocDeveloppement}}
+
+{{#blocDemonstration}}
+    {{>blocDemonstration}}
+{{/blocDemonstration}}
+
+<div class="container h-100 mt-5">
+
+    <span class="badge rounded-pill bg-dark mb-2">Bonjour {{utilisateur}}!</span>
+
+    {{#statistiques}}
+        <div class="row align-items-start">
+
+            {{#col}}
+                <div class="{{col_class}}">
+                    <div class="{{col_card_class}}">
+                        <div class="{{col_card_header_class}}"><i class="{{col_card_header_i_class}}"></i> {{col_card_header_text}}</div>
+                        <div class="{{col_card_body_class}}">
+                            <div class="{{progress_class}}">
+                                <div class="{{progressbar_class}}" role="{{progressbar_role}}" style="width: {{progressbar_pourcentage}}%;" aria-valuenow="{{progressbar_pourcentage}}" aria-valuemin="{{progressbar_min}}" aria-valuemax="{{progressbar_max}}">{{progressbar_text}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/col}}
+
+        </div>
+    {{/statistiques}}
+
+    <div class="row align-items-center">
+
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+        {{#repertoire}}
+            <div class="col">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header">Fichiers</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {{#fichiers}}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
+                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
+                                </li>
+                            {{/fichiers}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {{/repertoire}}
+
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row align-items-end">
+
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card text-white bg-dark mx-auto w-75 mb-3">
+        <div class="card-header"><i class="fa-solid fa-square-poll-horizontal"></i> Mon abonnement</div>
+        <div class="card-body">
+            <h5 class="card-title">Abonnement gratuit</h5>
+            <p class="card-text">Limitation de l'espace de stockage à une volumétrie ou un nombre de fichiers déposés maximum et limitation du nombre de traitements quotidiens possibles.</p>
+        </div>
+    </div>
+
+</div>
