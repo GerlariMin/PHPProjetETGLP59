@@ -133,14 +133,14 @@
 
                 if (xhttp.readyState === xhttp.DONE){
 
-                if (xhttp.status === 200){
-                    
-                    if(email === reponse) {
-                        alert("Votre email existe déjà");
-                        document.getElementById('email').focus(); // Focus
-                        return false;
+                    if (xhttp.status === 200){
+                        
+                        if(email === reponse) {
+                            alert("Votre email existe déjà");
+                            document.getElementById('email').focus(); // Focus
+                            return false;
+                        }
                     }
-                }
                 }
             }
 

@@ -71,13 +71,11 @@ try {
          $output = ob_get_clean();
 
          //-------------------------------creation du répertoire----------------------------//
-
+         $config['variables']['repertoires']['utilisateurs'];
          $dir = substr($uuid,0,5);
          $subdir=substr($uuid,5,10);
-         $path = "./{$dir}/{$subdir}";
-         var_dump($path);
+         $path = "./{$config}/{$dir}/{$subdir}";
          
-         //$config['variables']['repertoires']['utilisateurs']
          setDir($path);
       }
    }else{
