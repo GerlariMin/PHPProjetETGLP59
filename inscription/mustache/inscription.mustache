@@ -1,0 +1,286 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="col-md-8 order-md-1">
+    {{#form}}   
+    <form class="needs-validation" action="{{form_action}}" method="{{form_method}}" novalidate>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="firstName">Nom :</label>
+                <input type="text" class="form-control" name="{{input_nom}}" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                    Veiller entrer votre Nom
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="lastName">Prénom :</label>
+                <input type="text" class="form-control" name="{{input_prenom}}" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                    Veiller entrer votre Prénom
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="username">Nom d'utilisateur :</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ETGL-</span>
+                </div>
+                <input type="text" class="form-control" name="{{input_user}}" placeholder="Username" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                    Your username is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email">Email :</label>
+            <input type="email" class="form-control" name="{{input_email}}" placeholder="you@example.com">
+            <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password">Mot de passe :</label>
+            <input type="password" class="form-control" name="pass" placeholder="mot de passe" required>
+            <div class="invalid-feedback">
+                le mot de passe doit être entre 8 - 20 caractères
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password">Confirmation :</label>
+            <input type="password" class="form-control" name="{{input_password}}" placeholder="mot de passe" required>
+            <div class="invalid-feedback">
+                Please enter a valid field address for shipping updates.
+            </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">S'incrire</button>
+    </form>
+    {{/form}}
+</div>
+
+<script src="ressources\vendor\components\jquery\jquery.js"></script>
+    <script>
+       window.addEventListener("load", function () {
+
+        if (validateForm()){
+            function sendData() {
+                var XHR = new XMLHttpRequest();
+
+                // Liez l'objet FormData et l'élément form
+                var FD = new FormData(form);
+
+                // Définissez ce qui se passe si la soumission s'est opérée avec succès
+                XHR.addEventListener("load", function(event) {
+                alert(event.target.responseText);
+                //redirection vers le login
+                });
+
+                // Definissez ce qui se passe en cas d'erreur
+                XHR.addEventListener("error", function(event) {
+                alert('Erreur interne');
+                });
+
+                // Configurez la requête
+                XHR.open("POST", "post-ok.php");
+
+                // Les données envoyées sont ce que l'utilisateur a mis dans le formulaire
+                XHR.send(FD);
+            }
+
+            // Accédez à l'élément form …
+            var form = document.getElementById("myForm");
+
+            // … et prenez en charge l'événement submit.
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                sendData();
+            });
+
+        }
+        
+    });
+
+    /*
+    * Nom : checkEmail
+    * Type : Boolean
+    * Desc : Verification de l'email
+    */
+    function checkEmail(){
+            // Get form via form name:
+            var myForm = document.forms["myForm"];
+
+            var email = document.getElementById('mail').value;
+            console.log(email);
+            var reponse = "";
+
+            const xhttp = new XMLHttpRequest();
+
+            // Preparation de la requete
+            xhttp.open("GET", "fonction.php?email="+ email);
+
+            //Verification de l'email   
+            xhttp.onload = function(){
+
+            reponse = xhttp.responseText;
+            console.log(reponse);
+
+                if (xhttp.readyState === xhttp.DONE){
+
+                    if (xhttp.status === 200){
+                        
+                        if(email === reponse) {
+                            alert("Votre email existe déjà");
+                            document.getElementById('email').focus(); // Focus
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            xhttp.send();
+            return true;
+    }
+
+    /*
+    * Nom : randomIntFromInterval
+    * Type : fonction
+    * Desc : retourne un nombre sur un interval definis
+    */
+    function randomIntFromInterval(min, max) { // min and max included 
+            return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+
+    /*
+    * Nom : generateUsername
+    * Type : procedure
+    * Desc : suggestion d'un pseudo
+    */
+    function generateUsername(){
+        {{#form}}
+            let user = document.getElementsByName("{{input_user}}");
+            let nom = document.getElementsByName("{{input_nom}}");
+            let prenom = document.getElementsByName("{{input_prenom}}");
+        {{/form}}
+
+        if(user[0].value =='' && nom[0].value !='' && prenom[0].value !='') {
+            
+            var username = '';
+            
+            if(nom[0].value >= 4) {
+
+                username = prenom[0].value.substr(0,1) + nom[0].value.substr(0,49);
+            } else {
+
+                username = prenom[0].value.substr(0,4) + nom[0].value.substr(0,49);
+            }
+            username = username.replace(/\s+/g, '');
+            username = username.replace(/\'+/g, '');
+            username = username.replace(/-+/g, '');
+            username = username.toLowerCase();
+
+            const rand = randomIntFromInterval(1, 10);
+            user[0].value = username + rand; 
+            
+        }
+    }
+
+    /*
+    * Nom : ValidatePassword
+    * Type : Boolean
+    * Desc : Vérification des mots de passes
+    */
+    function validatePassword(){
+        {{#form}}
+            let confirmation = document.getElementsByName("{{input_password}}");
+        {{/form}}
+
+        let password = document.getElementsByName("pass");
+
+        if(password[0].value !== confirmation[0].value){
+            alert("les mots de passes ne sont pas conformes");
+            confirmation.focus;
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    /*
+    * Nom : ValidateForm
+    * Type : procedure
+    * Desc : verification du formulaire avant son envoie
+    */
+    function validateForm(){
+
+        {{#form}}
+            let user = document.getElementsByName("{{input_user}}");
+            let nom = document.getElementsByName("{{input_nom}}");
+            let prenom = document.getElementsByName("{{input_prenom}}");
+            let email = document.getElementsByName("{{input_email}}");
+            let password = document.getElementsByName("{{input_password}}");
+        {{/form}}
+
+
+        if(nom[0].value == "" ){
+            alert("veiller entrer votre nom");
+            nom.focus;
+            return false;
+        }
+
+        if(prenom[0].value == ""){
+            alert("veiller entrer votre prenom");
+            prenom.focus;
+            return false;
+        }
+
+        if(user[0].value == "" ){
+            alert("veiller entrer votre nom");
+            nom.focus;
+            return false;
+        }
+
+        if(email[0].value == "" ){
+            alert("veiller entrer votre email");
+            email.focus;
+            return false;
+        }
+
+        if(email[0].value.indexOf("@", 0) < 0) {
+            alert("Mettez une adresse email valide.");
+            email.focus;
+            return false;
+        }
+
+        if(email[0].value.indexOf(".", 0) < 0) {
+            alert("Mettez une adresse email valide.");
+            email.focus;
+            return false;
+        }
+
+        if(!validatePassword()){
+            return false;
+        }
+
+        if(password[0].length < 8) {
+            alert("le mot de pass doit contenir au moins 8 caractères");
+            password.focus;
+            return false;
+        }
+
+        if(password[0].length > 15) {
+            alert("le mot de pass trop long");
+            password.focus;
+            return false;
+        }
+
+        return true;
+    }
+    
+</script>
