@@ -19,20 +19,20 @@ session_start();
 
             case 'tableau-de-bord':
                 if(isset($_SESSION['login'])) {
-                    header("Location: ./tableau-de-bord/");
+                    header("Location: ./tableauDeBord/");
                 } else {
                     header("Location: ./connexion/");
                 }
                 break;
 
             default:
-                header("Location: ./erreur/");
+                header("Location: ./connexion/?erreur=indexRacine");
                 break;
         }
     }
     else
     {
-        header("Location: ./accueil/");
+        header("Location: ./connexion/");
         exit();
     }
 
