@@ -93,4 +93,11 @@
             return $req->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $password){
+            $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, motDePasseChiffreUtilisateur, AbonnementUtilisateur) 
+            VALUES ('{$uuid}','{$nom}','{$prenom}','{$user}','{$email}','{$password}','1')";
+            $req = $this->bdd->prepare($sql);
+            $req->execute();
+        }
+
     }

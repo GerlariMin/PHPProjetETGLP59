@@ -1,6 +1,6 @@
 <?php  
 require_once("../ressources/config/config.inc.php");
-require_once("ressources\php\Model.php");
+require_once("../ressources/php/Model.php");
 
 global $config;
 

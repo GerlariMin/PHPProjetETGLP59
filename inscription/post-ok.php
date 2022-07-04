@@ -3,12 +3,13 @@
 session_start();
 
 //Preparation de la connexion à la BDD
-$host = 'localhost:3307';
-$user = 'root';
-$passwd = '';
-$bdd = 'projetetglp59';
+require_once("../ressources/config/config.inc.php");
+require_once("../ressources/php/Model.php");
 
-$con = mysqli_connect($host, $user, $passwd, $bdd);
+global $config;
+
+
+$model = Model::get_model($config);
 
 // Vérification de la connexion
 if (!$con) {
@@ -34,9 +35,7 @@ try {
    //Si le mail n'existe pas
    if ($uuid != null){
       //Insertion de l'utilisateur dans la BDD
-      $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, motDePasseChiffreUtilisateur, AbonnementUtilisateur) 
-      VALUES ('{$uuid}','{$nom}','{$prenom}','{$user}','{$email}','{$password}','1')";
-      $query = mysqli_query($con, $sql);
+      $model->insererUtilisateur($uuid, $nom, $prenom, $user, $email, $password);
 
       //Si la requête est bonne alors on envoie en message de félicitation
       if ($query){
@@ -92,9 +91,9 @@ try {
 
 function isUniq($myVar){
 
-    $host = 'localhost:3307';
-    $user = 'root';
-    $passwd = '';
+    $host = 'localhost';
+    $user = 'etglp59';
+    $passwd = 'paf@Du#!5iVK@a&n';
     $bdd = 'projetetglp59';
 
     $con = mysqli_connect($host, $user, $passwd, $bdd);
