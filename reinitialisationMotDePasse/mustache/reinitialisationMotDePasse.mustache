@@ -1,0 +1,31 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="card w-50 mx-auto mt-5">
+    <div class="card-header text-center">
+        <p><i class="fas fa-fingerprint"></i> Réinitialisation du mot de passe<p>
+    </div>
+    <div class="card-body">
+        {{#form}}
+            <form action="{{form_action}}" method="{{form_method}}">
+                {{#div}}
+                    <div class="{{div_class}}">
+                        <input class="{{input_class}}" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" type="{{input_type}}">
+                        <label for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}}</label>
+                    </div>
+                {{/div}}
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            {{#button}}
+                                <button class="{{button_class}}" type="{{button_type}}"><i class="{{button_i_class}}"></i> {{button_text}}</button>
+                            {{/button}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {{/form}}
+    </div>
+</div>
