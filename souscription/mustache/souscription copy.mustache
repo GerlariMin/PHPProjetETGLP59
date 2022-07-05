@@ -1,0 +1,77 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="container text-center py-5">
+    <h1 class="display-4">Abonnement</h1>
+    <p class="lead">Veiller choisir la formule qui vous intéresse</p>
+</div>
+
+<div class="container text-center">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4>GRATUIT</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">0€<small class="{{div_small_class}}">/mois</small></h1>
+                    <ul class="{{div_ul_class}}">
+                        <li>2 traitements</li>
+                        <li>2 Go de stockage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="{{button_class}}">Souscrire</button>
+                {{/button}}
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card border-info shadow-lg">
+                <div class="card-header">
+                    <h4>PREMIUM</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">14.99 €<small class="{{div_small_class}}">/mois</small></h1>
+                    <ul class="{{div_ul_class}}">
+                        <li>20 traitements</li>
+                        <li>20 Go de stockage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="{{button_class}}">Souscrire</button>
+                {{/button}}
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card border-warning shadow-sm">
+                <div class="card-header">
+                    <h4>GOLDEN</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">29.99 €<small class="{{div_small_class}}">/mois</small></h1>
+                    <ul class="{{div_ul_class}}">
+                        <li>50 traitements</li>
+                        <li>100 Go de stockage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="{{button_class}}">Souscrire</button>
+                {{/button}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

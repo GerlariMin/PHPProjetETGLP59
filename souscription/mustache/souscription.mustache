@@ -1,0 +1,89 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="container text-center py-5">
+    <h1 class="display-4">Abonnement</h1>
+    <p class="lead">Veiller choisir la formule qui vous intéresse</p>
+</div>
+
+<div class="container text-center">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4>GRATUIT</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">0€<small class="{{div_small_class}}">/mois</small></h1>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>2 traitements</strong></li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>1 Go Stockoage</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Public Projects</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Community Access</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Private Projects</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated Phone Support</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Subdomain</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="{{button_class}}">Souscrire</button>
+                {{/button}}
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card border-info shadow-lg">
+                <div class="card-header">
+                    <h4>PREMIUM</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">14.99 €<small class="{{div_small_class}}">/mois</small></h1>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>10 traitements</strong></li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
+                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="btn btn-outline-info">Souscrire</button>
+                {{/button}}
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card border-warning shadow-sm">
+                <div class="card-header">
+                    <h4>GOLDEN</h4>
+                </div>
+                {{#div}}
+                <div class="card-body">
+                    <h1 class="{{div_h1_class}}">29.99 €<small class="{{div_small_class}}">/mois</small></h1>
+                   <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>traitements illimités</strong></li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
+                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Monthly Status Reports</li>
+                    </ul>
+                {{/div}}
+                {{#button}}
+                    <button class="btn btn-outline-warning">Souscrire</button>
+                {{/button}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
