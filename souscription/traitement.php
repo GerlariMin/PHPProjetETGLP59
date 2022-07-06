@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * Classe TraitementConnexion
+     * Classe TraitementSouscription
      */
-    class TraitementConnexion
+    class TraitementSouscription
     {
         /**
          * @var Logs logs
@@ -18,12 +18,13 @@
          */
         private array $config;
         /**
-         * @var TexteConnexion texte
+         * @var TexteSouscription texte
          */
-        private TexteConnexion $texte;
+        private TexteSouscription $texte;
 
         /**
          * Traitement_Accueil constructor.
+         * @param Logs $logs
          * @param Render $rendu
          */
         public function __construct(Logs $logs, Render $rendu)
@@ -32,12 +33,13 @@
             $this->config = $config;
             $this->logs = $logs;
             $this->render = $rendu;
-            $this->texte = new TexteConnexion($this->config);
+            $this->texte = new TexteSouscription($this->config);
         }
 
         /**
          * Gestion des erreurs pour prévenir l'utilisateur.
          * @param string $codeErreur
+         * @return array
          */
         private function traitementErreur(string $codeErreur = ''): array
         {

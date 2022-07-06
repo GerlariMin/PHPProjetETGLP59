@@ -3,7 +3,7 @@ require_once('../ressources/php/Model.php');
 /**
  * Classe dédiée aux requête propres au module de connexion.
  */
-class RequetesConnexion extends Model {
+class RequetesSouscription extends Model {
 
     /**
      * @var Logs logs
@@ -25,58 +25,25 @@ class RequetesConnexion extends Model {
     /**
      * Méthode dédiée à récupérer l'identifiant unique attribué à un utilisateur, à partir du login (unique) ou de l'adresse e-mail (unique) associée.
      */
-    public function recupererIdentifiant(String $login): mixed
+    public function recupererAbonnementsDisponibles(): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :login OR loginUtilisateur = :login;";
+        $texteRequete = "SELECT identifiantAbonnement AS IDENTIFIANT,
+                                typeAbonnement AS TYPE,
+                                limiteDocuments AS DOCUMENTS,
+                                limiteStockage AS STOCKAGE,
+                                promotion AS PROMO,
+                                pourcentagePromotion AS REDUCTION,
+                                prixAbonnement AS PRIX
+                        FROM abonnements
+                        WHERE disponible = 1;";
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-        // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":login", $login);
-        $this->logs->messageLog('Paramètres: [login: ' . $login . '].', $this->logs->typeDebug);
+        $this->logs->messageLog('Paramètres: aucuns.', $this->logs->typeDebug);
         // Exécution de la requête préparée
         $requete->execute();
         // La fonction retourne le résultat de la requête
-        return $requete->fetch(PDO::FETCH_ASSOC)['IDENTIFIANT'];
-    }
-
-    /**
-     * Méthode dédiée à la récupération du mot de passe chiffré associé à un identifiant (unique) donné.
-     */
-    public function recupererMotDePasseCourant(String $identifiant): mixed
-    {
-        // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT motDePasseChiffreUtilisateur AS PHRASE FROM utilisateurs WHERE identifiantUtilisateur = :identifiant AND motDePasseOublie = FALSE;";
-        // Requête SQL a exécuter
-        $requete = $this->model->bdd->prepare($texteRequete);
-        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-        // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":identifiant", $identifiant);
-        $this->logs->messageLog('Paramètres: [identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
-        // Exécution de la requête préparée
-        $requete->execute();
-        // La fonction retourne le résultat de la requête
-        return $requete->fetch(PDO::FETCH_ASSOC)['PHRASE'];
-    }
-
-    /**
-     * Méthode dédiée à la récupération des informations utiles à la création de sessions d'un utilisateur, à partir d'un login (unique) et d'un identifiant (unique) donnés.
-     */
-    public function recupererUtilisateur(string $login, string $identifiant): mixed
-    {
-        // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE (emailUtilisateur = :login OR loginUtilisateur = :login) AND identifiantUtilisateur = :identifiant;";
-        // Requête SQL a exécuter
-        $requete = $this->model->bdd->prepare($texteRequete);
-        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-        // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":login", $login);
-        $requete->bindValue(":identifiant", $identifiant);
-        $this->logs->messageLog('Paramètres: [login: ' . $login . ', identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
-        // Exécution de la requête préparée
-        $requete->execute();
-        // La fonction retourne le résultat de la requête
-        return $requete->fetch(PDO::FETCH_ASSOC);
+        return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 }

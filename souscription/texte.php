@@ -1,69 +1,105 @@
 <?php
 
     /**
-     * Classe TexteConnexion
+     * Classe TexteSouscription
      * Contient l'ensemble du texte à afficher pour la page de connexion.
      */
-    class TexteConnexion
+    class TexteSouscription
     {
         /**
-         * Variables correspondant aux balises Mustache de la page.
+         * Variables correspondants aux balises Mustache de la page.
          */
 
         /**
          * @var array
          */
         private array $config;
-
-         /**
-         * @var String Button
+        /**
+         * @var Logs
          */
-        private String $button_class = "btn btn-outline-primary btn-lg btn-block";
-
+        private Logs $logs;
+        /**
+         * @var RequetesSouscription
+         */
+        private RequetesSouscription $requetes;
         /**
          * @var String div_class
          */
-        private String $div_h1_class = "my-0 font-weight-normal";
-        private String $div_small_class = "text-muted";
-        private String $div_ul_class = "list-unstyled mt-3 mb-4";
+        private String $divColClass = 'col-4 mb-4';
+        private String $divH1Class = 'mt-3 my-0 font-weight-normal';
+        private String $divSmallClass = 'text-muted';
+        private String $divUlClass = "fa-ul list-unstyled mt-3 mb-4";
+        /**
+         * @var array|string[]
+         */
+        private array $couleursAbonnementsPayants =
+            [
+                0 => 'primary',
+                1 => 'secondary',
+                2 => 'danger',
+                3 => 'warning',
+                4 => 'info',
+                5 => 'dark'
+            ];
        
         public function __construct(array $config)
         {
             $this->config = $config;
+            $this->logs = new Logs($this->config);
+            $this->requetes = new RequetesSouscription($this->config, new Logs($this->config));
         }
 
-        private function texteButtons(): array
+        private function texteAbonnements(): array
         {
-            return
-                [
-                    $this->button_class => "btn btn-outline-primary btn-lg btn-block"
-                ];
+            $texteAbonnements = array();
+            try {
+                // On récupère les abonnements disponibles à l'achat
+                $abonnements = $this->requetes->recupererAbonnementsDisponibles();
+                // On regarde si il existe au moins un abonnement
+                if(is_array($abonnements)) {
+                    // On parcourt les abonnements trouvés
+                    foreach ($abonnements as $abonnement) {
+                        $bouton = false;
+                        $couleur = 'success';
+                        $href = '';
+                        $prix = 0;
+                        $reduction = 0;
+                        $type = strtoupper($abonnement['TYPE']);
+                        $limiteDocuments = $abonnement['DOCUMENTS'];
+                        $limiteStockage = $abonnement['STOCKAGE'];
+                        if($type === 'PAYANT') {
+                            $bouton = true;
+                            $couleur = $this->couleursAbonnementsPayants[random_int(0, 5)];
+                            $href = '../paiementAbonnent/?abonnement=' . $abonnement['IDENTIFIANT'];
+                            $prix = (float) $abonnement['PRIX'];
+                            if($abonnement['PROMO'] && $abonnement['REDUCTION']) {
+                                $reduction = (float) $abonnement['REDUCTION'];
+                                $calculPrix = round($prix - ($prix * $reduction / 100), 2);
+                                $prix = $calculPrix;
+                            }
+                        }
+                        $texteAbonnements[] =
+                            [
+                                'divColClass' => $this->divColClass,
+                                'divH1Class' => $this->divH1Class,
+                                'divSmallClass' => $this->divSmallClass,
+                                'divUlClass' => $this->divUlClass,
+                                'BOUTON' => $bouton,
+                                'COULEUR' => $couleur,
+                                'DOCUMENTS' => $limiteDocuments,
+                                'HREF' => $href,
+                                'PRIX' => $prix,
+                                'REDUCTION' => $reduction,
+                                'STOCKAGE' => $limiteStockage,
+                                'TYPE' => $type
+                            ];
+                    }
+                }
+            } catch (Exception $e) {
+                $this->logs->messageLog('Erreur lors de la récupération des abonnements. Exception: ' . $e->getMessage() . '.', $this->logs->typeError);
+            }
+            return $texteAbonnements;
         }
-
-        /**
-         * Fonction texteLignes qui retourne un tableau formaté pour les différentes divs du formulaire de la page de connexion.
-         *
-         * @return array[]
-         */
-        private function cardDiv(): array
-        {
-            return
-                [
-                    0 =>
-                        [
-                            $this->div_h1_class => "my-0 font-weight-normal",
-                            $this->div_small_class => "text-muted",
-                            $this->div_ul_class => "list-unstyled mt-3 mb-4"
-                        ]
-                ];
-        }
-
-        /**
-         * Retourn le tableau formaté pour les différents attributs de la balise <form>
-         *
-         * @return string[]
-         */
-       
 
         /**
          * Retourne le tableau formaté final utilisé pour générer le rendu intégral.
@@ -74,8 +110,7 @@
         {
             return
                 [
-                    "div" => $this->cardDiv(),
-                    "button" => $this->texteButtons()
+                    'abonnement' => $this->texteAbonnements()
                 ];
         }
 

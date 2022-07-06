@@ -8,82 +8,84 @@
 </div>
 
 <div class="container text-center">
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h4>GRATUIT</h4>
-                </div>
-                {{#div}}
-                <div class="card-body">
-                    <h1 class="{{div_h1_class}}">0€<small class="{{div_small_class}}">/mois</small></h1>
-                    <ul class="fa-ul">
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>2 traitements</strong></li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>1 Go Stockoage</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Public Projects</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Community Access</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited Private Projects</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated Phone Support</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Subdomain</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
-                    </ul>
-                {{/div}}
-                {{#button}}
-                    <button class="{{button_class}}">Souscrire</button>
-                {{/button}}
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card border-info shadow-lg">
-                <div class="card-header">
-                    <h4>PREMIUM</h4>
-                </div>
-                {{#div}}
-                <div class="card-body">
-                    <h1 class="{{div_h1_class}}">14.99 €<small class="{{div_small_class}}">/mois</small></h1>
-                    <ul class="fa-ul">
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>10 traitements</strong></li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
-                        <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly Status Reports</li>
-                    </ul>
-                {{/div}}
-                {{#button}}
-                    <button class="btn btn-outline-info">Souscrire</button>
-                {{/button}}
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card border-warning shadow-sm">
-                <div class="card-header">
-                    <h4>GOLDEN</h4>
-                </div>
-                {{#div}}
-                <div class="card-body">
-                    <h1 class="{{div_h1_class}}">29.99 €<small class="{{div_small_class}}">/mois</small></h1>
-                   <ul class="fa-ul">
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>traitements illimités</strong></li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
-                        <li><span class="fa-li"><i class="fas fa-check"></i></span>Monthly Status Reports</li>
-                    </ul>
-                {{/div}}
-                {{#button}}
-                    <button class="btn btn-outline-warning">Souscrire</button>
-                {{/button}}
-                </div>
 
+    <div class="row">
+        {{#abonnement}}
+            <div class="{{divColClass}}">
+                <div class="card border-{{COULEUR}} shadow-sm">
+                    <div class="card-header bg-{{COULEUR}} text-white">
+                        <h4>{{TYPE}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="{{divH1Class}}">{{PRIX}}€<small class="{{divSmallClass}}">/mois</small>{{#REDUCTION}} <span class="badge rounded-pill bg-success">-{{REDUCTION}}% <i class="fa-solid fa-tags"></i></span>{{/REDUCTION}}</h1>
+                        <ul class="{{divUlClass}}">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong>traitements illimités/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>{{STOCKAGE}} Go</strong> de stockage ou <strong>{{DOCUMENTS}} documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        {{#BOUTON}}
+                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}}>Souscrire</a>
+                        {{/BOUTON}}
+                        {{^BOUTON}}
+                            <span class="badge bg-{{COULEUR}}"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
+                        {{/BOUTON}}
+
+                    </div>
+
+                </div>
             </div>
-        </div>
+        {{/abonnement}}
+        {{^abonnement}}
+            <div class="col-6 mb-4">
+                <div class="card border-success shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4>GRATUIT</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="mt-3 my-0 font-weight-normal">0€<small class="text-muted">/mois</small></h1>
+                        <ul class="fa-ul list-unstyled mt-3 mb-4">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong>traitements limités/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>1 Go</strong> de stockage ou <strong>5 documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        <span class="badge bg-success"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-6 mb-4">
+                <div class="card border-warning shadow-sm">
+                    <div class="card-header bg-warning text-white">
+                        <h4>PAYANT</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="mt-3 my-0 font-weight-normal">0€<small class="text-muted">/mois</small></h1>
+                        <ul class="fa-ul list-unstyled mt-3 mb-4">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong> + de traitements possibles/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>+ de Go</strong> de stockage ou <strong>+ documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        <span class="badge bg-warning"><i class="fa-solid fa-circle-check"></i> Offre(s) bientôt disponible(s)</span>
+
+                    </div>
+
+                </div>
+            </div>
+        {{/abonnement}}
     </div>
+
 </div>

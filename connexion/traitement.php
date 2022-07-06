@@ -69,6 +69,12 @@
                     $erreur['small'] = 'Utilisateur';
                     $erreur['message'] = 'Utilisateur introuvable!';
                     break;
+                case '5':
+                    $erreur['i_class'] = 'fa-solid fa-arrow-right-to-bracket';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Connexion';
+                    $erreur['message'] = 'Il faut vous connecter pour accéder à cette partie du site!';
+                    break;
                 default:
                     $erreur['i_class'] = 'fa-solid fa-bomb';
                     $erreur['strong'] = 'Erreur';
