@@ -8,11 +8,11 @@
     include($config['variables']['chemin'] . "ressources/php/Logs.php");
     // On récupère les fichiers utiles pour afficher une page
     if(file_exists('traitement.php')) {
-        include("traitement.php");
-        }
-        if(file_exists('texte.php')){
-            include("texte.php");
-        }
+        include('traitement.php');
+    }
+    if(file_exists('texte.php')){
+        include('texte.php');
+    }
     // Initialisation de la classe Logs
     $logs = new Logs($config);
     // Initialisation de la classe Render

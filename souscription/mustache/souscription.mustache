@@ -1,0 +1,91 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<div class="container text-center py-5">
+    <h1 class="display-4">Abonnement</h1>
+    <p class="lead">Veiller choisir la formule qui vous intéresse</p>
+</div>
+
+<div class="container text-center">
+
+    <div class="row">
+        {{#abonnement}}
+            <div class="{{divColClass}}">
+                <div class="card border-{{COULEUR}} shadow-sm">
+                    <div class="card-header bg-{{COULEUR}} text-white">
+                        <h4>{{TYPE}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="{{divH1Class}}">{{PRIX}}€<small class="{{divSmallClass}}">/mois</small>{{#REDUCTION}} <span class="badge rounded-pill bg-success">-{{REDUCTION}}% <i class="fa-solid fa-tags"></i></span>{{/REDUCTION}}</h1>
+                        <ul class="{{divUlClass}}">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong>traitements illimités/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>{{STOCKAGE}} Go</strong> de stockage ou <strong>{{DOCUMENTS}} documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        {{#BOUTON}}
+                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}}>Souscrire</a>
+                        {{/BOUTON}}
+                        {{^BOUTON}}
+                            <span class="badge bg-{{COULEUR}}"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
+                        {{/BOUTON}}
+
+                    </div>
+
+                </div>
+            </div>
+        {{/abonnement}}
+        {{^abonnement}}
+            <div class="col-6 mb-4">
+                <div class="card border-success shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4>GRATUIT</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="mt-3 my-0 font-weight-normal">0€<small class="text-muted">/mois</small></h1>
+                        <ul class="fa-ul list-unstyled mt-3 mb-4">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong>traitements limités/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>1 Go</strong> de stockage ou <strong>5 documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        <span class="badge bg-success"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-6 mb-4">
+                <div class="card border-warning shadow-sm">
+                    <div class="card-header bg-warning text-white">
+                        <h4>PAYANT</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="mt-3 my-0 font-weight-normal">0€<small class="text-muted">/mois</small></h1>
+                        <ul class="fa-ul list-unstyled mt-3 mb-4">
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-folder-open"></i></span><strong> + de traitements possibles/jour</strong>
+                            </li>
+                            <li>
+                                <span class="fa-li"><i class="fa-solid fa-database"></i></span><strong>+ de Go</strong> de stockage ou <strong>+ documents déposables</strong> sur votre espace dédié.
+                            </li>
+                        </ul>
+
+                        <span class="badge bg-warning"><i class="fa-solid fa-circle-check"></i> Offre(s) bientôt disponible(s)</span>
+
+                    </div>
+
+                </div>
+            </div>
+        {{/abonnement}}
+    </div>
+
+</div>

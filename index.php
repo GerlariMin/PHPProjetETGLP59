@@ -17,6 +17,14 @@ session_start();
                 header("Location: ./deconnexion/");
                 break;
 
+            case 'souscription':
+                if(isset($_SESSION['login'])) {
+                    header("Location: ./souscription/");
+                } else {
+                    header("Location: ./connexion/?erreur=5");
+                }
+                break;
+
             case 'tableau-de-bord':
                 if(isset($_SESSION['login'])) {
                     header("Location: ./tableauDeBord/");

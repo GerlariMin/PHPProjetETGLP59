@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * Classe TraitementConnexion
+     * Classe TraitementSouscription
      */
-    class TraitementConnexion
+    class TraitementSouscription
     {
         /**
          * @var Logs logs
@@ -18,12 +18,13 @@
          */
         private array $config;
         /**
-         * @var TexteConnexion texte
+         * @var TexteSouscription texte
          */
-        private TexteConnexion $texte;
+        private TexteSouscription $texte;
 
         /**
          * Traitement_Accueil constructor.
+         * @param Logs $logs
          * @param Render $rendu
          */
         public function __construct(Logs $logs, Render $rendu)
@@ -32,12 +33,13 @@
             $this->config = $config;
             $this->logs = $logs;
             $this->render = $rendu;
-            $this->texte = new TexteConnexion($this->config);
+            $this->texte = new TexteSouscription($this->config);
         }
 
         /**
          * Gestion des erreurs pour prévenir l'utilisateur.
          * @param string $codeErreur
+         * @return array
          */
         private function traitementErreur(string $codeErreur = ''): array
         {
@@ -50,30 +52,6 @@
                     $erreur['strong'] = 'Erreur';
                     $erreur['small'] = 'Formulaire';
                     $erreur['message'] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
-                    break;
-                case '2':
-                    $erreur['i_class'] = 'fa-solid fa-id-badge';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Identifiant';
-                    $erreur['message'] = 'Impossible de vous retrouver à partir des informations saisies!';
-                    break;
-                case '3':
-                    $erreur['i_class'] = 'fa-solid fa-lock';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Mot de passe';
-                    $erreur['message'] = 'Mot de passe incorrect!';
-                    break;
-                case '4':
-                    $erreur['i_class'] = 'fa-solid fa-user';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Utilisateur';
-                    $erreur['message'] = 'Utilisateur introuvable!';
-                    break;
-                case '5':
-                    $erreur['i_class'] = 'fa-solid fa-arrow-right-to-bracket';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Connexion';
-                    $erreur['message'] = 'Il faut vous connecter pour accéder à cette partie du site!';
                     break;
                 default:
                     $erreur['i_class'] = 'fa-solid fa-bomb';
@@ -97,7 +75,7 @@
                 $data = $this->texte->texteFinal();
                 // On rajoute des clés au tableau dédié à Mustache pour afficher la page de connexion
                 $data['chemin'] = $this->config['variables']['chemin'];
-                $data['connexion'] = true;
+                $data['souscription'] = true;
                 // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
                 if($codeErreur) {
                     $data['blocErreur'] = $this->traitementErreur($codeErreur);
