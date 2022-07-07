@@ -30,7 +30,7 @@
         private String $divSmallClass = 'text-muted';
         private String $divUlClass = "fa-ul list-unstyled mt-3 mb-4";
         /**
-         * @var array|string[]
+         * @var array|string[] pour attribuer une couleur à la carte de présentation d'un abonnement donné
          */
         private array $couleursAbonnementsPayants =
             [
@@ -49,6 +49,11 @@
             $this->requetes = new RequetesSouscription($this->config, new Logs($this->config));
         }
 
+        /**
+         * Retourne un tableau formaté pour l'affichage des abonnements disponibles
+         *
+         * @return array
+         */
         private function texteAbonnements(): array
         {
             $texteAbonnements = array();
@@ -59,6 +64,7 @@
                 if(is_array($abonnements)) {
                     // On parcourt les abonnements trouvés
                     foreach ($abonnements as $abonnement) {
+                        // On définit les valeurs par défaut d'un abonnement (en se basant sur un abonnement gratuit)
                         $bouton = false;
                         $couleur = 'success';
                         $href = '';
@@ -67,17 +73,27 @@
                         $type = strtoupper($abonnement['TYPE']);
                         $limiteDocuments = $abonnement['DOCUMENTS'];
                         $limiteStockage = $abonnement['STOCKAGE'];
+                        // S'il s'agit d'un abonnement payant
                         if($type === 'PAYANT') {
+                            // on active le bouton de souscription à l'offre courante
                             $bouton = true;
+                            // On tire au sort la couleur de la carte de l'offre
                             $couleur = $this->couleursAbonnementsPayants[random_int(0, 5)];
+                            // On définir le lien qui permettra de régler le paiement de l'offre
                             $href = '../paiementAbonnent/?abonnement=' . $abonnement['IDENTIFIANT'];
+                            // On définit le prix
                             $prix = (float) $abonnement['PRIX'];
+                            // Si une réduction est active sur l'abonnement courant
                             if($abonnement['PROMO'] && $abonnement['REDUCTION']) {
+                                // On récupère le pourcentage de réduction
                                 $reduction = (float) $abonnement['REDUCTION'];
+                                // On calcule le prix final
                                 $calculPrix = round($prix - ($prix * $reduction / 100), 2);
+                                // On attribut le prix final à la variable du prix
                                 $prix = $calculPrix;
                             }
                         }
+                        // On ajoute l'ensemble des données dans le tableau formaté à la suite de l'indice courant
                         $texteAbonnements[] =
                             [
                                 'divColClass' => $this->divColClass,
@@ -98,6 +114,7 @@
             } catch (Exception $e) {
                 $this->logs->messageLog('Erreur lors de la récupération des abonnements. Exception: ' . $e->getMessage() . '.', $this->logs->typeError);
             }
+            // On retourne les abonnements disponibles
             return $texteAbonnements;
         }
 

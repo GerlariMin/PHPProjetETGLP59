@@ -7,33 +7,29 @@
     </div>
     <div class="card-body">    
         {{#form}}
-            <form action="{{form_action}}" method="{{form_method}}">
-                {{#div}}
-                    <div class="{{div_class}}">
-                        <input class="{{input_class}}" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" type="{{input_type}}">
-                        <label for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}}</label>
+            <form action="{{formAction}}" method="{{formMethod}}">
+                {{#inputs}}
+                    <div class="{{divClass}}">
+                        <input class="{{inputClass}}" id="{{inputId}}" name="{{inputName}}" placeholder="{{inputPlaceholder}}" required="{{inputRequired}}" type="{{inputType}}">
+                        <label for="{{labelFor}}"><i class="{{labelIClass}}"></i> {{labelText}}</label>
                     </div>
-                {{/div}}
+                {{/inputs}}
 
                 <div class="container">
                     <div class="row">
                         <div class="col">
                             {{#button}}
-                                <button class="{{button_class}}" type="{{button_type}}"><i class="{{button_i_class}}"></i> {{button_text}}</button>
+                                <button class="{{buttonClass}}" type="{{buttonType}}"><i class="{{buttonIClass}}"></i> {{buttonText}}</button>
                             {{/button}}
                         </div>
-                        <div class="col">
-                            Mot de passe oublié ? <a href="../motDePasseOublie/" class="text-decoration-none text-warning fw-bolder">Remplacez-le ici <i class="fa-solid fa-up-right-from-square"></i></a>.
-                        </div>
-                        <div class="col">
-                            Vous n'avez pas de compte ? <a href="../inscription/" class="text-decoration-none text-success fw-bolder">Inscrivez-vous ici <i class="fa-solid fa-up-right-from-square"></i></a>.
-                        </div>
+                        {{#redirections}}
+                            <div class="{{divClass}}">
+                                <p>{{pText}} {{#anchor}}<a href="{{HREF}}" class="{{CLASS}}">{{TEXT}} <i class="{{FONTAWESOME}}"></i></a>{{/anchor}}</p>
+                            </div>
+                        {{/redirections}}
                     </div>
                 </div>
             </form>
         {{/form}}
     </div>
-    <script>
-        console.log('test: {{#form}}{{form_action}}{{/form}}');
-    </script>
 </div>

@@ -69,7 +69,7 @@ class Logs {
         // On récupère le type de log qu'il faut afficher
         $type = $this->typesLogs[$typeLog];
         // On formate le message à afficher dans le fichier de logs
-        $message = $type . ' - ' . date('Y-m-d h:i:s') . "\n\t [MESSAGE] - " . $messageLog . "\n\t" . $trace . "\n";
+        $message = $type . ' - ' . date('Y-m-d h:i:s') . '\n\t [MESSAGE] - ' . $messageLog . '\n\t' . $trace . '\n';
         // On déverrouille le fichier de logs le temps d'ajouter une ligne
         chmod($this->repertoireFichierLog . $this->fichierLog, 0644);
         // On ouvre le fichier de logs

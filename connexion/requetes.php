@@ -28,12 +28,12 @@ class RequetesConnexion extends Model {
     public function recupererIdentifiant(String $login): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :login OR loginUtilisateur = :login;";
+        $texteRequete = 'SELECT identifiantUtilisateur AS IDENTIFIANT FROM utilisateurs WHERE emailUtilisateur = :login OR loginUtilisateur = :login;';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
         // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":login", $login);
+        $requete->bindValue(':login', $login);
         $this->logs->messageLog('Paramètres: [login: ' . $login . '].', $this->logs->typeDebug);
         // Exécution de la requête préparée
         $requete->execute();
@@ -47,12 +47,12 @@ class RequetesConnexion extends Model {
     public function recupererMotDePasseCourant(String $identifiant): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT motDePasseChiffreUtilisateur AS PHRASE FROM utilisateurs WHERE identifiantUtilisateur = :identifiant AND motDePasseOublie = FALSE;";
+        $texteRequete = 'SELECT motDePasseChiffreUtilisateur AS PHRASE FROM utilisateurs WHERE identifiantUtilisateur = :identifiant AND motDePasseOublie = FALSE;';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
         // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":identifiant", $identifiant);
+        $requete->bindValue(':identifiant', $identifiant);
         $this->logs->messageLog('Paramètres: [identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
         // Exécution de la requête préparée
         $requete->execute();
@@ -66,13 +66,13 @@ class RequetesConnexion extends Model {
     public function recupererUtilisateur(string $login, string $identifiant): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE (emailUtilisateur = :login OR loginUtilisateur = :login) AND identifiantUtilisateur = :identifiant;";
+        $texteRequete = 'SELECT loginUtilisateur AS LOGIN, nomUtilisateur AS NOM, prenomUtilisateur AS PRENOM, emailUtilisateur AS EMAIL FROM utilisateurs WHERE (emailUtilisateur = :login OR loginUtilisateur = :login) AND identifiantUtilisateur = :identifiant;';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
         // Attribution des valeurs de la requête préparée
-        $requete->bindValue(":login", $login);
-        $requete->bindValue(":identifiant", $identifiant);
+        $requete->bindValue(':login', $login);
+        $requete->bindValue(':identifiant', $identifiant);
         $this->logs->messageLog('Paramètres: [login: ' . $login . ', identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
         // Exécution de la requête préparée
         $requete->execute();

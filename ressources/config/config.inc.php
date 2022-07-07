@@ -14,8 +14,8 @@
     // BDD
     $config['bdd']['dbname'] = 'projetetglp59';
     $config['bdd']['host'] = 'localhost';
-    $config['bdd']['username'] = 'etglp59';
-    $config['bdd']['password'] = 'paf@Du#!5iVK@a&n';
+    $config['bdd']['username'] = 'root';//'etglp59';
+    $config['bdd']['password'] = '';//paf@Du#!5iVK@a&n';
     $config['bdd']['dsn'] = 'mysql:host=' . $config['bdd']['host'] . ';port=3306;dbname=' . $config['bdd']['dbname'];
 
     /**                  **

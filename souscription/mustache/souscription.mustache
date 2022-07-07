@@ -4,7 +4,7 @@
 
 <div class="container text-center py-5">
     <h1 class="display-4">Abonnement</h1>
-    <p class="lead">Veiller choisir la formule qui vous intéresse</p>
+    <p class="lead">Veuillez choisir la formule qui vous intéresse</p>
 </div>
 
 <div class="container text-center">
@@ -39,6 +39,7 @@
                 </div>
             </div>
         {{/abonnement}}
+        {{! Si aucun abonnement n'est récupéré, on affiche l'abonnement gratuit par défaut en dur }}
         {{^abonnement}}
             <div class="col-6 mb-4">
                 <div class="card border-success shadow-sm">

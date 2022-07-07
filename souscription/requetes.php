@@ -28,7 +28,7 @@ class RequetesSouscription extends Model {
     public function recupererAbonnementsDisponibles(): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = "SELECT identifiantAbonnement AS IDENTIFIANT,
+        $texteRequete = 'SELECT identifiantAbonnement AS IDENTIFIANT,
                                 typeAbonnement AS TYPE,
                                 limiteDocuments AS DOCUMENTS,
                                 limiteStockage AS STOCKAGE,
@@ -36,7 +36,7 @@ class RequetesSouscription extends Model {
                                 pourcentagePromotion AS REDUCTION,
                                 prixAbonnement AS PRIX
                         FROM abonnements
-                        WHERE disponible = 1;";
+                        WHERE disponible = 1;';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);

@@ -14,66 +14,75 @@
          * @var array
          */
         private array $config;
-        private String $button_class = "button_class";
-        private String $button_i_class = "button_i_class";
-        private String $button_text = "button_text";
-        private String $button_type = "button_type";
         /**
-         * @var String div_class
+         * @var string dédiées au bouton de validation
          */
-        private String $div_class = "div_class";
-        private String $form_action = "form_action";
-        private String $form_method = "form_method";
+        private String $buttonClass = 'buttonClass';
+        private String $buttonIClass = 'buttonIClass';
+        private String $buttonText = 'buttonText';
+        private String $buttonType = 'buttonType';
         /**
-         * @var string input_class
+         * @var string dédiées au paramétrage du formulaire
          */
-        private String $input_class = "input_class";
+        private String $formAction = 'formAction';
+        private String $formMethod = 'formMethod';
         /**
-         * @var string input_id
+         * @var string dédiées au paramétrage des inputs du formulaire
          */
-        private String $input_id = "input_id";
+        private String $divClass = 'divClass';
+        private String $inputClass = 'inputClass';
+        private String $inputId = 'inputId';
+        private String $inputName = 'inputName';
+        private String $inputPlaceholder = 'inputPlaceholder';
+        private String $inputRequired = 'inputRequired';
+        private String $inputType = 'inputType';
         /**
-         * @var string input_name
+         * @var string dédiées aux labels liés aux inputs du formulaire
          */
-        private String $input_name = "input_name";
+        private String $labelFor = 'labelFor';
+        private String $labelIClass = 'labelIClass';
+        private String $labelText = 'labelText';
         /**
-         * @var string input_placeholder
+         * @param string dédiées aux redirections
          */
-        private String $input_placeholder = "input_placeholder";
-        /**
-         * @var string input_required
-         */
-        private String $input_required = "input_required";
-        /**
-         * @var string input_type
-         */
-        private String $input_type = "input_type";
-        /**
-         * @var string label_for
-         */
-        private String $label_for = "label_for";
-        /**
-         * @var string label_i_class
-         */
-        private String $label_i_class = "label_i_class";
-        /**
-         * @var string label_text
-         */
-        private String $label_text = "label_text";
+        private String $col = 'col';
+        private String $pText = 'pText';
+        private String $anchor = 'anchor';
+        private String $anchorHREF = 'HREF';
+        private String $anchorCLASS = 'CLASS';
+        private String $anchorTEXT = 'TEXT';
+        private String $anchorFONTAWESOME = 'FONTAWESOME';
 
         public function __construct(array $config)
         {
             $this->config = $config;
         }
 
+        /**
+         * @return string[]
+         */
         private function texteButtons(): array
         {
             return
                 [
-                    $this->button_class => "btn btn-outline-success",
-                    $this->button_i_class => "fas fa-door-open",
-                    $this->button_text => "Connexion",
-                    $this->button_type => "submit"
+                    $this->buttonClass => 'btn btn-outline-success',
+                    $this->buttonIClass => 'fas fa-door-open',
+                    $this->buttonText => 'Connexion',
+                    $this->buttonType => 'submit'
+                ];
+        }
+
+        /**
+         * Retourne le tableau formaté pour les différents attributs de la balise <form>
+         *
+         * @return string[]
+         */
+        private function texteForm(): array
+        {
+            return
+                [
+                    $this->formAction => 'action.php',
+                    $this->formMethod => 'POST'
                 ];
         }
 
@@ -82,50 +91,67 @@
          *
          * @return array[]
          */
-        private function texteDivs(): array
+        private function texteInputs(): array
         {
             return
                 [
                     0 =>
                         [
-                            $this->div_class => "form-floating mb-3",
-                            $this->input_class => "form-control",
-                            $this->input_id => "input1",
-                            $this->input_name => "login",
-                            $this->input_placeholder => "E-mail ou Login",
-                            $this->input_required = "true",
-                            $this->input_type => "text",
-                            $this->label_for => "input1",
-                            $this->label_i_class => "fa-solid fa-user",
-                            $this->label_text => "E-mail ou Login"
+                            $this->divClass => 'form-floating mb-3',
+                            $this->inputClass => 'form-control',
+                            $this->inputId => 'input1',
+                            $this->inputName => 'login',
+                            $this->inputPlaceholder => 'E-mail ou Login',
+                            $this->inputRequired = true,
+                            $this->inputType => 'text',
+                            $this->labelFor => 'input1',
+                            $this->labelIClass => 'fa-solid fa-user',
+                            $this->labelText => 'E-mail ou Login'
                         ],
                     1 =>
                         [
-                            $this->div_class => "form-floating mb-3",
-                            $this->input_class => "form-control",
-                            $this->input_id => "input2",
-                            $this->input_name => "password",
-                            $this->input_placeholder => "Mot de passe utilisateur",
-                            $this->input_required = "true",
-                            $this->input_type => "password",
-                            $this->label_for => "input2",
-                            $this->label_i_class => "fas fa-key",
-                            $this->label_text => "Mot de passe"
+                            $this->divClass => 'form-floating mb-3',
+                            $this->inputClass => 'form-control',
+                            $this->inputId => 'input2',
+                            $this->inputName => 'password',
+                            $this->inputPlaceholder => 'Mot de passe utilisateur',
+                            $this->inputRequired = true,
+                            $this->inputType => 'password',
+                            $this->labelFor => 'input2',
+                            $this->labelIClass => 'fas fa-key',
+                            $this->labelText => 'Mot de passe'
                         ]
                 ];
         }
 
-        /**
-         * Retourn le tableau formaté pour les différents attributs de la balise <form>
-         *
-         * @return string[]
-         */
-        private function texteForm(): array
+        private function texteRedirections(): array
         {
             return
                 [
-                    $this->form_action => "action.php",
-                    $this->form_method => "POST"
+                    0 =>
+                        [
+                            $this->divClass => $this->col,
+                            $this->pText => 'Mot de passe oublié ?',
+                            $this->anchor =>
+                                [
+                                    $this->anchorHREF => '../motDePasseOublie/',
+                                    $this->anchorCLASS => 'text-decoration-none text-warning fw-bolder',
+                                    $this->anchorTEXT => 'Remplacez-le ici',
+                                    $this->anchorFONTAWESOME => 'fa-solid fa-up-right-from-square'
+                                ]
+                        ],
+                    1 =>
+                        [
+                            $this->divClass => $this->col,
+                            $this->pText => 'Vous n\'avez pas encore de compte ?',
+                            $this->anchor =>
+                                [
+                                    $this->anchorHREF => '../inscription/',
+                                    $this->anchorCLASS => 'text-decoration-none text-success fw-bolder',
+                                    $this->anchorTEXT => 'Inscrivez-vous ici',
+                                    $this->anchorFONTAWESOME => 'fa-solid fa-up-right-from-square'
+                                ]
+                        ]
                 ];
         }
 
@@ -138,9 +164,10 @@
         {
             return
                 [
-                    "form" => $this->texteForm(),
-                    "div" => $this->texteDivs(),
-                    "button" => $this->texteButtons()
+                    'form' => $this->texteForm(),
+                    'inputs' => $this->texteInputs(),
+                    'button' => $this->texteButtons(),
+                    'redirections' => $this->texteRedirections()
                 ];
         }
 

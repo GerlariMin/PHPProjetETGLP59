@@ -33,21 +33,21 @@
                     $_SESSION['identifiant'] = $identifiant;
                     $_SESSION['login'] = $utilisateur['LOGIN'];
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
-                    header("Location: ../tableauDeBord/");
+                    header('Location: ../tableauDeBord/');
                 } else {
                     $logs->messageLog('Utilisateur introuvable.', $logs->typeError);
-                    header("Location: ./?erreur=4");
+                    header('Location: ./?erreur=4');
                 }
             } else {
                 $logs->messageLog('Le mot de passe n\'a pas pu être récupéré ou n\'est pas conforme à ce qu\'a saisi l\'utilisateur.', $logs->typeError);
-                header("Location: ./?erreur=3");
+                header('Location: ./?erreur=3');
             }
         } else {
             $logs->messageLog('Aucun identifiant trouvé à partir des informations saisies par l\'utilisateur.', $logs->typeError);
-            header("Location: ./?erreur=2");
+            header('Location: ./?erreur=2');
         }
     } else {
         $logs->messageLog('Un des champs est vide ou non conforme.', $logs->typeError);
-        header("Location: ./?erreur=1");
+        header('Location: ./?erreur=1');
     }
     exit();

@@ -3,7 +3,7 @@
 // Cette partie n'est accessible que si l'utilisateur est connecté
     if(isset($_SESSION['login'])) {
         // Chargement des ressources utiles
-        include("../ressources/php/fichiers_communs.php");
+        include('../ressources/php/fichiers_communs.php');
         // On récupère la classe des requêtes dédiées aux abonnements
         require_once('requetes.php');
         // Initialisation de la classe de traitement dédiée au module de connexion

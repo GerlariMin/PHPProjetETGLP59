@@ -21,9 +21,17 @@
          * @var TexteConnexion texte
          */
         private TexteConnexion $texte;
+        /**
+         * @var string dédiées à la gestion des erreurs
+         */
+        private String $iClass = 'iClass';
+        private String $strong = 'strong';
+        private String $small = 'small';
+        private String $message = 'message';
 
         /**
          * Traitement_Accueil constructor.
+         * @param Logs $logs
          * @param Render $rendu
          */
         public function __construct(Logs $logs, Render $rendu)
@@ -46,40 +54,40 @@
             // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
             switch($codeErreur) {
                 case '1':
-                    $erreur['i_class'] = 'fa-solid fa-file-signature';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Formulaire';
-                    $erreur['message'] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
+                    $erreur[$this->iClass] = 'fa-solid fa-file-signature';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Formulaire';
+                    $erreur[$this->message] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
                     break;
                 case '2':
-                    $erreur['i_class'] = 'fa-solid fa-id-badge';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Identifiant';
-                    $erreur['message'] = 'Impossible de vous retrouver à partir des informations saisies!';
+                    $erreur[$this->iClass] = 'fa-solid fa-id-badge';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Identifiant';
+                    $erreur[$this->message] = 'Impossible de vous retrouver à partir des informations saisies!';
                     break;
                 case '3':
-                    $erreur['i_class'] = 'fa-solid fa-lock';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Mot de passe';
-                    $erreur['message'] = 'Mot de passe incorrect!';
+                    $erreur[$this->iClass] = 'fa-solid fa-lock';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Mot de passe';
+                    $erreur[$this->message] = 'Mot de passe incorrect!';
                     break;
                 case '4':
-                    $erreur['i_class'] = 'fa-solid fa-user';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Utilisateur';
-                    $erreur['message'] = 'Utilisateur introuvable!';
+                    $erreur[$this->iClass] = 'fa-solid fa-user';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Utilisateur';
+                    $erreur[$this->message] = 'Utilisateur introuvable!';
                     break;
                 case '5':
-                    $erreur['i_class'] = 'fa-solid fa-arrow-right-to-bracket';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Connexion';
-                    $erreur['message'] = 'Il faut vous connecter pour accéder à cette partie du site!';
+                    $erreur[$this->iClass] = 'fa-solid fa-arrow-right-to-bracket';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Connexion';
+                    $erreur[$this->message] = 'Il faut vous connecter pour accéder à cette partie du site!';
                     break;
                 default:
-                    $erreur['i_class'] = 'fa-solid fa-bomb';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'inconnue';
-                    $erreur['message'] = 'Une erreur est survenue!';
+                    $erreur[$this->iClass] = 'fa-solid fa-bomb';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'inconnue';
+                    $erreur[$this->message] = 'Une erreur est survenue!';
                     break;
             }
             // On retourne le tableau d'erreur formaté

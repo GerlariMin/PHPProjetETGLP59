@@ -32,7 +32,7 @@
             }catch(PDOException $e){
                 $erreur = 'Connexion échouée: '. $e->getMessage();
                 error_log($erreur);
-                header("Location: ../../connexion/?erreur=ConnexionBDD");
+                header('Location: ../../connexion/?erreur=ConnexionBDD');
                 exit();
             }
         }
@@ -98,6 +98,14 @@
             VALUES ('{$uuid}','{$nom}','{$prenom}','{$user}','{$email}','{$password}','1')";
             $req = $this->bdd->prepare($sql);
             $req->execute();
+        }
+
+        public function recuperDonneesUtilisateur(String $identifiant){
+            $sql = "SELECT * FROM utilisateurs WHERE identifiantUtilisateur = :identifiant;";
+            $req = $this->bdd->prepare($sql);
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+            return $req->fetch(PDO::FETCH_ASSOC);
         }
 
     }

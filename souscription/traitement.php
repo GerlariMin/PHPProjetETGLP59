@@ -21,6 +21,13 @@
          * @var TexteSouscription texte
          */
         private TexteSouscription $texte;
+        /**
+         * @var string dédiées à la gestion des erreurs
+         */
+        private String $iClass = 'iClass';
+        private String $strong = 'strong';
+        private String $small = 'small';
+        private String $message = 'message';
 
         /**
          * Traitement_Accueil constructor.
@@ -48,16 +55,16 @@
             // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
             switch($codeErreur) {
                 case '1':
-                    $erreur['i_class'] = 'fa-solid fa-file-signature';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'Formulaire';
-                    $erreur['message'] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
+                    $erreur[$this->iClass] = 'fa-solid fa-file-signature';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'Formulaire';
+                    $erreur[$this->message] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
                     break;
                 default:
-                    $erreur['i_class'] = 'fa-solid fa-bomb';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'inconnue';
-                    $erreur['message'] = 'Une erreur est survenue!';
+                    $erreur[$this->iClass] = 'fa-solid fa-bomb';
+                    $erreur[$this->strong] = 'Erreur';
+                    $erreur[$this->small] = 'inconnue';
+                    $erreur[$this->message] = 'Une erreur est survenue!';
                     break;
             }
             // On retourne le tableau d'erreur formaté
