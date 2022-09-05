@@ -3,7 +3,7 @@
 session_start();
 
 //Preparation de la connexion à la BDD
-$host = 'localhost:3307';
+$host = 'localhost:3306';
 $user = 'root';
 $passwd = '';
 $bdd = 'projetetglp59';
