@@ -1,15 +1,14 @@
 <?php
-session_start();
+    session_start();
 
-include("../ressources/php/fichiers_communs.php");
+    include("../ressources/php/fichiers_communs.php");
 
-global $render;
-$tab = array('inscription' => 'true','form' => ['form_action'=> 'post-ok.php', 
-        'form_method' => 'post', 
-        'input_nom' => 'nom', 
-        'input_prenom' => 'prenom',
-        'input_user' => 'username', 
-        'input_password' => 'password']);
+    $erreur = '';
+    global $render;
 
+    if(isset($_GET['erreur'])) {
+        $erreur = $_GET['erreur'];
+    }
 
-$render->actionRendu($tab);
+    $traitement = new TraitementInscription($render);
+    $traitement->traitementRendu($erreur);

@@ -3,13 +3,12 @@
 session_start();
 
 //Preparation de la connexion à la BDD
-require_once("../ressources/config/config.inc.php");
-require_once("../ressources/php/Model.php");
+$host = 'localhost:3307';
+$user = 'root';
+$passwd = '';
+$bdd = 'projetetglp59';
 
-global $config;
-
-
-$model = Model::get_model($config);
+$con = mysqli_connect($host, $user, $passwd, $bdd);
 
 // Vérification de la connexion
 if (!$con) {
@@ -26,6 +25,7 @@ $email = $_POST['email'];
 $pass = $_POST['password'];
 $password = password_hash($pass, PASSWORD_DEFAULT);
 $uuid = getUuid($con);
+
 var_dump($uuid);
 
  // Get data to display on index page
@@ -35,7 +35,9 @@ try {
    //Si le mail n'existe pas
    if ($uuid != null){
       //Insertion de l'utilisateur dans la BDD
-      $model->insererUtilisateur($uuid, $nom, $prenom, $user, $email, $password);
+      $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, motDePasseChiffreUtilisateur, AbonnementUtilisateur) 
+      VALUES ('{$uuid}','{$nom}','{$prenom}','{$user}','{$email}','{$password}','1')";
+      $query = mysqli_query($con, $sql);
 
       //Si la requête est bonne alors on envoie en message de félicitation
       if ($query){
@@ -70,11 +72,13 @@ try {
          $output = ob_get_clean();
 
          //-------------------------------creation du répertoire----------------------------//
-         $config['variables']['repertoires']['utilisateurs'];
+
          $dir = substr($uuid,0,5);
          $subdir=substr($uuid,5,10);
-         $path = "./{$config}/{$dir}/{$subdir}";
+         $path = "./{$dir}/{$subdir}";
+         var_dump($path);
          
+         //$config['variables']['repertoires']['utilisateurs']
          setDir($path);
       }
    }else{
@@ -87,19 +91,22 @@ try {
  }
 
 
-//------------------------FONCTION--------------------------------------//
+//------------------------FONCTION-----------------------------------------
+
+
+
 
 function isUniq($myVar){
-
-    $host = 'localhost';
-    $user = 'etglp59';
-    $passwd = 'paf@Du#!5iVK@a&n';
+   // var_dump($myVar);
+    $host = 'localhost:3307';
+    $user = 'root';
+    $passwd = '';
     $bdd = 'projetetglp59';
 
     $con = mysqli_connect($host, $user, $passwd, $bdd);
     //Je recupère la valeur envoyé depuis ma fonction js
 
-    // On va verifier l'email n'est pas dejà dans la BDD les utilisateurs ne sont pas dejà
+    // On va verifier l'id n'est pas dejà dans la BDD les utilisateurs ne sont pas dejà
     $sql = "SELECT identifiantUtilisateur FROM utilisateurs WHERE identifiantUtilisateur='{$myVar}'";
 
     // Préparation de la requête 
@@ -108,11 +115,15 @@ function isUniq($myVar){
 
     // Lier des variables à une déclaration préparée 
     mysqli_stmt_bind_result($stmt, $col1);
-
+    //var_dump($myVar);
     // Récupération des valeurs 
     mysqli_stmt_fetch($stmt);
 
     mysqli_close($con);
+
+    //var_dump($col1);
+    // On retourne la valeur
+    //var_dump(is_null($col1));
 
     if (is_null($col1)){
         return true;
@@ -125,8 +136,10 @@ function getUuid(){
 
     $var = substr(uniqid(),0,10);
 
+    //var_dump($var);
     $test = isUniq($var);
 
+    //var_dump($test);
     if($test){
         return $var;
     }else{
