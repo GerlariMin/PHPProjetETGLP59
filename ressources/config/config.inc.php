@@ -8,7 +8,7 @@
 
     $config['variables']['application']['nom'] = 'OCR Square';
     $config['variables']['chemin'] = "../";
-    $config['variables']['repertoires']['utilisateurs']['linux'] = '/home/user/utilisateurs/';
+    $config['variables']['repertoires']['utilisateurs']['linux'] ='/home/user/utilisateurs/';
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
 
     // BDD

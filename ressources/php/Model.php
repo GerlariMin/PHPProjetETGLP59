@@ -97,7 +97,14 @@
             $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, motDePasseChiffreUtilisateur, AbonnementUtilisateur) 
             VALUES ('{$uuid}','{$nom}','{$prenom}','{$user}','{$email}','{$password}','1')";
             $req = $this->bdd->prepare($sql);
+            return $req->execute();
+        }
+
+        public function isUuid(String $uuid){
+            $sql = "SELECT COUNT(identifiantUtilisateur) as bool FROM utilisateurs WHERE identifiantUtilisateur='{$uuid}'";
+            $req = $this->bdd->prepare($sql);
             $req->execute();
+            return (int) $req->fetch(PDO::FETCH_ASSOC)['bool'];
         }
 
         public function recuperDonneesUtilisateur(String $identifiant){

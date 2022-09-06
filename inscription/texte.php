@@ -61,6 +61,23 @@
          */
         private String $label_text = "label_text";
 
+        /**
+         * @var String onchange
+         */
+        private String $onChange = "onChange";
+
+        /**
+         * @var String pattern
+         */
+        private String $pattern = "pattern";
+
+        /**
+         * @var String onBlur
+         */
+        private String $onBlur = "onBlur";
+
+
+
         public function __construct(array $config)
         {
             $this->config = $config;
@@ -96,7 +113,8 @@
                         $this->input_type => "text",
                         $this->label_for => "Nom",
                         $this->label_i_class => "fa-solid fa-user",
-                        $this->label_text => "Nom"
+                        $this->label_text => "Nom",
+                        $this->onBlur => "generateUsername()"
                     ],
 
                   1 => 
@@ -125,6 +143,7 @@
                         $this->label_for => "username",
                         $this->label_i_class => "fa-solid fa-user",
                         $this->label_text => "Nom d'utilisateur"
+                        
                     ],
 
                   3 => 
@@ -138,7 +157,8 @@
                         $this->input_type => "email",
                         $this->label_for => "Adresse Email",
                         $this->label_i_class => "fa-solid fa-at",
-                        $this->label_text => "Adresse Email"
+                        $this->label_text => "Adresse Email",
+                        $this->onChange => "checkEmail()"
                     ],
 
                   4 => 
@@ -152,7 +172,8 @@
                         $this->input_type => "password",
                         $this->label_for => "Mot de passe",
                         $this->label_i_class => "fa-solid fa-lock",
-                        $this->label_text => "Mot de passe"
+                        $this->label_text => "Mot de passe",
+                        $this->pattern => "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     ],
 
                   5 => 
