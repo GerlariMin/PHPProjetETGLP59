@@ -1,10 +1,9 @@
 <?php
-
     /**
-     * Classe TexteConnexion
+     * Classe TexteAjouterDocument
      * Contient l'ensemble du texte à afficher pour la page de connexion.
      */
-    class TexteConnexion
+    class TexteAjouterDocument
     {
         /**
          * Variables correspondant aux balises Mustache de la page.
@@ -43,21 +42,12 @@
         private String $labelIClass = 'labelIClass';
         private String $labelText = 'labelText';
         /**
-         * @param string dédiées aux redirections
+         * @param array $config
          */
-        private String $col = 'col';
-        private String $pText = 'pText';
-        private String $anchor = 'anchor';
-        private String $anchorHREF = 'HREF';
-        private String $anchorCLASS = 'CLASS';
-        private String $anchorTEXT = 'TEXT';
-        private String $anchorFONTAWESOME = 'FONTAWESOME';
-
         public function __construct(array $config)
         {
             $this->config = $config;
         }
-
         /**
          * @return string[]
          */
@@ -66,12 +56,11 @@
             return
                 [
                     $this->buttonClass => 'btn btn-outline-success',
-                    $this->buttonIClass => 'fas fa-door-open',
-                    $this->buttonText => 'Connexion',
+                    $this->buttonIClass => 'fa-solid fa-file-arrow-down',
+                    $this->buttonText => 'Déposer le(s) document(s)',
                     $this->buttonType => 'submit'
                 ];
         }
-
         /**
          * Retourne le tableau formaté pour les différents attributs de la balise <form>
          *
@@ -85,7 +74,6 @@
                     $this->formMethod => 'POST'
                 ];
         }
-
         /**
          * Fonction texteLignes qui retourne un tableau formaté pour les différentes divs du formulaire de la page de connexion.
          *
@@ -97,64 +85,22 @@
                 [
                     0 =>
                         [
-                            $this->divClass => 'form-floating mb-3',
+                            $this->divClass => 'mb-3',
+                            'inputAccept' => '.pdf, .docx, .txt, .jpeg, .png',
                             $this->inputClass => 'form-control',
                             $this->inputId => 'input1',
-                            $this->inputName => 'login',
-                            $this->inputPlaceholder => 'E-mail ou Login',
+                            'inputMultiple' => true,
+                            $this->inputName => 'documents[]',
+                            $this->inputPlaceholder => 'Document(s) à télécharger',
                             $this->inputRequired => true,
-                            $this->inputType => 'text',
+                            $this->inputType => 'file',
+                            'labelClass' => 'mb-2',
                             $this->labelFor => 'input1',
-                            $this->labelIClass => 'fa-solid fa-user',
-                            $this->labelText => 'E-mail ou Login'
-                        ],
-                    1 =>
-                        [
-                            $this->divClass => 'form-floating mb-3',
-                            $this->inputClass => 'form-control',
-                            $this->inputId => 'input2',
-                            $this->inputName => 'password',
-                            $this->inputPlaceholder => 'Mot de passe utilisateur',
-                            $this->inputRequired => true,
-                            $this->inputType => 'password',
-                            $this->labelFor => 'input2',
-                            $this->labelIClass => 'fas fa-key',
-                            $this->labelText => 'Mot de passe'
+                            $this->labelIClass => 'fa-solid fa-file',
+                            $this->labelText => 'Document(s) à télécharger'
                         ]
                 ];
         }
-
-        private function texteRedirections(): array
-        {
-            return
-                [
-                    0 =>
-                        [
-                            $this->divClass => $this->col,
-                            $this->pText => 'Mot de passe oublié ?',
-                            $this->anchor =>
-                                [
-                                    $this->anchorHREF => '../motDePasseOublie/',
-                                    $this->anchorCLASS => 'text-decoration-none text-warning fw-bolder',
-                                    $this->anchorTEXT => 'Remplacez-le ici',
-                                    $this->anchorFONTAWESOME => 'fa-solid fa-up-right-from-square'
-                                ]
-                        ],
-                    1 =>
-                        [
-                            $this->divClass => $this->col,
-                            $this->pText => 'Vous n\'avez pas encore de compte ?',
-                            $this->anchor =>
-                                [
-                                    $this->anchorHREF => '../inscription/',
-                                    $this->anchorCLASS => 'text-decoration-none text-success fw-bolder',
-                                    $this->anchorTEXT => 'Inscrivez-vous ici',
-                                    $this->anchorFONTAWESOME => 'fa-solid fa-up-right-from-square'
-                                ]
-                        ]
-                ];
-        }
-
         /**
          * Retourne le tableau formaté final utilisé pour générer le rendu intégral.
          *
@@ -167,8 +113,6 @@
                     'form' => $this->texteForm(),
                     'inputs' => $this->texteInputs(),
                     'button' => $this->texteButtons(),
-                    'redirections' => $this->texteRedirections()
                 ];
         }
-
     }

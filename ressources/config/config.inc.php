@@ -5,24 +5,22 @@
     /**                **
      * Variables utiles *
      **                **/
-
     $config['variables']['application']['nom'] = 'OCR Square';
     $config['variables']['chemin'] = "../";
     $config['variables']['repertoires']['utilisateurs']['linux'] ='/home/user/utilisateurs/';
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
     $config['variables']['redirection']['mail']['ip'] = '192.168.30.34';
-
-    // BDD
+    /**
+     * Variables BDD
+     */
     $config['bdd']['dbname'] = 'projetetglp59';
     $config['bdd']['host'] = 'localhost';
     $config['bdd']['username'] = 'root';//'etglp59';
     $config['bdd']['password'] = '';//paf@Du#!5iVK@a&n';
     $config['bdd']['dsn'] = 'mysql:host=' . $config['bdd']['host'] . ';port=3306;dbname=' . $config['bdd']['dbname'];
-
     /**                  **
      * Messages d'erreurs *
      **                  **/
-
     // erreur 401
     $config['erreur']['401'] = "Acces interdit";
     // erreur 402
@@ -33,14 +31,12 @@
     $config['erreur']['405'] = "Erreur serveur interne";
     // erreur 500
     $config['erreur']['500'] = "Erreur serveur interne";
-
     /**
      * Logs
      */
      $config['logs']['emplacement']['linux'] = '/home/user/logs/';
      $config['logs']['emplacement']['windows'] = 'c:/wamp64/www/logs/';
      $config['logs']['fichier'] = 'ocr-square-logs';
-
     /**
      * Variables qui dépendent du système d'exploitation
      */
@@ -51,12 +47,16 @@
         $config['logs']['emplacement'] = $config['logs']['emplacement']['linux'];
         $config['variables']['repertoires']['utilisateurs'] = $config['variables']['repertoires']['utilisateurs']['linux'];
     }
-
     /**
      * Actions spécifiques d'installation
      */
-
     // création du répertoire qui contiendra les données utilisateurs
     if(!is_dir($config['variables']['repertoires']['utilisateurs'])) {
-        mkdir(directory: $config['variables']['repertoires']['utilisateurs'], recursive: true);
+        try {
+            if (!mkdir($concurrentDirectory = $config['variables']['repertoires']['utilisateurs'], true) && !is_dir($concurrentDirectory)) {
+                throw new RuntimeException(sprintf('Le répertoire "%s" n\'a pas pu être créé!', $concurrentDirectory));
+            }
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
+        }
     }

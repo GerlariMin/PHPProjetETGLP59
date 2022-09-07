@@ -53,6 +53,9 @@
                                     <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
                                 </li>
                             {{/fichiers}}
+                            {{^fichiers}}
+                                <a class="btn btn-outline-warning" href="../ajouterDocument"><i class="fa-solid fa-download"></i> Ajouter des fichiers</a>
+                            {{/fichiers}}
                         </ul>
                     </div>
                 </div>

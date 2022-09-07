@@ -1,0 +1,30 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+<div class="card w-50 mx-auto mt-5">
+    <div class="card-header text-center">
+        <p><i class="fas fa-download"></i> Ajout de document<p>
+    </div>
+    <div class="card-body">
+        {{#form}}
+            <form action="{{formAction}}" enctype="multipart/form-data" method="{{formMethod}}">
+                {{#inputs}}
+                    <div class="{{divClass}}">
+                        <label {{#labelClass}}class="{{labelClass}}"{{/labelClass}} for="{{labelFor}}"><i class="{{labelIClass}}"></i> {{labelText}}</label>
+                        <input {{#inputAccept}}accept="{{inputAccept}}"{{/inputAccept}} class="{{inputClass}}" id="{{inputId}}" name="{{inputName}}" {{#inputMultiple}}multiple{{/inputMultiple}} placeholder="{{inputPlaceholder}}" required="{{inputRequired}}" type="{{inputType}}">
+                    </div>
+                {{/inputs}}
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            {{#button}}
+                                <button class="{{buttonClass}}" type="{{buttonType}}"><i class="{{buttonIClass}}"></i> {{buttonText}}</button>
+                            {{/button}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {{/form}}
+    </div>
+</div>
