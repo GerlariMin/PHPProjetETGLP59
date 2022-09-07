@@ -115,4 +115,64 @@
             return $req->fetch(PDO::FETCH_ASSOC);
         }
 
+       // MODIFICATIONS UTILISATEUR
+
+        public function miseAJourMotDePasse(String $nouveauMotDePasse, String $token)
+        {
+            $nouveauMotDePasseChiffre = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
+            // ajout nouveau mot de passe chiffré et suppression du token et de sa date d'expiration
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasseChiffre', motDePasseOublie = '0', motDePasseOublieToken = NULL, expirationToken = NULL WHERE motDePasseOublieToken IN (:token);");
+            $req->bindValue(":token", $token);
+
+            $req->execute();
+        }
+
+        public function modificationNom(String $identifiant, String $nouveauNom)
+        {
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET nomUtilisateur = '$nouveauNom' WHERE identifiantUtilisateur IN (:identifiant);");
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+        }
+
+        public function modificationPrenom(String $identifiant, String $nouveauPrenom)
+        {
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET prenomUtilisateur = '$nouveauPrenom' WHERE identifiantUtilisateur IN (:identifiant);");
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+        }
+
+        public function modificationEmail(String $identifiant, String $nouvelEmail)
+        {
+            if(verifierEmail($nouvelEmail)){
+                //TODO: message d'erreur, nouvel email déjà utilisé
+            }else{
+                $req = $this->bdd->prepare("UPDATE utilisateurs SET emailUtilisateur = '$nouvelEmail' WHERE identifiantUtilisateur IN (:identifiant);");
+                $req->bindValue(":identifiant", $identifiant);
+                $req->execute();
+            }
+        }
+
+        // à vérifier également car la connexion peut également se faire via le login
+        public function modificationLogin(String $identifiant, String $nouveauLogin)
+        {
+            if($this->verifierLogin($nouveauLogin)){
+                //TODO: message d'erreur, nouveau login déjà utilisé
+                var_dump("login déjà utilisé");
+                exit();
+            }else{
+                $req = $this->bdd->prepare("UPDATE utilisateurs SET loginUtilisateur = '$nouveauLogin' WHERE identifiantUtilisateur IN (:identifiant);");
+                $req->bindValue(":identifiant", $identifiant);
+                $req->execute();
+            }
+        }
+
+        public function donneesUtilisateur(String $identifiant)
+        {
+            $req = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE identifiantUtilisateur IN (:identifiant);");
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+
+            return $req->fetch(PDO::FETCH_ASSOC);
+        }
+
     }
