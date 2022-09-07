@@ -10,6 +10,7 @@
     $config['variables']['chemin'] = "../";
     $config['variables']['repertoires']['utilisateurs']['linux'] ='/home/user/utilisateurs/';
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
+    $config['variables']['redirection']['mail']['ip'] = '192.168.30.34';
 
     // BDD
     $config['bdd']['dbname'] = 'projetetglp59';

@@ -77,7 +77,7 @@
         {
             $nouveauMotDePasseChiffre = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
             // ajout nouveau mot de passe chiffré et suppression du token
-            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasseChiffre', motDePasseOublie = '0', motDePasseOublieToken = 'NULL' WHERE motDePasseOublieToken IN (:token);");
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasseChiffre', motDePasseOublie = '0', motDePasseOublieToken = NULL, expirationToken = NULL WHERE motDePasseOublieToken IN (:token);");
             $req->bindValue(":token", $token);
 
             $req->execute();

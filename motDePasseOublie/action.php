@@ -34,7 +34,7 @@
         </head>
         <body>
         <p>Bonjour ,</p>
-        <p>Vous venez de faire la demande de réinitialisation de mot de passe. Pour le renouveler cliquer <a href="http://192.168.30.28/php-project-sandbox/reinitialisationMotDePasse?token='. $token .'">ici</a>.</p>
+        <p>Vous venez de faire la demande de réinitialisation de mot de passe. Pour le renouveler cliquer <a href="http://'. $config['variables']['redirection']['mail']['ip'] .'/PHPProjetETGLP59-sandbox/reinitialisationMotDePasse?token='. $token .'">ici</a>.</p>
         <p>Merci,</p>
         <p>L\'équipe OCRSQUARE<p>
         </body>
