@@ -19,8 +19,14 @@
     $render = new Render($logs, $config['variables']['chemin']);
     // variable dédiée au code d'erreur
     $erreur = '';
+    // variable dédiée au code de succès
+    $succes = '';
     // Si il existe une clé erreur dans le lien
     if(isset($_GET['erreur'])) {
         // On affecte la valeur associée à la clé à la variable dédiée
         $erreur = $_GET['erreur'];
+    // Sinon, si il existe une clé succes dans le lien
+    } else if(isset($_GET['succes'])) {
+        // On affecte la valeur associée à la clé à la variable dédiée
+        $succes = $_GET['succes'];
     }

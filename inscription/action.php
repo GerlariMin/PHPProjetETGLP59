@@ -47,7 +47,7 @@ try {
 
          // renvoi true ou false (à ajuster quand il y aura accès à la base de donnée)
          ob_start();
-         var_dump(mail("$email", $subject, $message, $headers));
+
          $output = ob_get_clean();
 
          //-------------------------------creation du répertoire----------------------------//
@@ -55,8 +55,7 @@ try {
          $dir = substr($uuid,0,5);
          $subdir=substr($uuid,5,10);
          $path =  $config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}";
-         var_dump($path);
-         
+
          setDir($path);
 
          header("Location: ../connexion");
@@ -74,12 +73,10 @@ try {
 
 function getUuid($model){
 
-    $var = substr(uniqid(),0,10);
+    $var = substr(uniqid('', true),0,10);
 
-    var_dump($var);
     $test = $model->isUuid($var);
 
-    var_dump($test);
     if($test === 0){
         return $var;
     }else{

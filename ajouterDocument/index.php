@@ -7,7 +7,7 @@
         // Initialisation de la classe de traitement dédiée au module de connexion
         $traitement = new TraitementAjouterDocument($logs, $render);
         // Appel de la méthode générant l'affichage du module de connexion
-        $traitement->traitementRendu($erreur);
+        $traitement->traitementRendu($erreur, $succes);
     } else {
         header('Location: ../connexion/?erreur=5');
         exit();

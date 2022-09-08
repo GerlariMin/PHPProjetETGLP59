@@ -46,6 +46,7 @@ class TraitementAjouterDocument
     /**
      * Gestion des erreurs pour prévenir l'utilisateur.
      * @param string $codeErreur
+     * @return array
      */
     private function traitementErreur(string $codeErreur = ''): array
     {
@@ -53,35 +54,23 @@ class TraitementAjouterDocument
         $erreur = array();
         // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
         switch($codeErreur) {
-            case '1':
-                $erreur[$this->iClass] = 'fa-solid fa-file-signature';
+            case 'f':
+                $erreur[$this->iClass] = 'fa-solid fa-file';
                 $erreur[$this->strong] = 'Erreur';
                 $erreur[$this->small] = 'Formulaire';
-                $erreur[$this->message] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
+                $erreur[$this->message] = 'Aucun fichiers à transférer!';
                 break;
-            case '2':
-                $erreur[$this->iClass] = 'fa-solid fa-id-badge';
+            case 'fup':
+                $erreur[$this->iClass] = 'fa-solid fa-server';
                 $erreur[$this->strong] = 'Erreur';
-                $erreur[$this->small] = 'Identifiant';
-                $erreur[$this->message] = 'Impossible de vous retrouver à partir des informations saisies!';
+                $erreur[$this->small] = 'Téléchargement sur serveur';
+                $erreur[$this->message] = 'Un problème est survenu lors du téléchargement de vos fichiers vers notre serveur!';
                 break;
-            case '3':
-                $erreur[$this->iClass] = 'fa-solid fa-lock';
+            case 'fbdd':
+                $erreur[$this->iClass] = 'fa-solid fa-database';
                 $erreur[$this->strong] = 'Erreur';
-                $erreur[$this->small] = 'Mot de passe';
-                $erreur[$this->message] = 'Mot de passe incorrect!';
-                break;
-            case '4':
-                $erreur[$this->iClass] = 'fa-solid fa-user';
-                $erreur[$this->strong] = 'Erreur';
-                $erreur[$this->small] = 'Utilisateur';
-                $erreur[$this->message] = 'Utilisateur introuvable!';
-                break;
-            case '5':
-                $erreur[$this->iClass] = 'fa-solid fa-arrow-right-to-bracket';
-                $erreur[$this->strong] = 'Erreur';
-                $erreur[$this->small] = 'Connexion';
-                $erreur[$this->message] = 'Il faut vous connecter pour accéder à cette partie du site!';
+                $erreur[$this->small] = 'Document non ajouté';
+                $erreur[$this->message] = 'Un problème est survenu lors du téléchargement de vos fichiers vers notre serveur!';
                 break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb';
@@ -95,10 +84,38 @@ class TraitementAjouterDocument
     }
 
     /**
+     * Gestion des succès pour prévenir l'utilisateur.
+     * @param string $codeSucces
+     * @return array
+     */
+    private function traitementSucces(string $codeSucces = ''): array
+    {
+        // Initialisation du tableau de succès a retourner
+        $erreur = array();
+        // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
+        switch($codeSucces) {
+            case 'fok':
+                $erreur[$this->iClass] = 'fa-solid fa-thumbs-up';
+                $erreur[$this->strong] = 'Succès';
+                $erreur[$this->small] = 'Envoi fichier';
+                $erreur[$this->message] = 'Opération effectuée avec succès!';
+                break;
+            default:
+                $erreur[$this->iClass] = 'fa-solid fa-circle-check';
+                $erreur[$this->strong] = 'Succès';
+                $erreur[$this->small] = 'succès';
+                $erreur[$this->message] = 'Opération effectuée avec succès!';
+                break;
+        }
+        // On retourne le tableau de succès formaté
+        return $erreur;
+    }
+
+    /**
      * Affichage de la page de connexion.
      * @param string $codeErreur
      */
-    public function traitementRendu(string $codeErreur = ''): void
+    public function traitementRendu(string $codeErreur = '', string $codeSucces = ''): void
     {
         try {
             // On récupère le tableau formaté pour Mustache
@@ -109,6 +126,10 @@ class TraitementAjouterDocument
             // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
             if($codeErreur) {
                 $data['blocErreur'] = $this->traitementErreur($codeErreur);
+            }
+            // Si un codeSucces existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
+            if($codeSucces) {
+                $data['blocSucces'] = $this->traitementSucces($codeSucces);
             }
             // On génère l'affichage Mustache
             $this->render->actionRendu($data);

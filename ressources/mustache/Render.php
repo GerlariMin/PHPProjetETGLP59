@@ -50,7 +50,7 @@
          * Fonction permettant d'afficher le contenu Mustache d'une page, avec les données contenues dans la variable $data
          * @param array $data
          */
-        public function actionRendu(array $data = [])
+        public function actionRendu(array $data = []): void
         {
             try {
                 //On extrait les données à afficher

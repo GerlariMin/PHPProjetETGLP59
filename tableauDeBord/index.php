@@ -2,7 +2,6 @@
     session_start();
     // Cette partie n'est accessible que si l'utilisateur est connecté
     if(isset($_SESSION['login'])) {
-        var_dump($_SESSION);
         include("../ressources/php/fichiers_communs.php");
         /*
         var_dump(
