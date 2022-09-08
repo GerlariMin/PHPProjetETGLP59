@@ -83,6 +83,16 @@
             $req->execute();
         }
 
+        public function confirmationMotDePasse(String $nouveauMotDePasse, String $token)
+        {
+            $nouveauMotDePasseChiffre = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
+            // ajout nouveau mot de passe chiffré et suppression du token et de sa date d'expiration
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasseChiffre', motDePasseOublie = '0', motDePasseOublieToken = NULL, expirationToken = NULL WHERE motDePasseOublieToken IN (:token);");
+            $req->bindValue(":token", $token);
+
+            $req->execute();
+        }
+
         public function verifierToken(String $token){
             $req = $this->bdd->prepare("SELECT loginUtilisateur FROM projetetglp59.utilisateurs WHERE motDePasseOublieToken IN (:token) AND expirationToken > (:expirationToken);");
             $req->bindValue(":token", $token);
@@ -116,16 +126,6 @@
         }
 
        // MODIFICATIONS UTILISATEUR
-
-        public function miseAJourMotDePasse(String $nouveauMotDePasse, String $token)
-        {
-            $nouveauMotDePasseChiffre = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
-            // ajout nouveau mot de passe chiffré et suppression du token et de sa date d'expiration
-            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasseChiffre', motDePasseOublie = '0', motDePasseOublieToken = NULL, expirationToken = NULL WHERE motDePasseOublieToken IN (:token);");
-            $req->bindValue(":token", $token);
-
-            $req->execute();
-        }
 
         public function modificationNom(String $identifiant, String $nouveauNom)
         {
@@ -169,6 +169,31 @@
         public function donneesUtilisateur(String $identifiant)
         {
             $req = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE identifiantUtilisateur IN (:identifiant);");
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+
+            return $req->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function motDePasseModifie(String $identifiant, String $motDePasseChiffre, String $token)
+        {
+            $req = $this->bdd->prepare("UPDATE motDePasse SET motDePasseChiffre = '$motDePasseChiffre', token = '$token' WHERE utilisateurLie IN (:identifiant);");
+            $req->bindValue(":identifiant", $identifiant);
+            $req->execute();
+
+            return $req->fetch(PDO::FETCH_ASSOC);
+        }
+
+        //TODO: encore qq petits pb ici à debug
+        public function confirmerMotDePasseModifie(String $identifiant, String $token)
+        {
+            $reqMotDePasse = $this->bdd->prepare("SELECT motDePasseChiffre FROM motDePasse WHERE token IN (:token)");
+            $reqMotDePasse->bindValue(":token", $token);
+            $reqMotDePasse->execute();
+            $motDePasse = $reqMotDePasse->fetch(PDO::FETCH_ASSOC);
+            $nouveauMotDePasse = $motDePasse['motDePasseChiffre'];
+
+            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasse' WHERE identifiantUtilisateur IN (:identifiant);");
             $req->bindValue(":identifiant", $identifiant);
             $req->execute();
 

@@ -23,7 +23,9 @@ if(isset($_POST['email'])){
     $model->modificationEmail($_SESSION['identifiant'], $_POST['email']);
 }
 if(isset($_POST['mdp'])){
-    //TODO
+    // jsp si bonne idée de mettre ça en session, à voir...
+    $_SESSION['mdp'] = $_POST['mdp'];
+    header("Location: ../profil/envoiMailModifMdp.php");
 }
 if(isset($_POST['abonnement'])){
     header("Location: ../souscription/souscription.mustache");
