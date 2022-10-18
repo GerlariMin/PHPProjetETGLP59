@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS `projetetglp59`.`utilisateurs` (
   `motDePasseChiffreUtilisateur` VARCHAR(45) NOT NULL,
   `motDePasseOublie` TINYINT NOT NULL DEFAULT 0,
   `motDePasseOublieToken` VARCHAR(30) NULL,
+  `expirationToken` DATETIME NULL,
+  `motDePasseModifie`INT NULL,
   PRIMARY KEY (`identifiantUtilisateur`),
   UNIQUE INDEX `identifiant_UNIQUE` (`identifiantUtilisateur` ASC) VISIBLE,
   INDEX `liaisonUtilisateurAbonnement_idx` (`abonnementUtilisateur` ASC) VISIBLE,
@@ -103,6 +105,25 @@ CREATE TABLE IF NOT EXISTS `projetetglp59`.`Facturations` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `projetetglp59`.`motDePasse`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `projetetglp59`.`motdepasse`;
+
+CREATE TABLE IF NOT EXISTS `projetetglp59`.`motdepasse` (
+  `identifiantMotDePasse` int(11) NOT NULL,
+  `motDePasseChiffre` varchar(128) NOT NULL,
+  `token` varchar(20) NOT NULL,
+  `utilisateurLie` varchar(10) NOT NULL,
+  PRIMARY KEY (`identifiantMotDePasse`),
+  KEY `utilisateur mdp` (`utilisateurLie`)
+  CONSTRAINT `liaisonMotDePasseUtilisateur`
+    FOREIGN KEY (`utilisateurLie`)
+    REFERENCES `projetetglp59`.`utilisateurs` (`identifiantUtilisateur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE=InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
