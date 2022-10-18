@@ -177,27 +177,41 @@
 
         public function motDePasseModifie(String $identifiant, String $motDePasseChiffre, String $token)
         {
-            $req = $this->bdd->prepare("UPDATE motDePasse SET motDePasseChiffre = '$motDePasseChiffre', token = '$token' WHERE utilisateurLie IN (:identifiant);");
+            // on place dans la table mot de passe le mdp provisoire en attente de confirmation par mail
+            $req  = $this->bdd->prepare("UPDATE motDePasse SET motDePasseChiffre = '$motDePasseChiffre', token = '$token' WHERE utilisateurLie IN (:identifiant);");
             $req->bindValue(":identifiant", $identifiant);
             $req->execute();
+
+            $req2 = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseModifie = 1 WHERE identifiantUtilisateur IN (:identifiant)");
+            $req2->bindValue(":identifiant", $identifiant);
+            $req2->execute();
 
             return $req->fetch(PDO::FETCH_ASSOC);
         }
 
-        //TODO: encore qq petits pb ici à debug
         public function confirmerMotDePasseModifie(String $identifiant, String $token)
         {
-            $reqMotDePasse = $this->bdd->prepare("SELECT motDePasseChiffre FROM motDePasse WHERE token IN (:token)");
-            $reqMotDePasse->bindValue(":token", $token);
-            $reqMotDePasse->execute();
-            $motDePasse = $reqMotDePasse->fetch(PDO::FETCH_ASSOC);
-            $nouveauMotDePasse = $motDePasse['motDePasseChiffre'];
+            $reqmodifmdp = $this->bdd->prepare("SELECT motDePasseModifie FROM utilisateurs WHERE identifiantUtilisateur IN (:identifiant)");
+            $reqmodifmdp->bindValue(":identifiant", $identifiant);
+            $reqmodifmdp->execute();
+            $utilisateur = $reqmodifmdp->fetch(PDO::FETCH_ASSOC);
+            $modification = $utilisateur['motDePasseModifie'];
 
-            $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasse' WHERE identifiantUtilisateur IN (:identifiant);");
-            $req->bindValue(":identifiant", $identifiant);
-            $req->execute();
+            // on vérifie bien que l'utilisateur à fait la demande de modification de mot de passe
+            // sans ça n'importe qui disposant de l'id unique d'un utilisateur pourrait modifier son mdp
+            if($modification){
+                $reqMotDePasse = $this->bdd->prepare("SELECT motDePasseChiffre FROM motDePasse WHERE token IN (:token)");
+                $reqMotDePasse->bindValue(":token", $token);
+                $reqMotDePasse->execute();
+                $motDePasse = $reqMotDePasse->fetch(PDO::FETCH_ASSOC);
+                $nouveauMotDePasse = $motDePasse['motDePasseChiffre'];
 
-            return $req->fetch(PDO::FETCH_ASSOC);
+                $req = $this->bdd->prepare("UPDATE utilisateurs SET motDePasseChiffreUtilisateur = '$nouveauMotDePasse', motDePasseModifie = NULL WHERE identifiantUtilisateur IN (:identifiant);");
+                $req->bindValue(":identifiant", $identifiant);
+                $req->execute();
+                return true;
+            }else{
+                return false;
+            }
         }
-
     }

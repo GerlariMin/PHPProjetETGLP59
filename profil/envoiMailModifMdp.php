@@ -37,7 +37,7 @@ if(isset($email)){
   </head>
   <body>
   <p>Bonjour ,</p>
-  <p>Vous venez de faire la demande de modification de mot de passe. Pour la confirmer cliquer <a href="http://'. $config['variables']['redirection']['mail']['ip'] .'/PHPProjetETGLP59-sandbox/profil/confirmationMotDePasseModifie.php?token='. $token .'">ici</a>.</p>
+  <p>Vous venez de faire la demande de modification de mot de passe. Pour la confirmer cliquer <a href="http://'. $config['variables']['redirection']['mail']['ip'] .'/PHPProjetETGLP59-sandbox/profil/confirmationMotDePasseModifie.php?token='. $token .'&identifiant='.$donneesUtilisateur['identifiantUtilisateur'].'">ici</a>.</p>
   <p>Merci,</p>
   <p>L\'équipe OCRSQUARE<p>
   </body>

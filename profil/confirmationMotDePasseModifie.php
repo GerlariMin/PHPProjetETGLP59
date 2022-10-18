@@ -7,17 +7,15 @@ include("../ressources/config/config.inc.php");
 global $config;
 include($config['variables']['chemin'] . "ressources/php/Model.php");
 
-$infosUtilisateurs = Model::get_model($config);
-$donneesUtilisateur = $infosUtilisateurs->donneesUtilisateur($_SESSION['identifiant']);
+$model = Model::get_model($config);
+$donneesUtilisateur = $model->donneesUtilisateur($_GET['identifiant']);
 
 //$logs = new Logs($config);
 
 $email = $donneesUtilisateur['emailUtilisateur'];
 
-$model = Model::get_model($config);
-
 // si le token correspond bien a une demande de modif (à définir)
-if($model->confirmerMotDePasseModifie($_SESSION['identifiant'], $_GET['token'])){
+if($model->confirmerMotDePasseModifie($_GET['identifiant'], $_GET['token'])){
     echo '
 <head>
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
