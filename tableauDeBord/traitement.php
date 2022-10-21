@@ -34,28 +34,37 @@ class TraitementTableauDeBord
 
     public function traitementFichiers(): void
     {
+        // On récupère le répertoire et sous répertoire dans lesquels les fichiers de l'utilisateur connecté sont stockés
         $repertoires = str_split($_SESSION['identifiant'], 5);
+        // On récupère le chemin complet de l'endroit où sont stockés les fichiers de l'utilisateur connecté
         $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
+        // Tableau qui contiendra l'ensemble des fichiers compris dans ce répertoire
         $fichiers = array();
+        // Si il s'agit bien d'un répertoire
         if(is_dir($repertoireUtilisateur))
         {
+            // Accès au répertoire
             if($iteration = opendir($repertoireUtilisateur))
             {
+                // On parcourt chaque fichier du répertoire
                 while(($fichier = readdir($iteration)) !== false)
                 {
-                    if($fichier != "." && $fichier != ".." && $fichier != "Thumbs.db")
+                    // On trie les fichiers correspondants aux répertoires parents ou autres fichiers non liées au site
+                    if($fichier !== "." && $fichier !== ".." && $fichier !== "Thumbs.db")
                     {
                         $fichiers[] =
                             [
-                                'href' => $repertoireUtilisateur . $fichier,
-                                'text' => $fichier,
-                                'taille' => filesize($repertoireUtilisateur . $fichier)
+                                'href' => $repertoireUtilisateur . $fichier, // Lien d'accès au fichier
+                                'text' => $fichier, // Nom du fichier
+                                'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
                             ];
                     }
                 }
+                // On ferme l'accès au répertoire
                 closedir($iteration);
             }
         }
+        // On affiche l'ensemble des fichiers sur la page du tableau de bord
         $this->texte->setFichiers($fichiers);
     }
 

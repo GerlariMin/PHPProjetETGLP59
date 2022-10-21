@@ -36,7 +36,7 @@
         {{#repertoire}}
             <div class="col">
                 <div class="card text-white bg-dark mb-3">
-                    <div class="card-header">Fichiers</div>
+                    <div class="card-header fw-bolder"><i class="fa-solid fa-file"></i> Fichiers</div>
                     <div class="card-body">
                         <ul class="list-group">
                             {{#fichiers}}
@@ -46,8 +46,12 @@
                                 </li>
                             {{/fichiers}}
                             {{^fichiers}}
-                                <a class="btn btn-outline-warning" href="../ajouterDocument"><i class="fa-solid fa-download"></i> Ajouter des fichiers</a>
+                                <div class="alert alert-warning text-center" role="alert">
+                                    <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked"></i> C'est bien vide ici!</p>
+                                    <p>Ajoutez des fichiers pour qu'ils apparaissent ici.</p>
+                                </div>
                             {{/fichiers}}
+                            <a class="btn btn-outline-warning mt-2" href="../ajouterDocument"><i class="fa-solid fa-download"></i> Ajouter des fichiers</a>
                         </ul>
                     </div>
                 </div>
