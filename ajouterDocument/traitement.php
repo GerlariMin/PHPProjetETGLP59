@@ -93,7 +93,7 @@ class TraitementAjouterDocument
         // Initialisation du tableau de succès a retourner
         $erreur = array();
         // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
-        switch($codeSucces) {
+        switch ($codeSucces) {
             case 'fok':
                 $erreur[$this->iClass] = 'fa-solid fa-thumbs-up';
                 $erreur[$this->strong] = 'Succès';
@@ -114,6 +114,7 @@ class TraitementAjouterDocument
     /**
      * Affichage de la page de connexion.
      * @param string $codeErreur
+     * @param string $codeSucces
      */
     public function traitementRendu(string $codeErreur = '', string $codeSucces = ''): void
     {
@@ -124,16 +125,16 @@ class TraitementAjouterDocument
             $data['chemin'] = $this->config['variables']['chemin'];
             $data['ajouterDocument'] = true;
             // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
-            if($codeErreur) {
+            if ($codeErreur) {
                 $data['blocErreur'] = $this->traitementErreur($codeErreur);
             }
             // Si un codeSucces existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
-            if($codeSucces) {
+            if ($codeSucces) {
                 $data['blocSucces'] = $this->traitementSucces($codeSucces);
             }
             // On génère l'affichage Mustache
             $this->render->actionRendu($data);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             // En cas de problème, on affiche le résultat dans les logs
             $this->logs->messageLog('Erreur lors de l\'affichage du module de connexion. Erreur: ' . $e->getMessage(), $this->logs->typeCritical);
         }

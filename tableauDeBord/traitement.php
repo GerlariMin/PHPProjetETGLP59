@@ -49,8 +49,8 @@ class TraitementTableauDeBord
                 // On parcourt chaque fichier du répertoire
                 while(($fichier = readdir($iteration)) !== false)
                 {
-                    // On trie les fichiers correspondants aux répertoires parents ou autres fichiers non liées au site
-                    if($fichier !== "." && $fichier !== ".." && $fichier !== "Thumbs.db")
+                    // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
+                    if($fichier !== "Thumbs.db" && !is_dir($repertoireUtilisateur.$fichier))
                     {
                         $fichiers[] =
                             [
