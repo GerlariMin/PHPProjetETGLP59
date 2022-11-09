@@ -82,15 +82,29 @@
             </div>
         </div>
 
-        <div class="col">
-            <div class="card text-white bg-dark mb-3">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Dark card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        {{#repertoireResultats}}
+            <div class="col">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header fw-bolder"><i class="fa-solid fa-square-poll-vertical"></i> Résultat(s) traitement(s) OCR</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {{#fichiersResultats}}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
+                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
+                                </li>
+                            {{/fichiersResultats}}
+                            {{^fichiersResultats}}
+                                <div class="alert alert-warning text-center" role="alert">
+                                    <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked"></i> C'est bien vide ici!</p>
+                                    <p>Effectuez des traitements OCR et les résultats apparaitront ici.</p>
+                                </div>
+                            {{/fichiersResultats}}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        {{/repertoireResultats}}
 
         <div class="col">
             <div class="card text-white bg-dark mb-3">
