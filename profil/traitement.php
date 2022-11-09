@@ -50,6 +50,25 @@
                     $erreur['message'] = 'L\'adresse mail renseignée n\'existe pas.';
                     $erreur['lien'] = '<a href="../inscription/"> Créer un compte </a>';
                     break;
+                case 'email-exisant':
+                    $erreur['i_class'] = 'fa-solid fa-id-badge';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'email';
+                    $erreur['message'] = 'Cet email est déjà utilisé.';
+                    $erreur['lien'] = '<a href="../connexion/"> Se connecter </a>';
+                    break;
+                case 'mdp-exisant':
+                    $erreur['i_class'] = 'fa-solid fa-id-badge';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'mot de passe';
+                    $erreur['message'] = 'Veuillez renseigner un mot de passe différent.';
+                    break;
+                case 'login-exisant':
+                    $erreur['i_class'] = 'fa-solid fa-id-badge';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'login';
+                    $erreur['message'] = 'Le login renseigné existe déjà. Veuillez en renseigner un nouveau.';
+                    break;
                 default:
                     $erreur['i_class'] = 'fa-solid fa-bomb';
                     $erreur['strong'] = 'Erreur';
