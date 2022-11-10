@@ -96,9 +96,17 @@ class TraitementTableauDeBord
                     // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
                     if ($fichier !== "Thumbs.db" && !is_dir($repertoireUtilisateur.$fichier))
                     {
+                        if(str_contains($fichier, '.jpg') || str_contains($fichier, '.jpeg')) {
+                            $type = 1;
+                        } else if(str_contains($fichier, '.png')) {
+                            $type = 2;
+                        } else {
+                            $type = 0;
+                        }
+                        $href = '../visualiserDocument/?document=' . $fichier . '&type=' . $type . '&resultat=true';
                         $fichiers[] =
                             [
-                                'href' => $repertoireUtilisateur . $fichier, // Lien d'accès au fichier
+                                'href' => $href,
                                 'text' => $fichier, // Nom du fichier
                                 'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
                             ];
