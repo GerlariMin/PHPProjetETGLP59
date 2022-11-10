@@ -19,7 +19,7 @@ $email = $donneesUtilisateur['emailUtilisateur'];
 $model = Model::get_model($config);
 // token unique, d'une modification
 $token = bin2hex(random_bytes(15));
-$lien = 'http://'. $config['variables']['redirection']['mail']['ip'] .'/PHPProjetETGLP59-sandbox/profil/confirmationModification.php?token='. $token .'&identifiant='.$donneesUtilisateur['identifiantUtilisateur'];
+$lien = 'http://'. $config['variables']['redirection']['mail']['ip'] .'/'.$config['variables']['redirection']['mail']['dossier'].'profil/confirmationModification.php?token='. $token .'&identifiant='.$donneesUtilisateur['identifiantUtilisateur'];
 $returnLink = '<a href="../tableauDeBord"><p>Retour au tableau de bord</p></a>';
 
 if(isset($_SESSION['mdpModif'])){
