@@ -25,6 +25,7 @@
     if(isset($email)){
 
         $model = Model::get_model($config);
+        $_SESSION['email'] = $email;
 
         // message formaté en HTML
         $message = '

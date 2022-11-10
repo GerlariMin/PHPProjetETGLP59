@@ -1,0 +1,64 @@
+{{#blocErreur}}
+    {{>blocErreur}}
+{{/blocErreur}}
+
+<head>
+<script src="scriptProfil.js"></script>
+</head>
+
+<div class="card w-75 mx-auto mt-5">
+  <div class="card-header text-center">
+    <i class="fa-solid fa-user"></i> Informations personnelles
+  </div>
+  <ul class="list-group list-group-flush">
+    {{#liste}}
+        <li class="list-group-item">
+          <div class="container">
+            <div class="row">
+              <div class="col"> <b>{{type_information}}</b> :</div>
+              <div class="col">{{information_personnelle}}</div>
+              <div class="col"> <div class="float-end"> <a class="btn btn-primary border" id="{{id_bouton_modifier}}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">modifier</a></div></div>
+            </div>
+            <div class="collapse" id="{{id_collapse}}">
+              <form action="action.php" method="POST">
+                <div class="input-group mb-3 w-50">
+                  <input type="{{type_input}}" class="form-control" name="{{name_input}}" placeholder="{{placeholder_input}}">
+                  <input type="{{type_input_2}}" class="form-control" name="{{name_input_2}}" placeholder="{{placeholder_input_2}}">
+                  <button type="submit" class="btn btn-primary border "> Enregistrer </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
+    {{/liste}}
+  </ul>
+</div>
+
+<div class="mt-5 text-center">
+  <button type="button" class="btn btn-danger border " id="resiliation" data-toggle="modal" data-target="#exampleModal"> Résilier abonnement </button>
+  <button type="button" class="btn btn-danger border "> Supprimer mon compte </button>
+</div>
+
+
+<!-- Popup résiliation-->
+{{#popup}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Résiliation abonnement</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        êtes-vous sûr de vouloir nous quitter ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non je reste !</button>
+        <button type="button" class="btn btn-primary">Oui je vous quitte lâchement</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{/popup}}
