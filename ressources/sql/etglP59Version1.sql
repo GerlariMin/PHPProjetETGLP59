@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS `projetetglp59`.`utilisateurs` (
   `motDePasseChiffreUtilisateur` VARCHAR(45) NOT NULL,
   `motDePasseOublie` TINYINT NOT NULL DEFAULT 0,
   `motDePasseOublieToken` VARCHAR(30) NULL,
+  `expirationToken` DATETIME NULL,
+  `motDePasseModifie`INT NULL,
   PRIMARY KEY (`identifiantUtilisateur`),
   UNIQUE INDEX `identifiant_UNIQUE` (`identifiantUtilisateur` ASC) VISIBLE,
   INDEX `liaisonUtilisateurAbonnement_idx` (`abonnementUtilisateur` ASC) VISIBLE,
@@ -104,6 +106,79 @@ CREATE TABLE IF NOT EXISTS `projetetglp59`.`Facturations` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `projetetglp59`.`motDePasse`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `projetetglp59`.`motdepasse`;
+
+CREATE TABLE IF NOT EXISTS `projetetglp59`.`motdepasse` (
+  `identifiantMotDePasse` int(11) NOT NULL AUTO_INCREMENT,
+  `motDePasseChiffre` varchar(128) NULL,
+  `token` varchar(20) NULL,
+  `utilisateurLie` varchar(10) NOT NULL,
+  PRIMARY KEY (`identifiantMotDePasse`),
+  KEY `utilisateur mdp` (`utilisateurLie`)
+  CONSTRAINT `liaisonMotDePasseUtilisateur`
+    FOREIGN KEY (`utilisateurLie`)
+    REFERENCES `projetetglp59`.`utilisateurs` (`identifiantUtilisateur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `projetetglp59`.`emails`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `projetetglp59`.`emails`;
+
+CREATE TABLE `projetetglp59`.`emails` (
+  `identifiantEmail` INT(11) NOT NULL AUTO_INCREMENT ,
+  `email` VARCHAR(128) NULL DEFAULT NULL ,
+  `token` VARCHAR(128) NULL DEFAULT NULL ,
+  `utilisateurLie` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`identifiantEmail`),
+  CONSTRAINT `liaisonEmailsUtilisateur`
+    FOREIGN KEY (`utilisateurLie`)
+    REFERENCES `projetetglp59`.`utilisateurs` (`identifiantUtilisateur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `projetetglp59`.`logins`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `projetetglp59`.`logins`;
+
+CREATE TABLE `projetetglp59`.`logins` (
+  `identifiantLogin` INT(11) NOT NULL AUTO_INCREMENT ,
+  `login` VARCHAR(128) NULL DEFAULT NULL ,
+  `token` VARCHAR(128) NULL DEFAULT NULL ,
+  `utilisateurLie` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`identifiantLogin`),
+  CONSTRAINT `liaisonloginsUtilisateur`
+    FOREIGN KEY (`utilisateurLie`)
+    REFERENCES `projetetglp59`.`utilisateurs` (`identifiantUtilisateur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `projetetglp59`.`modifications`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `projetetglp59`.`modifications`;
+
+CREATE TABLE `projetetglp59`.`modifications` (
+  `identifiantLogin` INT(11) NOT NULL AUTO_INCREMENT ,
+  `typeModification` VARCHAR(128) NULL DEFAULT NULL ,
+  `modification` VARCHAR(128) NULL DEFAULT NULL ,
+  `token` VARCHAR(128) NULL DEFAULT NULL ,
+  `utilisateurLie` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`identifiantLogin`),
+  CONSTRAINT `liaisonloginsUtilisateur`
+    FOREIGN KEY (`utilisateurLie`)
+    REFERENCES `projetetglp59`.`utilisateurs` (`identifiantUtilisateur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE=InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -10,14 +10,16 @@
     $config['variables']['repertoires']['utilisateurs']['linux'] ='/home/user/utilisateurs/';
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
     $config['variables']['redirection']['mail']['ip'] = '192.168.30.34';
+    $config['variables']['redirection']['mail']['dossier'] = 'dev/';
     $config['variables']['ssh']['port'] = 22;
+
     /**
      * Variables BDD
      */
     $config['bdd']['dbname'] = 'projetetglp59';
     $config['bdd']['host'] = 'localhost';
-    $config['bdd']['username'] = 'root';//'etglp59';
-    $config['bdd']['password'] = '';//paf@Du#!5iVK@a&n';
+    $config['bdd']['username'] = 'root';
+    $config['bdd']['password'] = '';
     $config['bdd']['dsn'] = 'mysql:host=' . $config['bdd']['host'] . ';port=3306;dbname=' . $config['bdd']['dbname'];
     /**                       **
      * Variables SSH Tesseract *
