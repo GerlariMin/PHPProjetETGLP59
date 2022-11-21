@@ -46,13 +46,14 @@
         /**
          * Gestion des erreurs pour prévenir l'utilisateur.
          * @param string $codeErreur
+         * @return array
          */
         private function traitementErreur(string $codeErreur = ''): array
         {
             // Initialisation du tableau d'erreur a retourner
             $erreur = array();
             // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
-            switch($codeErreur) {
+            switch ($codeErreur) {
                 case '1':
                     $erreur[$this->iClass] = 'fa-solid fa-file-signature';
                     $erreur[$this->strong] = 'Erreur';

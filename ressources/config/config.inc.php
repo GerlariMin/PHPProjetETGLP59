@@ -11,6 +11,8 @@
     $config['variables']['repertoires']['utilisateurs']['windows'] = 'c:/wamp64/www/utilisateurs/';
     $config['variables']['redirection']['mail']['ip'] = '192.168.30.34';
     $config['variables']['redirection']['mail']['dossier'] = 'dev/';
+    $config['variables']['ssh']['port'] = 22;
+
     /**
      * Variables BDD
      */
@@ -19,6 +21,12 @@
     $config['bdd']['username'] = 'root';
     $config['bdd']['password'] = '';
     $config['bdd']['dsn'] = 'mysql:host=' . $config['bdd']['host'] . ';port=3306;dbname=' . $config['bdd']['dbname'];
+    /**                       **
+     * Variables SSH Tesseract *
+     **                       **/
+    $config['ssh']['tesseract']['ip'] = '192.168.30.35';
+    $config['ssh']['tesseract']['login'] = 'tesseract';
+    $config['ssh']['tesseract']['password'] = '@qALiF38xXjS0vZD';
     /**                  **
      * Messages d'erreurs *
      **                  **/

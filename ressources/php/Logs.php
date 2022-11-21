@@ -7,15 +7,15 @@ class Logs {
     private array $config = array();
     private string $fichierLog;
     private string $repertoireFichierLog;
-    private array $typesLogs = 
-        [
+    private array $typesLogs = [
             0 => 'ALERT',
             1 => 'CRITICAL',
             2 => 'DEBUG',
             3 => 'ERROR',
             4 => 'INFO',
             5 => 'NOTICE',
-            6 => 'PANIC'
+            6 => 'PANIC',
+            7 => 'WARNING',
         ];
     // Variables publiques qui seront utilisées lors de l'appel de la fonction messageLog dans le code des fichiers PHP externes
     public int $typeAlert = 0;
@@ -25,6 +25,7 @@ class Logs {
     public int $typeInfo = 4;
     public int $typeNotice = 5;
     public int $typePanic = 6;
+    public int $typeWarning = 7;
     // Constructeur
     public function __construct(array $config) {
         $this->config = $config;
