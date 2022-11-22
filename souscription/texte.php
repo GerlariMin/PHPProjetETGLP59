@@ -80,7 +80,7 @@
                             // On tire au sort la couleur de la carte de l'offre
                             $couleur = $this->couleursAbonnementsPayants[random_int(0, 5)];
                             // On définir le lien qui permettra de régler le paiement de l'offre
-                            $href = '../paiementAbonnent/?abonnement=' . $abonnement['IDENTIFIANT'];
+                            $href = '';
                             // On définit le prix
                             $prix = (float) $abonnement['PRIX'];
                             // Si une réduction est active sur l'abonnement courant

@@ -28,7 +28,7 @@
                         </ul>
 
                         {{#BOUTON}}
-                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}}>Souscrire</a>
+                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}} onclick="showPaypalButton()">Souscrire</a>
                         {{/BOUTON}}
                         {{^BOUTON}}
                             <span class="badge bg-{{COULEUR}}"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
@@ -73,11 +73,15 @@
 <!-- Replace "test" with your own sandbox Business account app client ID -->
 <script src="https://www.paypal.com/sdk/js?client-id=Abg7jei8i5waaAGsrCPry-eEf8jxVN0Ux9L38uXUHOkUtgaXGrEHzOyL8r0q9XIp8kbZN3QDBT3-Kj0F&currency=EUR"></script>
 
-<center>
+<center style="display:none" id="paypal">
     <!-- Set up a container element for the button -->
     <div id="paypal-button-container"></div>
 </center>
 <script>
+
+    function showPaypalButton(){
+        document.getElementById('paypal').style.display = 'block';
+    }
 
     paypal.Buttons({
     // Sets up the transaction when a payment button is clicked
@@ -91,19 +95,19 @@
                 "description": "Abonnement au service payant", /* Item details will also be in the completed paypal.com transaction view */
                 "unit_amount": {
                   "currency_code": "EUR",
-                  "value": "50"
+                  "value": "9.99"
                 },
-                "quantity": "2"
+                "quantity": "1"
               },
             ],
 
             "amount": {
               "currency_code": "EUR",
-              "value": "100",
+              "value": "9.99",
               "breakdown": {
                 "item_total": {  /* Required when including the items array */
                   "currency_code": "EUR",
-                  "value": "100"
+                  "value": "9.99"
                 }
               }
             }
@@ -118,6 +122,7 @@
         console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
         const transaction = orderData.purchase_units[0].payments.captures[0];
         alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+        window.location.href = "http://localhost/PHPProjetETGLP59/tableauDeBord/";
         // When ready to go live, remove the alert and show a success message within this page. For example:
         // const element = document.getElementById('paypal-button-container');
         // element.innerHTML = '<h3>Thank you for your payment!</h3>';
