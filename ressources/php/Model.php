@@ -37,6 +37,11 @@
             }
         }
 
+        // TODO - AJOUTER LES LOGS EN CONSTRUCTEUR
+        // TODO - UTILISER LES LOGS DANS LES METHODES
+        // TODO - NE GARDER QUE LES REQUETES GLOBALES
+        // TODO - BIEN PREPARER ET UTILISER BINDVALUE POUR LES REQUETES
+
         /**
          * Méthode qui permet d'instancier la classe
          * @param $config
@@ -114,6 +119,7 @@
             return $req->fetch(PDO::FETCH_ASSOC);
         }
 
+        /*
         public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $aboUser, String $password){
             // vérification séparée pour bien indiquer à l'utilisateur quel est le problème
             if($this->verifierEmail($email)){
@@ -129,27 +135,15 @@
                 return $req->execute();
             }
         }
-
-        public function insertionBDD(String $uuid){
-            // $sql = "INSERT INTO motDePasse (motDePasseChiffre, token, utilisateurLie, motDePasseModifie) VALUES (NULL,NULL,'{$uuid}',0)";
-            // $req = $this->bdd->prepare($sql);
-            // $req->execute();
-            // $sql1 = "INSERT INTO emails (email, token, utilisateurLie, emailModifie) VALUES (NULL,NULL,'{$uuid}',0)";
-            // $req = $this->bdd->prepare($sql1);
-            // $req->execute();
-            // $sql2 = "INSERT INTO logins (`login`, token, utilisateurLie, loginModifie) VALUES (NULL,NULL,'{$uuid}',0)";
-            // $req = $this->bdd->prepare($sql2);
-            // $req->execute();
-            // $sql2 = "INSERT INTO modifications (typeModification, modification, token, utilisateurLie) VALUES (NULL,NULL,NULL,'{$uuid}')";
-            // $req = $this->bdd->prepare($sql2);
-            // $req->execute();
-        }
+        */
 
         public function isUuid(String $uuid){
-            $sql = "SELECT COUNT(identifiantUtilisateur) as bool FROM utilisateurs WHERE identifiantUtilisateur='{$uuid}'";
-            $req = $this->bdd->prepare($sql);
-            $req->execute();
-            return (int) $req->fetch(PDO::FETCH_ASSOC)['bool'];
+            $sql = "SELECT COUNT(identifiantUtilisateur) as bool FROM utilisateurs WHERE identifiantUtilisateur = :identifiant;";
+            $requete = $this->bdd->prepare($sql);
+            // Attribution des valeurs de la requête préparée
+            $requete->bindValue(':identifiant', $uuid);
+            $requete->execute();
+            return (int) $requete->fetch(PDO::FETCH_ASSOC)['bool'];
         }
 
         public function recuperDonneesUtilisateur(String $identifiant){

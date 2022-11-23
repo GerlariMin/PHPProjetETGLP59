@@ -59,22 +59,22 @@ class Logs {
     }
     // Génération du message de logs
     public function messageLog(string $messageLog, int $typeLog = 4) {
-        $trace = ' [TRACE] - ';
+        $trace = " [TRACE] - ";
         // On parcourt l'ensemble du tableau contenant la trace de l'origine de l'appel de la méthode
         foreach(debug_backtrace() as $traceCourante) {
             // On récupère le fichier source courant
-            $trace .= $traceCourante['file'] . ' -> ';
+            $trace .= $traceCourante['file'] . " -> ";
         }
         // On rajoute la source de ce fichier comme destination finale de la trace
         $trace .= __FILE__;
         // On récupère le type de log qu'il faut afficher
         $type = $this->typesLogs[$typeLog];
         // On formate le message à afficher dans le fichier de logs
-        $message = $type . ' - ' . date('Y-m-d h:i:s') . '\n\t [MESSAGE] - ' . $messageLog . '\n\t' . $trace . '\n';
+        $message = $type . " - " . date('Y-m-d h:i:s') . "\n\t [MESSAGE] - " . $messageLog . "\n\t" . $trace . "\n";
         // On déverrouille le fichier de logs le temps d'ajouter une ligne
         chmod($this->repertoireFichierLog . $this->fichierLog, 0644);
         // On ouvre le fichier de logs
-        $fichierLog = fopen($this->repertoireFichierLog . $this->fichierLog, 'a');
+        $fichierLog = fopen($this->repertoireFichierLog . $this->fichierLog, 'a+b');
         // On écrit le message dans le fichier de logs
         fwrite($fichierLog, $message);
         // On ferme le fichier de logs
