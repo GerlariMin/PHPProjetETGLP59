@@ -77,28 +77,30 @@
     function checkEmail(){
             // Get form via form name:
             var myForm = document.forms["myForm"];
-
+            // Récupération de l'e-mail saisi
             var email = document.getElementById('email').value;
-            console.log(email);
+            // Initialisation de la variable qui contiendra le retour de fonction.php
             var reponse = "";
-
+            // Initialisation XMLHttpRequest
             const xhttp = new XMLHttpRequest();
-
             // Preparation de la requete
             xhttp.open("GET", "fonction.php?email="+ email);
-
             //Verification de l'email   
             xhttp.onload = function(){
-
-            reponse = xhttp.responseText;
-            console.log(reponse);
-
-                if (xhttp.readyState === xhttp.DONE){
+                // Récupération valeur de retour
+                reponse = xhttp.responseText;
+                //
+                if (xhttp.readyState === xhttp.DONE) {
 
                     if (xhttp.status === 200){
-                        
+                        // Si le mail saisi est le même que celui reçu en réponse, cela veut dire que l'e-mail saisi est déjà utilisé
                         if(email === reponse) {
-                            alert("Votre email existe déjà");
+                            // Pop-up stylisée SweetAlert pour informer l'utilisateur que l'adresse e-mail saisie est déjà affectée à un compte
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Adresse e-mail',
+                                text: 'Cette adresse e-mail est déjà utilisée! Veuillez en choisir une autre!',
+                            })
                             document.getElementById('email').focus(); // Focus
                             return false;
                         }

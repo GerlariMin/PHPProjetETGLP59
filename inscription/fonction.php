@@ -1,32 +1,24 @@
-<?php  
-
-$host = 'localhost:3306';
-$user = 'root';
-$passwd = '';
-$bdd = 'projetetglp59';
-
-$con = mysqli_connect($host, $user, $passwd, $bdd);
-
-//Je recupère la valeur envoyé depuis ma fonction js
-$email = $_GET['email'];
-
-// On va verifier l'email n'est pas dejà dans la BDD les utilisateurs ne sont pas dejà
-$sql = "SELECT emailUtilisateur FROM utilisateurs WHERE emailUtilisateur='{$email}'";
-
-// Préparation de la requête 
-$stmt = mysqli_prepare($con, $sql);
-mysqli_stmt_execute($stmt);
-
-// Lier des variables à une déclaration préparée 
-mysqli_stmt_bind_result($stmt, $col1);
-
-// Récupération des valeurs 
-mysqli_stmt_fetch($stmt);
-
+<?php
+session_start();
+require_once('../ressources/config/config.inc.php');
+require_once('../ressources/php/Logs.php');
+require_once('../ressources/php/Model.php');
+// Initialisation de la classe dédiée aux Logs
+$logs = new Logs($config);
+// Valeur de retour
+$reponse = false;
+// Si il existe un GET email
+if ($_GET['email']) {
+    $logs->messageLog('GET email présent.', $logs->typeDebug);
+    // Je recupère la valeur envoyé depuis ma fonction js
+    $email = $_GET['email'];
+    $logs->messageLog('GET[email] = "' . $_GET['email'] . '".', $logs->typeDebug);
+    // Initialisation de la classe ddédiée à la BDD
+    $modele = Model::get_model($config);
+    $reponse = $modele->verifierEmail($email)['EMAIL'];
+    $logs->messageLog('Réponse requete: "' . $reponse . '".', $logs->typeDebug);
+} else {
+    $logs->messageLog('Utilisateur "' . $_SESSION['identifiant'] . '" - GET email non conforme: "' . $_GET['email'] .'"', $logs->typeWarning);
+}
 // On retourne la valeur
-echo $col1;
-
-mysqli_close($con);
-
-
-//return $checkmail;
+echo $reponse;
