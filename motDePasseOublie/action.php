@@ -24,7 +24,7 @@
     
     if(isset($email)){
 
-        $model = Model::get_model($config);
+        $model = Model::getModel($config, $logs);
         $_SESSION['email'] = $email;
 
         // message formaté en HTML

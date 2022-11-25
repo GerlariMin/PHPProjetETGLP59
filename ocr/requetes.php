@@ -19,7 +19,7 @@ class RequetesOCR extends Model {
      */
     public function __construct(array $config, Logs $logs) {
         $this->logs = $logs;
-        $this->model = Model::get_model($config);
+        $this->model = Model::getModel($config, $logs);
     }
 
     public function recupererIdentifiantsDocuments(String $identifiant, String $documents): mixed

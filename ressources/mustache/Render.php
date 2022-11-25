@@ -34,7 +34,7 @@
                                 new Mustache_Loader_FilesystemLoader($chemin . 'inscription/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'motDePasseOublie/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'ocr/mustache'),
-                                //new Mustache_Loader_FilesystemLoader($chemin . 'profil/mustache'),
+                                new Mustache_Loader_FilesystemLoader($chemin . 'profil/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'reinitialisationMotDePasse/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'souscription/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'tableauDeBord/mustache'),

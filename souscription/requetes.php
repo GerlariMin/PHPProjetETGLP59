@@ -19,7 +19,7 @@ class RequetesSouscription extends Model {
      */
     public function __construct(array $config, Logs $logs) {
         $this->logs = $logs;
-        $this->model = Model::get_model($config);
+        $this->model = Model::getModel($config, $logs);
     }
 
     /**

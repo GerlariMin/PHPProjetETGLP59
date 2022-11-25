@@ -3,19 +3,23 @@
 session_start();
 
 session_regenerate_id();
-include("../ressources/config/config.inc.php");
+include_once("../ressources/config/config.inc.php");
 global $config;
-include($config['variables']['chemin'] . "ressources/php/Model.php");
+include_once($config['variables']['chemin'] . "ressources/php/Logs.php");
+include_once('requetes.php');
+include_once('texte.php');
 
-$model = Model::get_model($config);
+$logs = new Logs($config);
+$requetes = new RequetesProfil($config, $logs);
+$texte = new TexteProfil($config);
 
 $returnLink = '<a href="../connexion"><p>Retour à la page de connexion</p></a>';
 // si le token correspond bien a une demande de modif (à définir)
-if(isset($_GET['identifiant'], $_GET['token'])){
-  $motif = $model->confirmerModification($_GET['identifiant'], $_GET['token']);
-  $text = $model->messageConfirmation($motif);
-  $model->templateMessageSucces('', $text, $returnLink);
-}else{
+if (isset($_GET['identifiant'], $_GET['token'])) {
+  $motif = $requetes->confirmerModification($_GET['identifiant'], $_GET['token']);
+  $messageConfirmation = $texte->messageConfirmation($motif);
+  $texte->templateMessageSucces('', $messageConfirmation, $returnLink);
+} else {
   header("Location: ./?token");
   //$logs->messageLog("Token ou identifiant non renseigné dans l'URL");
 }

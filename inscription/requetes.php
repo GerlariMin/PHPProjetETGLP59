@@ -20,7 +20,7 @@ class RequetesInscription extends Model {
      */
     public function __construct(array $config, Logs $logs) {
         $this->logs = $logs;
-        $this->model = Model::get_model($config);
+        $this->model = Model::getModel($config, $logs);
     }
 
     /**
@@ -33,7 +33,8 @@ class RequetesInscription extends Model {
      * @param String $password
      * @return bool
      */
-    public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $aboUser, String $password) {
+    public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $aboUser, String $password): bool
+    {
         // vérification séparée pour bien indiquer à l'utilisateur quel est le problème
         // Si l'adresse e-mail saisie est déjà stockée en base, on retourne false
         if ($this->model->verifierEmail($email)) {

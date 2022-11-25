@@ -83,9 +83,9 @@
         /**
          * Affichage de la page de mot de passe oublié.
          */
-        public function traitementRendu(String $codeErreur = ''): void
+        public function traitementRendu(RequetesProfil $requetes, String $codeErreur = ''): void
         {
-            $data = $this->texte->texteFinal();
+            $data = $this->texte->texteFinal($requetes);
 
             $data['chemin'] = $this->config['variables']['chemin'];
             $data['profil'] = true;

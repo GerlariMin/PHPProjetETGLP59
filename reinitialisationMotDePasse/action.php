@@ -20,7 +20,7 @@
     // => maj de la bdd
     if($nouveauMotDePasse === $confirmationMotDePasse){
 
-        $model = Model::get_model($config);
+        $model = Model::getModel($config, $logs);
 
         // récupération du token passé en clair (pas de pb je pense car token unique)
         if(isset($_SESSION['token']) && $model->verifierToken($_SESSION['token'])) {

@@ -14,7 +14,7 @@ if ($_GET['email']) {
     $email = $_GET['email'];
     $logs->messageLog('GET[email] = "' . $_GET['email'] . '".', $logs->typeDebug);
     // Initialisation de la classe ddédiée à la BDD
-    $modele = Model::get_model($config);
+    $modele = Model::getModel($config, $logs);
     $reponse = $modele->verifierEmail($email)['EMAIL'];
     $logs->messageLog('Réponse requete: "' . $reponse . '".', $logs->typeDebug);
 } else {
