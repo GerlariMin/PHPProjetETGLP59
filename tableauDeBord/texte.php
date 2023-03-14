@@ -46,60 +46,44 @@ class TexteTableauDeBord
      */
     private function texteStatistiques(): array
     {
-        return
-            [
-                'col' =>
-                    [
-                        0 =>
-                            [
-                                'col_class' => 'col',
-                                'col_card_class' => 'card text-white bg-dark mb-3 col',
-                                'col_card_header_class' => 'card-header',
-                                'col_card_header_i_class' => 'fa-solid fa-floppy-disk',
-                                'col_card_header_text' => 'Espace disque utilisé (Max: 1,00 Go)',
-                                'col_card_body_class' => 'card-body',
-                                'progress_class' => 'progress',
-                                'progressbar_class' => 'progress-bar bg-success',
-                                'progressbar_role' => 'progressbar',
-                                'progressbar_pourcentage' => '25',
-                                'progressbar_min' => '0',
-                                'progressbar_max' => '100',
-                                'progressbar_text' => '250 Mo'
-                            ],
-                        1 =>
-                            [
-                                'col_class' => 'col',
-                                'col_card_class' => 'card text-white bg-dark mb-3 col',
-                                'col_card_header_class' => 'card-header',
-                                'col_card_header_i_class' => 'fa-solid fa-file',
-                                'col_card_header_text' => 'Fichiers stockés (Max: 10 fichiers)',
-                                'col_card_body_class' => 'card-body',
-                                'progress_class' => 'progress',
-                                'progressbar_class' => 'progress-bar bg-warning',
-                                'progressbar_role' => 'progressbar',
-                                'progressbar_pourcentage' => '60',
-                                'progressbar_min' => '0',
-                                'progressbar_max' => '100',
-                                'progressbar_text' => '6 Fichier(s)'
-                            ],
-                        2 =>
-                            [
-                                'col_class' => 'col',
-                                'col_card_class' => 'card text-white bg-dark mb-3 col',
-                                'col_card_header_class' => 'card-header',
-                                'col_card_header_i_class' => 'fa-solid fa-chart-line',
-                                'col_card_header_text' => 'Traitements quotidiens (Max: 10 traitements)',
-                                'col_card_body_class' => 'card-body',
-                                'progress_class' => 'progress',
-                                'progressbar_class' => 'progress-bar bg-danger',
-                                'progressbar_role' => 'progressbar',
-                                'progressbar_pourcentage' => '90',
-                                'progressbar_min' => '0',
-                                'progressbar_max' => '100',
-                                'progressbar_text' => '9 Traitement(s)'
-                            ]
-                    ]
-            ];
+        return [
+            0 => [
+                  'cardTitleClass' => 'card-title',
+                  'cardTitleFontAwesome' => 'fa-solid fa-floppy-disk',
+                  'cardTitleText' => 'Espace disque utilisé (Max: 1,00 Go)',
+                  'cardTextClass' => 'card-text progress mb-3',
+                  'progressbarClass' => 'progress-bar bg-success',
+                  'progressbarRole' => 'progressbar',
+                  'progressbarPourcentage' => '25',
+                  'progressbarMin' => '0',
+                  'progressbarMax' => '1024',
+                  'progressbarText' => '256 Mo'
+            ],
+            1 => [
+                'cardTitleClass' => 'card-title',
+                'cardTitleFontAwesome' => 'fa-regular fa-file',
+                'cardTitleText' => 'Fichiers stockés (Max: 10 fichiers)',
+                'cardTextClass' => 'card-text progress mb-3',
+                'progressbarClass' => 'progress-bar bg-warning',
+                'progressbarRole' => 'progressbar',
+                'progressbarPourcentage' => '60',
+                'progressbarMin' => '0',
+                'progressbarMax' => '10',
+                'progressbarText' => '6 Fichier(s)'
+            ],
+            2 => [
+                'cardTitleClass' => 'card-title',
+                'cardTitleFontAwesome' => 'fa-solid fa-chart-line',
+                'cardTitleText' => 'Traitements quotidiens (Max: 10/j)',
+                'cardTextClass' => 'card-text progress mb-3',
+                'progressbarClass' => 'progress-bar bg-danger',
+                'progressbarRole' => 'progressbar',
+                'progressbarPourcentage' => '90',
+                'progressbarMin' => '0',
+                'progressbarMax' => '10',
+                'progressbarText' => '9 Traitement(s)'
+            ]
+        ];
     }
 
     /**
