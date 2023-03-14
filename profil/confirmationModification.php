@@ -6,7 +6,7 @@ session_regenerate_id();
 include_once("../ressources/config/config.inc.php");
 global $config;
 include_once($config['variables']['chemin'] . "ressources/php/Logs.php");
-include_once('requetes.php');
+include_once('requete.php');
 include_once('texte.php');
 
 $logs = new Logs($config);
