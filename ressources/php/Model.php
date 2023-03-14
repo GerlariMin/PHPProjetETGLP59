@@ -33,12 +33,12 @@
         {
             $this->config = $config;
             $this->logs = $logs;
-            try{
+            try {
                 $this->bdd = new PDO($this->config['bdd']['dsn'], $this->config['bdd']['username'], $this->config['bdd']['password']);
-            }catch(PDOException $e){
+            } catch(PDOException $e) {
                 $erreur = 'Connexion échouée: '. $e->getMessage();
                 error_log($erreur);
-                header('Location: ../../connexion/?erreur=ConnexionBDD');
+                header('Location: ../connexion/?erreur=ConnexionBDD');
                 exit();
             }
         }

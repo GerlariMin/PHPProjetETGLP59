@@ -1,18 +1,28 @@
 <div class="container h-100 mt-5">
-
-    <form action="action.php" method="post">
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-door-open"></i> Afin d'effectuer votre traitemnt, vous devez sélectionner <strong>un fichier à traiter</strong>!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{#form}}
+    <form {{#action}}action="{{action}}"{{/action}} {{#method}}method="{{method}}"{{/method}}>
         <div class="input-group mb-3">
-            <select aria-label="Sélection du fichier à soummettre au traitement OCR" class="form-select" multiple name="fichierOCR[]">
-                <option disabled selected>Sélectionnez un fichier</option>
-                {{#fichiers}}
+            {{#select}}
+            <select {{#ariaLabel}}aria-label="{{ariaLabel}}"{{/ariaLabel}} {{#class}}class="{{class}}"{{/class}} {{#multiple}}multiple{{/multiple}} {{#name}}name="{{name}}"{{/name}}>
+                {{#optiondefaut}}
+                    <option {{#disabled}}disabled{{/disabled}} {{#selected}}selected{{/selected}}>{{#texte}}{{texte}}{{/texte}}</option>
+                {{/optiondefaut}}
+                {{#options}}
                     <option value="{{{IDENTIFIANT}}}">{{{DOCUMENT}}}</option>
-                {{/fichiers}}
-                {{^fichiers}}
+                {{/options}}
+                {{^options}}
                     <option disabled selected>Vous n'avez déposé aucun fichier</option>
-                {{/fichiers}}
+                {{/options}}
             </select>
-            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-wand-magic-sparkles"></i> Extraire le texte</button>
+            {{/select}}
+            {{#submit}}
+            <button {{#class}}class="{{class}}"{{/class}} {{#type}}type="{{type}}"{{/type}}>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{texte}}</button>
+            {{/submit}}
         </div>
     </form>
-
+    {{/form}}
 </div>

@@ -30,6 +30,45 @@ class TexteOCR
         $this->fichiers = $fichiers;
     }
 
+    private function texteForm(): array
+    {
+        return
+        [
+            'action' => 'action.php',
+            'method' => 'post',
+            'select' => $this->texteSelect(),
+            'submit' => $this->texteSubmitButton(),
+        ];
+    }
+
+    private function texteSelect(): array
+    {
+        return
+        [
+            'ariaLabel' => 'Sélection du fichier à soummettre au traitement OCR',
+            'class' => 'form-select',
+            'multiple' => false,
+            'name' => 'fichierOCR[]',
+            'optiondefaut' => [
+                'disabled' => true,
+                'selected' => true,
+                'texte' => 'Sélectionnez un fichier',
+            ],
+            'options' => $this->fichiers,
+        ];
+    }
+
+    private function texteSubmitButton(): array
+    {
+        return
+        [
+            'class' => 'btn btn-outline-secondary',
+            'type' => 'submit',
+            'fontawesome' => 'fa-solid fa-wand-magic-sparkles',
+            'texte' => 'Extraire le texte',
+        ];
+    }
+
     /**
      * Retourne le tableau formaté final utilisé pour générer le rendu intégral.
      *
@@ -40,9 +79,9 @@ class TexteOCR
         return
             [
                 "repertoire" => true,
-                "fichiers" => $this->fichiers,
+                //"fichiers" => $this->fichiers,
+                "form" => $this->texteForm(),
             ];
-        $data['utilisateur'] = $_SESSION['login'];
     }
 
 }
