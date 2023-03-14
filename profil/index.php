@@ -2,7 +2,7 @@
     session_start();
 
     include_once("../ressources/php/fichiers_communs.php");
-    include_once("requete.php");
+    include_once("requetes.php");
 
     $erreur = '';
     global $render;

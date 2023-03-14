@@ -31,7 +31,6 @@
                                 new Mustache_Loader_FilesystemLoader($chemin . 'ajouterDocument/mustache'),
                                 //new Mustache_Loader_FilesystemLoader($chemin . 'cgu/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'connexion/mustache'),
-                                new Mustache_Loader_FilesystemLoader($chemin . 'dossier/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'inscription/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'motDePasseOublie/mustache'),
                                 new Mustache_Loader_FilesystemLoader($chemin . 'ocr/mustache'),

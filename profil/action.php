@@ -9,7 +9,7 @@ require_once('texte.php');
 
 $logs = new Logs($config);
 // Initialisation de la classe des requêtes dédiées au module d'inscription
-$requetes = new RequetesInscription($config, $logs); // TODO - utiliser requetes et creer classe pour mail
+$requetes = new RequetesProfil($config, $logs); // TODO - utiliser requetes et creer classe pour mail
 $texte = new TexteProfil($config);
 
 $returnLink = '<a href="../connexion"><p>Retour à la page de connexion</p></a>';

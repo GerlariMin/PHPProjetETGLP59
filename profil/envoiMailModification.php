@@ -7,7 +7,7 @@ include_once('../ressources/php/Logs.php');
 include_once("../ressources/config/config.inc.php");
 global $config;
 include_once('mail.php');
-include_once('requete.php');
+include_once('requetes.php');
 include_once('texte.php');
 
 $logs = new Logs($config);
