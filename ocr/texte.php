@@ -45,16 +45,62 @@ class TexteOCR
     {
         return
         [
-            'ariaLabel' => 'Sélection du fichier à soummettre au traitement OCR',
-            'class' => 'form-select',
-            'multiple' => false,
-            'name' => 'fichierOCR[]',
-            'optiondefaut' => [
-                'disabled' => true,
-                'selected' => true,
-                'texte' => 'Sélectionnez un fichier',
+            0 =>
+            [
+                'ariaLabel' => 'Type de traitement OCR',
+                'class' => 'form-select',
+                'id' => 'traitement',
+                'label' => [
+                    'class' => 'input-group-text',
+                    'fontawesome' => 'fa-solid fa-gears',
+                    'for' => 'traitement',
+                    'text' => 'Extraction',
+                ],
+                'multiple' => false,
+                'name' => 'traitement',
+                'optiondefaut' => [
+                    'disabled' => true,
+                    'selected' => true,
+                    'texte' => 'Sélectionnez le type de traitement à effectuer',
+                ],
+                'options' =>
+                [
+                    0 => [
+                        'value' => 1,
+                        'text' => 'Extraction du texte du fichier',
+                    ],
+                    1 => [
+                        'value' => 2,
+                        'text' => 'Extraction d\'image(s) du fichier',
+                    ],
+                    2 => [
+                        'value' => 3,
+                        'text' => 'Extraction d\'image(s) et du texte du fichier (sans mise en forme)',
+                    ],
+                ],
+                'required' => true,
             ],
-            'options' => $this->fichiers,
+            1 =>
+            [
+                'ariaLabel' => 'Sélection du fichier à soummettre au traitement OCR',
+                'class' => 'form-select',
+                'id' => 'fichierOCR',
+                'label' => [
+                    'class' => 'input-group-text',
+                    'fontawesome' => 'fa-solid fa-file-arrow-up',
+                    'for' => 'fichierOCR',
+                    'text' => 'Fichier',
+                ],
+                'multiple' => false,
+                'name' => 'fichierOCR[]',
+                'optiondefaut' => [
+                    'disabled' => true,
+                    'selected' => true,
+                    'texte' => 'Sélectionnez un fichier à traiter',
+                ],
+                'options' => $this->fichiers,
+                'required' => true,
+            ],
         ];
     }
 

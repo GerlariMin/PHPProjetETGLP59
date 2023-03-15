@@ -25,7 +25,7 @@ class RequetesOCR extends Model {
     public function recupererIdentifiantsDocuments(String $identifiant, String $documents): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = 'SELECT identifiantDocument AS IDENTIFIANT, nomDocument AS DOCUMENT FROM documents WHERE utilisateurLie = :identifiant AND nomDocument IN (' . $documents .');';
+        $texteRequete = 'SELECT identifiantDocument AS value, nomDocument AS text FROM documents WHERE utilisateurLie = :identifiant AND nomDocument IN (' . $documents .');';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);

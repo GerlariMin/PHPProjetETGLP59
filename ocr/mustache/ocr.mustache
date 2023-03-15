@@ -5,24 +5,29 @@
     </div>
     {{#form}}
     <form {{#action}}action="{{action}}"{{/action}} {{#method}}method="{{method}}"{{/method}}>
+        {{#select}}
         <div class="input-group mb-3">
-            {{#select}}
-            <select {{#ariaLabel}}aria-label="{{ariaLabel}}"{{/ariaLabel}} {{#class}}class="{{class}}"{{/class}} {{#multiple}}multiple{{/multiple}} {{#name}}name="{{name}}"{{/name}}>
+            {{#label}}
+            <label {{#class}}class="{{class}}"{{/class}} {{#for}}for="{{for}}"{{/for}}><span>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{text}}</span></label>
+            {{/label}}
+            <select {{#ariaLabel}}aria-label="{{ariaLabel}}"{{/ariaLabel}} {{#class}}class="{{class}}"{{/class}} {{#id}}id="{{id}}"{{/id}} {{#multiple}}multiple{{/multiple}} {{#name}}name="{{name}}"{{/name}} {{#required}}required{{/required}}>
                 {{#optiondefaut}}
-                    <option {{#disabled}}disabled{{/disabled}} {{#selected}}selected{{/selected}}>{{#texte}}{{texte}}{{/texte}}</option>
+                    <option {{#disabled}}disabled{{/disabled}} {{#selected}}selected{{/selected}} value="">{{#texte}}{{texte}}{{/texte}}</option>
                 {{/optiondefaut}}
                 {{#options}}
-                    <option value="{{{IDENTIFIANT}}}">{{{DOCUMENT}}}</option>
+                    <option value="{{{value}}}">{{{text}}}</option>
                 {{/options}}
                 {{^options}}
                     <option disabled selected>Vous n'avez déposé aucun fichier</option>
                 {{/options}}
             </select>
-            {{/select}}
-            {{#submit}}
-            <button {{#class}}class="{{class}}"{{/class}} {{#type}}type="{{type}}"{{/type}}>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{texte}}</button>
-            {{/submit}}
         </div>
+        {{/select}}
+        {{#submit}}
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button {{#class}}class="{{class}}"{{/class}} {{#type}}type="{{type}}"{{/type}}>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{texte}}</button>
+        </div>
+        {{/submit}}
     </form>
     {{/form}}
 </div>
