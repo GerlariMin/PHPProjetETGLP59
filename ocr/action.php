@@ -40,7 +40,7 @@
                     // On envoie le fichier sur la machine tesseract
                     ssh2_scp_send($connexionSsh2, $fichier, '/home/tesseract/Documents/fichiersATraiter/' . $nomFichier['DOCUMENT'], 0777);
                     // On exécute une commande sur la machine dédiée à Tesseract
-                    $stream = ssh2_exec($connexionSsh2, 'tesseract ~/Documents/fichiersATraiter/' . $nomFichier['DOCUMENT'] . ' ~/Documents/fichiersATraiter/OK');// . $nomFichier['DOCUMENT']);
+                    $stream = ssh2_exec($connexionSsh2, 'tesseract ~/Documents/fichiersATraiter/' . $nomFichier['DOCUMENT'] . ' ~/Documents/fichiersATraiter/' . $nomFichier['DOCUMENT']);// . $nomFichier['DOCUMENT']);
                     // Répertoire dédié aux résultats Tesseract de l'utilisateur connecté
                     $repertoireResultatsTesseract = $repertoireUtilisateur . 'resultats/';
                     // Si le répertoire n'exste pas
