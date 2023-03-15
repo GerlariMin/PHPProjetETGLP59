@@ -32,6 +32,7 @@
                     // Si tout s'est bien passé, on redirige l'utilisateur sur son espace.
                     $_SESSION['identifiant'] = $identifiant;
                     $_SESSION['login'] = $utilisateur['LOGIN'];
+                    $requetes->horodatageConnexion($_SESSION['login']);
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
                     header('Location: ../tableauDeBord/');
                 } else {
