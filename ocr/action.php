@@ -4,10 +4,29 @@
     // INSTALLER SSH2 WINDOWS: https://stackoverflow.com/questions/15134421/php-install-ssh2-on-windows-machine
     include("../ressources/php/fichiers_communs.php");
     // Cette partie n'est accessible que si l'utilisateur est connecté
-    if(isset($_SESSION['login'])) {
+    if (isset($_SESSION['login'])) {
         $logs->messageLog('Utilisateur "' . $_SESSION['identifiant'] .'" est connecté et veut faire un traitement OCR.', $logs->typeInfo);
-        if(isset($_POST['fichierOCR']) && is_array($_POST['fichierOCR'])) {
-            $logs->messageLog('Utilisateur "' . $_SESSION['identifiant'] .'" - Tentative de création du répertoire "résultats" échouée.', $logs->typeCritical);
+        if (isset($_POST['fichierOCR'], $_POST['traitement']) && is_array($_POST['fichierOCR'])) {
+            // TODO - DEBUT CODE A FINIR
+            /*
+            $urlServeurPython = '192.168.30.35:5000/cas' . $_POST['traitement'];
+            $valeurPost = [
+                'entree' => 'uneEntree',
+                'sortie' => 'uneSortie'
+            ];
+            $donneesPost = http_build_query($valeurPost);
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $urlServeurPython);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $donneesPost);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            try {
+                $result = json_decode(curl_exec($curl), true, 512, JSON_THROW_ON_ERROR);
+            } catch (JsonException $e) {
+                $logs->messageLog('Problème lors de la récupération du JSON. Exception: "' . $e->getMessage() . '".', $logs->typeError);
+            }
+            */
+            // TODO - FIN CODE A FINIR
             // Chargement et instanciation de la classe dédiées aux requête SQL pour le traitement OCR
             require_once("./requetes.php");
             $requetes = new RequetesOCR($config, $logs);
