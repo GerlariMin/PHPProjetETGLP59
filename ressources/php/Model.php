@@ -85,26 +85,6 @@
         }
 
         /**
-         * @param String $user
-         * @return mixed
-         */
-        public function verifierLogin(String $user): mixed
-        {
-            // Texte SQL qui va alimenter la requête
-            $texteRequete = 'SELECT identifiantUtilisateur FROM utilisateurs WHERE loginUtilisateur IN (:user);';
-            // Requête SQL a exécuter
-            $requete = $this->bdd->prepare($texteRequete);
-            $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-            // Attribution des valeurs de la requête préparée
-            $requete->bindValue(":user", $user);
-            $this->logs->messageLog('Paramètres: [user: ' . $user . '].', $this->logs->typeDebug);
-            // Exécution de la requête préparée
-            $requete->execute();
-            // La fonction retourne le résultat de la requête
-            return $requete->fetch(PDO::FETCH_ASSOC);
-        }
-
-        /**
          * @param String $email
          * @param String $token
          * @return bool
@@ -167,25 +147,5 @@
             $requete->execute();
             // La fonction retourne le résultat de la requête
             return $requete->fetch(PDO::FETCH_ASSOC);
-        }
-
-        /**
-         * @param String $uuid
-         * @return int
-         */
-        public function isUuid(String $uuid): int
-        {
-            // Texte SQL qui va alimenter la requête
-            $texteRequete = 'SELECT COUNT(identifiantUtilisateur) as BOOL FROM utilisateurs WHERE identifiantUtilisateur = :identifiant;';
-            // Requête SQL a exécuter
-            $requete = $this->bdd->prepare($texteRequete);
-            $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-            // Attribution des valeurs de la requête préparée
-            $requete->bindValue(':identifiant', $uuid);
-            $this->logs->messageLog('Paramètres: [identifiant: "' . $uuid . '"].', $this->logs->typeDebug);
-            // Exécution de la requête préparée
-            $requete->execute();
-            // La fonction retourne le résultat de la requête
-            return (int) $requete->fetch(PDO::FETCH_ASSOC)['BOOL'];
         }
     }

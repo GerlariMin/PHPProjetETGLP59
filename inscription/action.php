@@ -2,12 +2,14 @@
     session_start();
 
     require_once('../ressources/config/config.inc.php');
+    global $config;
+    include_once($config['variables']['chemin'] . 'ressources/vendor/autoload.php');
     require_once('../ressources/php/Logs.php');
-    require_once('../ressources/php/Model.php');
+    //require_once('../ressources/php/Model.php');
     require_once('../ressources/mustache/Render.php');
     require_once('traitement.php');
+    require_once('texte.php');
     require_once('requetes.php');
-    global $config;
     $logs = new Logs($config);
 
     if($_POST) {
