@@ -96,10 +96,12 @@ class TraitementTableauDeBord
                     // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
                     if ($fichier !== "Thumbs.db" && !is_dir($repertoireUtilisateur.$fichier))
                     {
-                        if(str_contains($fichier, '.jpg') || str_contains($fichier, '.jpeg')) {
+                        if (str_contains($fichier, '.jpg') || str_contains($fichier, '.jpeg')) {
                             $type = 1;
-                        } else if(str_contains($fichier, '.png')) {
+                        } elseif (str_contains($fichier, '.png')) {
                             $type = 2;
+                        } elseif (str_contains($fichier, '.txt')) {
+                            $type = 3;
                         } else {
                             $type = 0;
                         }
