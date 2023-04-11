@@ -72,6 +72,12 @@ class TraitementAjouterDocument
                 $erreur[$this->small] = 'Document non ajouté';
                 $erreur[$this->message] = 'Un problème est survenu lors du téléchargement de vos fichiers vers notre serveur!';
                 break;
+            case 'fsize':
+                $erreur[$this->iClass] = 'fa-solid fa-database';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Taille Document';
+                $erreur[$this->message] = 'Un ou plusieurs documents est trop volumineux! Veuillez sélectionner un document n\'excédant pas ' . ini_get('upload_max_filesize');
+                break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb';
                 $erreur[$this->strong] = 'Erreur';

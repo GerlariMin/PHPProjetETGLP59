@@ -13,9 +13,17 @@
         $nomFichiers = $documents['name'];
         $emplacementTMP = $documents['tmp_name'];
         $tailleFichiers = $documents['size'];
+        $tailleMaxFichier = ini_get('upload_max_filesize'); // On récupère la taille maximum autorisée sur le serveur
         $fichiers = [];
+        $fichierTropVolumineux = false;
         $listeExtensionsAcceptees = ['.pdf', '.docx', '.txt', '.jpeg', '.png'];
+        // On parcourt chaque fichiers
         for ($indice = 0; $indice < $indiceMax; $indice++) {
+            // si le fichier courant a une taille supérieure à la capacité max supportée par le serveur ou spécifiée par le formulaire
+            if ($documents['error'][$indice] === UPLOAD_ERR_INI_SIZE || $documents['error'][$indice] === UPLOAD_ERR_FORM_SIZE) { // voir https://www.php.net/manual/fr/features.file-upload.errors.php
+                $fichierTropVolumineux = true;
+                break;
+            }
             $formatCorrect = false;
             foreach ($listeExtensionsAcceptees as $extension) {
                 if (str_contains($nomFichiers[$indice], $extension)) {
@@ -30,6 +38,13 @@
                         'taille' => $tailleFichiers[$indice],
                     ];
             }
+        }
+        // Si au moins un fichier est trop volumineux, on redirige vers la page avec un code d'erreur
+        if ($fichierTropVolumineux) {
+            // On notifie le problème dans les logs
+            $logs->messageLog('La procédure d\'upload de fichiers ne s\'est pas déroulée sans problèmes. Au moins un fichier dépasse la taille maximale indiquée par le serveur.', $logs->typeError);
+            header('Location: ./?erreur=fsize');
+            exit();
         }
         $identifiantUtilisateur = $_SESSION['identifiant'];
         if ($fichiers && is_array($fichiers)) {
@@ -65,11 +80,11 @@
                 // On notifie le problème dans les logs
                 $logs->messageLog('La procédure d\'upload de fichiers ne s\'est pas déroulée sans problèmes.', $logs->typeError);
                 header('Location: ./?erreur=fup');
-            } else {
-                // Logs
-                $logs->messageLog('La procédure d\'upload de fichiers s\'est déroulée sans problèmes.', $logs->typeNotice);
-                header('Location: ./index.php?succes=fok');
+                exit();
             }
+            // Logs
+            $logs->messageLog('La procédure d\'upload de fichiers s\'est déroulée sans problèmes.', $logs->typeNotice);
+            header('Location: ./index.php?succes=fok');
             exit();
         } else {
             $logs->messageLog('L\'utilisateur n\'a soumit aucun fichier ou ceux-ci ne sont pas conformes.', $logs->typeError);
