@@ -47,7 +47,7 @@ class RequetesInscription extends Model {
             return false;
         }
         // Texte SQL qui va alimenter la requête
-        $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, abonnementUtilisateur, motDePasseChiffreUtilisateur,motDePasseOublie, motDePasseOublieToken, expirationToken, motDePasseModifie, loginModifie, emailModifie) VALUES (:identifiant, :nom, :prenom, :login, :email, :abonnement, :motDePasse, NULL, NULL, NULL, NULL, NULL, NULL)";
+        $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, abonnementUtilisateur, motDePasseChiffreUtilisateur,motDePasseOublie, motDePasseOublieToken, expirationToken, motDePasseModifie, loginModifie, emailModifie) VALUES (:identifiant, :nom, :prenom, :login, :email, :abonnement, :motDePasse, FALSE, NULL, NULL, NULL, NULL, NULL)";
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($sql);
         $this->logs->messageLog('Requete SQL préparée: "' . $sql . '".', $this->logs->typeDebug);

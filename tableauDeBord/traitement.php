@@ -32,48 +32,18 @@ class TraitementTableauDeBord
         $this->texte = new TexteTableauDeBord($this->config);
     }
 
-    public function traitementFichiers(): void
-    {
-        // On récupère le répertoire et sous répertoire dans lesquels les fichiers de l'utilisateur connecté sont stockés
-        $repertoires = str_split($_SESSION['identifiant'], 5);
-        // On récupère le chemin complet de l'endroit où sont stockés les fichiers de l'utilisateur connecté
-        $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
-        // Tableau qui contiendra l'ensemble des fichiers compris dans ce répertoire
-        $fichiers = array();
-        // Si il s'agit bien d'un répertoire
-        if (is_dir($repertoireUtilisateur))
-        {
-            // Accès au répertoire
-            if ($iteration = opendir($repertoireUtilisateur))
-            {
-                // On parcourt chaque fichier du répertoire
-                while (($fichier = readdir($iteration)) !== false)
-                {
-                    // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
-                    if ($fichier !== "Thumbs.db" && !is_dir($repertoireUtilisateur.$fichier))
-                    {
-                        if(str_contains($fichier, '.jpg') || str_contains($fichier, '.jpeg')) {
-                            $type = 1;
-                        } else if(str_contains($fichier, '.png')) {
-                            $type = 2;
-                        } else {
-                            $type = 0;
-                        }
-                        $href = '../visualiserDocument/?document=' . $fichier . '&type=' . $type;
-                        $fichiers[] =
-                            [
-                                'href' => $href,
-                                'text' => $fichier, // Nom du fichier
-                                'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
-                            ];
-                    }
-                }
-                // On ferme l'accès au répertoire
-                closedir($iteration);
-            }
+    private function traitementAffichageTailleFichier($tailleFichier) {
+        $unite = [
+            0 => 'o',
+            1 => 'Ko',
+            2 => 'Mo',
+            3 => 'Go',
+        ];
+        $affichage = '';
+        while ($tailleFichier > 1000) {
+            $tailleFichier /= 1024;
         }
-        // On affiche l'ensemble des fichiers sur la page du tableau de bord
-        $this->texte->setFichiers($fichiers);
+
     }
 
     private function traitementFichiersResultats()
@@ -119,6 +89,53 @@ class TraitementTableauDeBord
             }
         }
         $this->texte->setFichiersResultats($fichiers);
+    }
+
+    /**
+     * @return void
+     */
+    public function traitementFichiers(): void
+    {
+        // On récupère le répertoire et sous répertoire dans lesquels les fichiers de l'utilisateur connecté sont stockés
+        $repertoires = str_split($_SESSION['identifiant'], 5);
+        // On récupère le chemin complet de l'endroit où sont stockés les fichiers de l'utilisateur connecté
+        $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
+        // Tableau qui contiendra l'ensemble des fichiers compris dans ce répertoire
+        $fichiers = array();
+        // Si il s'agit bien d'un répertoire
+        if (is_dir($repertoireUtilisateur))
+        {
+            // Accès au répertoire
+            if ($iteration = opendir($repertoireUtilisateur))
+            {
+                // On parcourt chaque fichier du répertoire
+                while (($fichier = readdir($iteration)) !== false)
+                {
+                    // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
+                    if ($fichier !== "Thumbs.db" && !is_dir($repertoireUtilisateur.$fichier))
+                    {
+                        if(str_contains($fichier, '.jpg') || str_contains($fichier, '.jpeg')) {
+                            $type = 1;
+                        } else if(str_contains($fichier, '.png')) {
+                            $type = 2;
+                        } else {
+                            $type = 0;
+                        }
+                        $href = '../visualiserDocument/?document=' . $fichier . '&type=' . $type;
+                        $fichiers[] =
+                            [
+                                'href' => $href,
+                                'text' => $fichier, // Nom du fichier
+                                'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
+                            ];
+                    }
+                }
+                // On ferme l'accès au répertoire
+                closedir($iteration);
+            }
+        }
+        // On affiche l'ensemble des fichiers sur la page du tableau de bord
+        $this->texte->setFichiers($fichiers);
     }
 
     /**

@@ -16,7 +16,7 @@
         $tailleMaxFichier = ini_get('upload_max_filesize'); // On récupère la taille maximum autorisée sur le serveur
         $fichiers = [];
         $fichierTropVolumineux = false;
-        $listeExtensionsAcceptees = ['.pdf', '.docx', '.txt', '.jpeg', '.png'];
+        $listeExtensionsAcceptees = ['.pdf', '.docx', '.txt', '.jpeg', '.jpg', '.png'];
         // On parcourt chaque fichiers
         for ($indice = 0; $indice < $indiceMax; $indice++) {
             // si le fichier courant a une taille supérieure à la capacité max supportée par le serveur ou spécifiée par le formulaire

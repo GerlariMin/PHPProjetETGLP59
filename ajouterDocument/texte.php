@@ -86,7 +86,7 @@
                     0 =>
                         [
                             $this->divClass => 'mb-3',
-                            'inputAccept' => '.pdf, .docx, .txt, .jpeg, .png',
+                            'inputAccept' => '.pdf, .docx, .txt, .jpeg, jpg, .png',
                             $this->inputClass => 'form-control',
                             $this->inputId => 'input1',
                             'inputMultiple' => true,
