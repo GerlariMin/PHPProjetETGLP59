@@ -59,8 +59,7 @@ class TexteTableauDeBord
     }
 
     /**
-     * Fonction texteLignes qui retourne un tableau formaté pour les différentes divs statistiques de la page du tableau de bord.
-     *
+     * Fonction qui retourne un tableau formaté pour les différentes divs statistiques de la page du tableau de bord.
      * @return array[]
      */
     private function texteStatistiques(array $limites): array
@@ -105,6 +104,11 @@ class TexteTableauDeBord
         ];
     }
 
+    /**
+     * Données utiles pour l'affichage du bloc Mon abonnement
+     * @param array $limites
+     * @return array
+     */
     private function texteAbonnement(array $limites): array
     {
         return [
@@ -117,21 +121,24 @@ class TexteTableauDeBord
 
     /**
      * Retourne le tableau formaté final utilisé pour générer le rendu intégral.
-     *
      * @return array
      */
     public function texteFinal(array $limites):array
     {
-        return
-            [
-                'repertoire' => true,
-                'fichiers' => $this->fichiers,
-                'repertoireResultats' => [
-                    'fichiersResultats' => $this->fichiersResultats,
-                ],
-                'statistiques' => $this->texteStatistiques($limites),
-                'abonnement' => $this->texteAbonnement($limites),
-            ];
+        return [
+            'repertoire' => true,
+            // Mon abonnement
+            'abonnement' => $this->texteAbonnement($limites),
+            'desactiverBoutonAjoutFichier' => $limites['desactiverBoutonAjoutFichier'],
+            'desactiverBoutonOCR' => $limites['desactiverBoutonOCR'],
+            // Vos documents
+            'fichiers' => $this->fichiers,
+            'repertoireResultats' => [
+                'fichiersResultats' => $this->fichiersResultats,
+            ],
+            // Votre espace
+            'statistiques' => $this->texteStatistiques($limites),
+        ];
     }
 
 }

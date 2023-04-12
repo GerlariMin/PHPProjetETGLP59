@@ -227,9 +227,21 @@ class TraitementTableauDeBord
             // Calcul du nombre de fichiers dans les répertoires de l'utilisateur
             $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
             // On récupère le nombre de traitements qu'a effectué l'utilisateur à la date actuelle
-            $traitements = $requetes->recupererTraitementsUtilisateur($_SESSION['identifiant']);
+            $traitements = (int) $requetes->recupererTraitementsUtilisateur($_SESSION['identifiant']);
+            // Vérification des conditions pour faire un traitement OCR ou non (a dépassé son nombre de traitements quotidien OU a dépassé le nombre de fichiers stockés)
+            $desactiverBoutonAjoutFichier = $desactiverBoutonOCR = false;
+            if (($nombreTotalFichiersUtilisateur >= (int) $limites['LDOC'])
+                || ($volumeTotalFichiersUtilisateur >= ((int) $limites['LSTOCK'] * 1000000000))) {
+                $desactiverBoutonAjoutFichier = true;
+                $desactiverBoutonOCR = true;
+            }
+            if ($traitements >= (int) $limites['LOCR']) {
+                $desactiverBoutonOCR = true;
+            }
             // On prépare un tableau formaté pour la classe de Texte dédiée
             $tableau = [
+                'desactiverBoutonAjoutFichier' => $desactiverBoutonAjoutFichier,
+                'desactiverBoutonOCR' => $desactiverBoutonOCR,
                 'fichiers' =>
                     [
                         'max' => $limites['LDOC'],
