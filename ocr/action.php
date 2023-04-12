@@ -61,8 +61,12 @@
                     try {
                         $result = json_decode(curl_exec($curl), true, 512, JSON_THROW_ON_ERROR);
                         $logs->messageLog('RETOUR JSON. Exception: "' . $result['traitement'] . '".', $logs->typeDebug);
+                        $requetes->nouveauTraitement($_SESSION['identifiant'], true);
                     } catch (JsonException $e) {
                         $logs->messageLog('Problème lors de la récupération du JSON. Exception: "' . $e->getMessage() . '".', $logs->typeError);
+                        $requetes->nouveauTraitement($_SESSION['identifiant'], false);
+                        header('Location: ./?erreur=2');
+                        exit();
                     }
                     // TODO - FIN CODE A FINIR
                     /*// On envoie le fichier sur la machine tesseract

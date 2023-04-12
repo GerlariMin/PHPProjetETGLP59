@@ -58,6 +58,12 @@ class TraitementOCR
                 $erreur[$this->small] = 'Formulaire';
                 $erreur[$this->message] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
                 break;
+            case '2':
+                $erreur[$this->iClass] = 'fa-solid fa-print fa-spin-pulse';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Traitement OCR';
+                $erreur[$this->message] = 'Un problème est survenu lors de l\'opération! Veuillez réessayer dans quelques instants.';
+                break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb';
                 $erreur[$this->strong] = 'Erreur';

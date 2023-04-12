@@ -55,4 +55,20 @@ class RequetesOCR extends Model {
         // La fonction retourne le résultat de la requête
         return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function nouveauTraitement(String $identifiantUtilisateur, bool $traitementAbouti): bool
+    {
+        $traitementAbouti = ($traitementAbouti) ? '1' : '0';
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'INSERT INTO traitements (utilisateurLie, date, traitementAbouti) VALUES (:identifiantUtilisateur, CURRENT_DATE, :traitementAbouti)';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(":identifiantUtilisateur", $identifiantUtilisateur);
+        $requete->bindValue(":traitementAbouti", $traitementAbouti);
+        $this->logs->messageLog('Paramètres: [ identifiantUtilisateur: "' . $identifiantUtilisateur . '", traitementeAbouti: "' . $traitementAbouti . '"].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        return $requete->execute();
+    }
 }

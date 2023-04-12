@@ -1,4 +1,4 @@
-<div class="container h-100 mt-5 mb-5">
+<div class="container mt-5 mb-5">
 
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <i class="fa-solid fa-wand-magic-sparkles"></i> Bienvenue sur votre tableau de bord, <strong>{{utilisateur}}</strong>!
@@ -33,12 +33,27 @@
                     <i class="fa-solid fa-chart-gantt"></i> Mon abonnement
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">
-                        Abonnement gratuit
-                    </h5>
-                    <p class="card-text">
-                        Limitation de l'espace de stockage à une volumétrie ou un nombre de fichiers déposés maximum et limitation du nombre de traitements quotidiens possibles.
-                    </p>
+                    {{#abonnement}}
+                        <h5 class="card-title">
+                            Abonnement {{typeAbonnement}}
+                        </h5>
+                        <p class="card-text">
+                            Limitation de l'espace de stockage à une volumétrie ou un nombre de fichiers déposés maximum et limitation du nombre de traitements quotidiens possibles.
+                        </p>
+                        <p class="card-text">
+                            Votre abonnement comprend:
+                        </p>
+                        <ul class="card-text">
+                            <li>{{volumetrieMax}} Go d'espace disque <b>ou</b> {{nombreFichiersMax}} fichiers sur votre espace</li>
+                            <li>{{traitementsMax}} traitements par jour</li>
+                        </ul>
+
+                    {{/abonnement}}
+                    {{^abonnement}}
+                        <div class="alert alert-warning text-center" role="alert">
+                            <p class="fw-bolder"><i class="fa-solid fa-triangle-exclamation"></i> Problème lors de la récupération de vos données!</p>
+                        </div>
+                    {{/abonnement}}
                     <div class="d-grid gap-2 mt-5">
                         <a class="btn btn-outline-warning mt-5" href="../souscription"><i class="fa-solid fa-list"></i> Modifier l'abonnement</a>
                     </div>
