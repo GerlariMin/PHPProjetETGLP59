@@ -2,9 +2,6 @@
     {{>blocErreur}}
 {{/blocErreur}}
 
-<head>
-<script src="scriptProfil.js"></script>
-</head>
 
 <div class="card w-75 mx-auto mt-5">
   <div class="card-header text-center">
@@ -35,30 +32,9 @@
 </div>
 
 <div class="mt-5 text-center">
-  <button type="button" class="btn btn-danger border " id="resiliation" data-toggle="modal" data-target="#exampleModal"> Résilier abonnement </button>
-  <button type="button" class="btn btn-danger border "> Supprimer mon compte </button>
+  <button type="button" class="btn btn-danger border " id="resiliation"> Résilier abonnement </button>
+  <button type="button" class="btn btn-danger border " id="suppression"> Supprimer mon compte </button>
 </div>
 
-
-<!-- Popup résiliation-->
-{{#popup}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Résiliation abonnement</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        êtes-vous sûr de vouloir nous quitter ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non je reste !</button>
-        <button type="button" class="btn btn-primary">Oui je vous quitte lâchement</button>
-      </div>
-    </div>
-  </div>
-</div>
-{{/popup}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="scriptProfil.js"></script>

@@ -30,7 +30,7 @@ if (isset($_SESSION['mdpModif'])) {
         // insertion du nouveau mdp dans la table 'modifications' avant de le modifier sur la table 'utilisateurs'
         $requetes->modification($_SESSION['identifiant'], 'motDePasse', $_SESSION['mdpModif'], $token);
         $mails->templateEmailModification($email, "mot de passe", $lien);
-        $texte->templateMessageSucces($email, $motif, $returnLink);
+        RequetesProfil::templateMessageSucces($email, $motif, $returnLink);
         $logs->messageLog('l\'email : '.$email.' existe en base et mail a été envoyé');
     } else {
         // email inexistant
@@ -44,7 +44,7 @@ if (isset($_SESSION['loginModif'])) {
     $motif = $texte->messageModification("login");
     $requetes->modification($_SESSION['identifiant'], 'login', $_SESSION['loginModif'], $token);
     $mails->templateEmailModification($email, "login", $lien);
-    $texte->templateMessageSucces($email, $motif, $returnLink);
+    RequetesProfil::templateMessageSucces($email, $motif, $returnLink);
     $logs->messageLog('Un mail de modification de login a été envoyé');
     unset($_SESSION["loginModif"]);
 }
@@ -53,7 +53,7 @@ if (isset($_SESSION['emailModif'])) {
     $motif = $texte->messageModification("email");
     $requetes->modification($_SESSION['identifiant'], 'email', $_SESSION['emailModif'], $token);
     $mails->templateEmailModification($email, "email", $lien);
-    $texte->templateMessageSucces($email, $motif, $returnLink);
+    RequetesProfil::templateMessageSucces($email, $motif, $returnLink);
     $logs->messageLog('Un mail de modification d\'email a été envoyé');
     unset($_SESSION["emailModif"]);
 }
