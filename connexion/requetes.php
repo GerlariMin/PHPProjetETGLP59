@@ -79,21 +79,4 @@ class RequetesConnexion extends Model {
         // La fonction retourne le résultat de la requête
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
-
-    /**
-     * 
-     */
-    public function horodatageConnexion(string $login): mixed
-    {
-        // Texte SQL qui va alimenter la requête
-        $texteRequete = 'UPDATE utilisateurs SET derniereConnexion = NOW() WHERE loginUtilisateur = :loginUtilisateur;';
-        // Requête SQL a exécuter
-        $requete = $this->model->bdd->prepare($texteRequete);
-        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
-        // Attribution des valeurs de la requête préparée
-        $requete->bindValue(':loginUtilisateur', $login);
-        $this->logs->messageLog('Paramètres: [login: ' . $login . '].', $this->logs->typeDebug);
-        // Exécution de la requête préparée
-        return $requete->execute();
-    }
 }
