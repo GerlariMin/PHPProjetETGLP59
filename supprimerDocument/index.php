@@ -12,24 +12,14 @@ if (isset($_SESSION['login'])) {
         // Récupération de l'identifiant de l'utilsateur connecté
         $identifiantUtilisateur = $_SESSION['identifiant'];
         // Décomposition de l'identifiant utilisateur pour trouver le répertoire et sous répertoire où placer les fichiers
-        $repertoireUtilisateur = substr($identifiantUtilisateur,0,5);
-        $sousRepertoireUtilisateur = substr($identifiantUtilisateur,5,10);
+        $repertoireUtilisateur = substr($identifiantUtilisateur, 0, 5);
+        $sousRepertoireUtilisateur = substr($identifiantUtilisateur, 5, 10);
         // Chemin répertoire complet
         $cheminRepertoire = $config['variables']['repertoires']['utilisateurs'] . $repertoireUtilisateur . '/' . $sousRepertoireUtilisateur . '/';
         // Si il s'agit d'un fichier dans l'espace résultat
         if (isset($_GET['resultat'])) {
-            $logs->messageLog('Document "' . $_GET['document'] .' issu du répertoire résultat.', $logs->typeNotice);
-            $cheminRepertoire .= 'resultat/';
-            // On supprime le fichier du répertoire dans lequel on vient de le placer
-            if (exec('rm -f ' . $cheminRepertoire . $_GET['document']) !== false) {
-                $logs->messageLog('Suppression effectuée dans le répertoire résultats.', $logs->typeInfo);
-                header('Location: ../tableauDeBord/?succes=fsup');
-                exit();
-            }
-            // Si la suppression n'est pas faite sur l'espace disque
-            $logs->messageLog('La suppression sur l\'espace disque a échoué.', $logs->typeError);
-            header('Location: ../tableauDeBord/?erreur=pfsup');
-            exit();
+            $logs->messageLog('Document "' . $_GET['document'] .' issu du répertoire résultats.', $logs->typeNotice);
+            $cheminRepertoire .= 'resultats/';
         }
         // On commence par supprimer les informations en base
         if ($requetes->supprimerDocument($_GET['document'], $_SESSION['identifiant'])) {

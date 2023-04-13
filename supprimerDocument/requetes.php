@@ -1,7 +1,7 @@
 <?php
 require_once('../ressources/php/Model.php');
 /**
- * Classe dédiée aux requête propres au module de connexion.
+ * Classe dédiée aux requête propres au module de suppression de fichier.
  */
 class RequetesSupprimerDocument extends Model
 {

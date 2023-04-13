@@ -9,7 +9,7 @@
 
         <div class="col-8">
             <div class="card text-white bg-dark mb-3 h-100">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h4><i class="fa-regular fa-folder-open"></i> Votre espace</h4>
                 </div>
                 <div class="card-body">
@@ -34,7 +34,7 @@
 
         <div class="col-4">
             <div class="card text-white bg-dark mb-3 h-100">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h4><i class="fa-solid fa-chart-gantt"></i> Mon abonnement</h4>
                 </div>
                 <div class="card-body">
@@ -74,7 +74,7 @@
 
             <div class="card bg-dark mb-3 h-100">
 
-                <div class="card-header text-white fw-bolder">
+                <div class="card-header text-white fw-bolder text-center">
                     <h4><i class="fa-solid fa-file"></i> Vos documents</h4>
                 </div>
                 <div class="card-body">
@@ -84,7 +84,7 @@
                         {{#repertoire}}
                             <div class="col">
                                 <div class="card border-white text-white bg-dark mb-3">
-                                    <div class="card-header fw-bolder">
+                                    <div class="card-header fw-bolder text-center">
                                         <i class="fa-solid fa-upload"></i> Fichier(s) déposé(s)
                                     </div>
                                     <div class="card-body">
@@ -92,8 +92,8 @@
                                             {{#fichiers}}
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
-                                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
-                                                    <a class="text-decoration-none text-danger fw-bolder" href="../supprimerDocument/?document={{text}}"><i class="fa-solid fa-trash-can"></i></a>
+                                                    <span class="badge bg-dark rounded-pill ms-auto">{{taille}} bytes</span>
+                                                    <a class="text-decoration-none text-danger fw-bolder ms-1" href="../supprimerDocument/?document={{text}}"><i class="fa-solid fa-trash-can"></i></a>
                                                 </li>
                                             {{/fichiers}}
                                             {{^fichiers}}
@@ -126,7 +126,7 @@
                         {{#repertoireResultats}}
                             <div class="col">
                                 <div class="card border-white text-white bg-dark mb-3">
-                                    <div class="card-header fw-bolder">
+                                    <div class="card-header fw-bolder text-center">
                                         <i class="fa-solid fa-square-poll-vertical"></i> Résultat(s) traitement(s) OCR
                                     </div>
                                     <div class="card-body">
@@ -134,8 +134,8 @@
                                             {{#fichiersResultats}}
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
-                                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
-                                                    <!-- <a class="text-decoration-none text-danger fw-bolder" href="../supprimerDocument/?document={{text}}&resultat=true"><i class="fa-solid fa-trash-can"></i></a> -->
+                                                    <span class="badge bg-dark rounded-pill ms-auto">{{taille}} bytes</span>
+                                                    <a class="text-decoration-none text-danger fw-bolder ms-1" href="../supprimerDocument/?document={{text}}&resultat=true"><i class="fa-solid fa-trash-can"></i></a>
                                                 </li>
                                             {{/fichiersResultats}}
                                             {{^fichiersResultats}}
@@ -176,7 +176,7 @@
 
         <div class="col-4">
             <div class="card text-white bg-dark mb-3 h-100">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h4><i class="fa-solid fa-magnifying-glass"></i> Reconnaissance</h4>
                 </div>
                 <div class="card-body">
@@ -208,3 +208,4 @@
     </div>
 
 </div>
+<br>
