@@ -1,14 +1,13 @@
 
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+})
+
 $(() => {
-
-    // affichage du popup lors du click sur le bouton "résilier abonnement"
-    $('#resiliation').on('click', function(){
-        $('#exampleModal').modal('show');
-    });
-
-    $('.close').on('click', function(){
-        $('#exampleModal').modal('hide');
-    });
 
     // lorsqu'on appuie sur le bouton modifier, un input texte apparaît, où l'on peut modifier ses information personnelles
     $('a[id^="modifier"]').on("click", function () {
@@ -28,5 +27,60 @@ $(() => {
         if($(this).attr("name") == ""){
             $(this).remove();
         }
+    })
+
+    $('#suppression').on("click", function(){
+        swalWithBootstrapButtons.fire({
+            title: 'Etes-vous sûr ?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // swalWithBootstrapButtons.fire(
+                //     'Suppression annulée',
+                //     'Merci',
+                //     'error'
+                //     )
+                window.location.href ='../supprimerCompte/index.php';
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                'Suppression annulée',
+                'Merci',
+                'error'
+                )
+            }
+            })
+    })
+
+    $('#resiliation').on("click", function(){
+        swalWithBootstrapButtons.fire({
+            title: 'Etes-vous sûr ?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                //TODO: add AJAX query + timer
+                // swalWithBootstrapButtons.fire(
+                //     'Suppression annulée',
+                //     'Merci',
+                //     'error'
+                //     )
+                window.location.href ='../resilierAbonnement/index.php';
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                'Suppression annulée',
+                'Merci',
+                'error'
+                )
+            }
+            })
     })
 });
