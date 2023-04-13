@@ -1,5 +1,5 @@
 <?php
-    require_once('/var/www/html/PHPProjetETGLP59-sandbox/ressources/php/Mail.php');
+    require_once('../ressources/php/Mail.php');
     /**
     * Classe MailSupprimerCompte dédiée aux requête propres au module supprimerCompte.
     */

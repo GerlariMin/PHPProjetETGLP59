@@ -150,7 +150,8 @@ class TraitementAjouterDocument
         $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
         // On récupère le chemin complet de l'endroit où sont stockés les fichiers résultats de l'utilisateur connecté
         $repertoireResultatsUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/resultats/';
-        $nombreDocumentsSurDisque = $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);
+        $nombreDocumentsSurDisque = // Calcul du nombre de fichiers dans les répertoires de l'utilisateur
+        $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
         $limiteDocuments = (int) $this->requetes->recupererLimiteDocuments($_SESSION['identifiant']);
         if ($nombreDocumentsSurDisque >= $limiteDocuments) {
             header('Location: ../tableauDeBord/?erreur=ardoc');

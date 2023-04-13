@@ -61,7 +61,7 @@
                     try {
                         $result = json_decode(curl_exec($curl), true, 512, JSON_THROW_ON_ERROR);
                         $logs->messageLog('RETOUR JSON. Exception: "' . $result['traitement'] . '".', $logs->typeDebug);
-                        //$requetes->nouveauTraitement($_SESSION['identifiant'], true);
+                        $requetes->nouveauTraitement($_SESSION['identifiant'], true);
                         // Document en entrée - vérifier si déjà en base
                         if ($requetes->documentDejaExistant($nomFichier['DOCUMENT'], $_SESSION['identifiant'])) {
                             $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" déjà présent en base, pas besoin de rajouter une entrée.', $logs->typeInfo);
