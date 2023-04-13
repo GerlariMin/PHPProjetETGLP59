@@ -4,9 +4,11 @@
     require_once('../ressources/config/config.inc.php');
     require_once('../ressources/php/Logs.php');
     require_once('requetes.php');
+    require_once('../supprimerCompte/requetes.php');
     global $config;
     $logs = new Logs($config);
     $requetes = new RequetesConnexion($config, $logs);
+    $requetesSuppression = new RequetesSupprimerCompte($config, $logs);
     // On récupère le formulaire
     $formulaire = $_POST;
     $login = $formulaire['login'];
@@ -32,7 +34,8 @@
                     // Si tout s'est bien passé, on redirige l'utilisateur sur son espace.
                     $_SESSION['identifiant'] = $identifiant;
                     $_SESSION['login'] = $utilisateur['LOGIN'];
-                    $requetes->horodatageConnexion($_SESSION['login']);
+                    $requetesSuppression->horodatageConnexion($_SESSION['login']);
+                    $requetesSuppression->verificationDeadlineUtilisateur($_SESSION['login']);
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
                     header('Location: ../tableauDeBord/');
                 } else {
