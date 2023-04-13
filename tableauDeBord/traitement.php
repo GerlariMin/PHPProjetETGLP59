@@ -297,6 +297,18 @@ class TraitementTableauDeBord
                 $erreur[$this->small] = 'Suppression Fichier';
                 $erreur[$this->message] = 'Problème lors de la suppression du fichier! Veuillez réessayer dans quelques instants.';
                 break;
+            case 'arocr': // accès refusé ocr
+                $erreur[$this->iClass] = 'fa-solid fa-bomb fa-shake fa-bounce';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Traitement OCR refusé';
+                $erreur[$this->message] = 'Vous avez dépassé votre quota quotidien de traitement OCR. Attendez demain ou modifier votre abonnement.';
+                break;
+            case 'ardoc': // accès refusé ajout de fichier
+                $erreur[$this->iClass] = 'fa-solid fa-bomb fa-shake fa-bounce';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Ajout de fichier refusé';
+                $erreur[$this->message] = 'Vous avez dépassé votre quota de documents stockés. Veuillez en supprimer.';
+                break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb fa-shake';
                 $erreur[$this->strong] = 'Erreur';
@@ -323,6 +335,12 @@ class TraitementTableauDeBord
                 $succes[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
                 $succes[$this->strong] = 'Succès';
                 $succes[$this->small] = 'Suppression du fichier';
+                $succes[$this->message] = 'Opération effectuée avec succès!';
+                break;
+            case 'tok':
+                $succes[$this->iClass] = 'fa-solid fa-wand-magic-sparkles fa-shake';
+                $succes[$this->strong] = 'Succès';
+                $succes[$this->small] = 'Traitement OCR';
                 $succes[$this->message] = 'Opération effectuée avec succès!';
                 break;
             default:

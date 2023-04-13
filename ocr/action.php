@@ -61,7 +61,31 @@
                     try {
                         $result = json_decode(curl_exec($curl), true, 512, JSON_THROW_ON_ERROR);
                         $logs->messageLog('RETOUR JSON. Exception: "' . $result['traitement'] . '".', $logs->typeDebug);
-                        $requetes->nouveauTraitement($_SESSION['identifiant'], true);
+                        //$requetes->nouveauTraitement($_SESSION['identifiant'], true);
+                        // Document en entrée - vérifier si déjà en base
+                        if ($requetes->documentDejaExistant($nomFichier['DOCUMENT'], $_SESSION['identifiant'])) {
+                            $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" déjà présent en base, pas besoin de rajouter une entrée.', $logs->typeInfo);
+                        } else {
+                            $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" n\'est pas encore en base.', $logs->typeNotice);
+                            if ($requetes->ajouterDocument($nomFichier['DOCUMENT'], $_SESSION['identifiant'])) {
+                                $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" ajouté en base.', $logs->typeInfo);
+                            } else {
+                                $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" n\'a pas pu être ajouté en base.', $logs->typeError);
+                            }
+                        }
+                        // Document en sortie - ajouter le résultat sorti TODO - Regarder le résultat, il peut y en avoir plusieurs
+                        /*
+                        if ($requetes->documentDejaExistant($nomFichier['DOCUMENT'] . '_', $_SESSION['identifiant'])) {
+                            $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" déjà présent en base, pas besoin de rajouter une entrée.', $logs->typeInfo);
+                        } else {
+                            $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" n\'est pas encore en base.', $logs->typeNotice);
+                            if ($requetes->ajouterDocument($nomFichier['DOCUMENT'], $_SESSION['identifiant'])) {
+                                $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" ajouté en base.', $logs->typeInfo);
+                            } else {
+                                $logs->messageLog('Document "' . $nomFichier['DOCUMENT'] . '" n\'a pas pu être ajouté en base.', $logs->typeError);
+                            }
+                        }
+                        */
                     } catch (JsonException $e) {
                         $logs->messageLog('Problème lors de la récupération du JSON. Exception: "' . $e->getMessage() . '".', $logs->typeError);
                         $requetes->nouveauTraitement($_SESSION['identifiant'], false);
@@ -81,7 +105,8 @@
             // close remote connection
             /*ssh2_exec($connexionSsh2, 'exit');
             $logs->messageLog('Utilisateur "' . $_SESSION['identifiant'] .'" - Connexion SSH2 fermée.', $logs->typeNotice);
-            */header('Location: ./?succes=tok');
+            */header('Location: ../tableauDeBord/?succes=tok');
+            //header('Location: ./?succes=tok');
             exit();
         } else {
             $logs->messageLog('Utilisateur "' . $_SESSION['identifiant'] .'" - Variable POST non présente ou non conforme.', $logs->typeError);

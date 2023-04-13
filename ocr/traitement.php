@@ -149,12 +149,16 @@ class TraitementOCR
      */
     public function traitementRendu(String $codeErreur = '', String $codeSucces = ''): void
     {
+        if ((int) $this->requetes->recupererNbTraitementOCR($_SESSION['identifiant']) >= (int) $this->requetes->recupererLimiteTraitementOCR($_SESSION['identifiant'])) {
+            header('Location: ../tableauDeBord/?erreur=arocr');
+            exit();
+        }
         $this->traitementFichiers();
         $data = $this->texte->texteFinal();
         // Ajout des variables et valeurs utiles dans $data pour l'affichage du module
         $data['chemin'] = $this->config['variables']['chemin'];
         $data['ocr'] = true;
-        $data['blocDemonstration'] = true;
+        $data['blocDemonstration'] = false;
         $data['utilisateur'] = $_SESSION['login'];
         // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
         if ($codeErreur) {

@@ -5,7 +5,7 @@ include("../ressources/php/fichiers_communs.php");
 if (isset($_SESSION['login'])) {
     $logs->messageLog('Utilisateur "' . $_SESSION['login'] .'" veut supprimer un fichier.', $logs->typeNotice);
     // Si on a bien un document dans l'URL
-    if ($_GET['document']) {
+    if (isset($_GET['document'])) {
         $logs->messageLog('Suppression souhaitée du document "' . $_GET['document'] .'.', $logs->typeNotice);
         require_once("./requetes.php");
         $requetes = new RequetesSupprimerDocument($config, $logs);
@@ -17,15 +17,25 @@ if (isset($_SESSION['login'])) {
         // Chemin répertoire complet
         $cheminRepertoire = $config['variables']['repertoires']['utilisateurs'] . $repertoireUtilisateur . '/' . $sousRepertoireUtilisateur . '/';
         // Si il s'agit d'un fichier dans l'espace résultat
-        if ($_GET['resultat']) {
+        if (isset($_GET['resultat'])) {
             $logs->messageLog('Document "' . $_GET['document'] .' issu du répertoire résultat.', $logs->typeNotice);
             $cheminRepertoire .= 'resultat/';
+            // On supprime le fichier du répertoire dans lequel on vient de le placer
+            if (exec('rm -f ' . $cheminRepertoire . $_GET['document']) !== false) {
+                $logs->messageLog('Suppression effectuée dans le répertoire résultats.', $logs->typeInfo);
+                header('Location: ../tableauDeBord/?succes=fsup');
+                exit();
+            }
+            // Si la suppression n'est pas faite sur l'espace disque
+            $logs->messageLog('La suppression sur l\'espace disque a échoué.', $logs->typeError);
+            header('Location: ../tableauDeBord/?erreur=pfsup');
+            exit();
         }
         // On commence par supprimer les informations en base
         if ($requetes->supprimerDocument($_GET['document'], $_SESSION['identifiant'])) {
             $logs->messageLog('Suppression effectuée en base.', $logs->typeInfo);
             // On supprime le fichier du répertoire dans lequel on vient de le placer
-            if (exec('rm -f ' . $cheminRepertoire . $_GET['document'])) {
+            if (exec('rm -f ' . $cheminRepertoire . $_GET['document']) !== false) {
                 $logs->messageLog('Suppression effectuée dans le répertoire.', $logs->typeInfo);
                 header('Location: ../tableauDeBord/?succes=fsup');
                 exit();
