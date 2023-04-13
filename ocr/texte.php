@@ -77,6 +77,10 @@ class TexteOCR
                         'value' => 3,
                         'text' => 'Extraction d\'image(s) et du texte du fichier (sans mise en forme)',
                     ],
+                    3 => [
+                        'value' => 'CNI',
+                        'text' => 'Extraction des données d\'une CNI',
+                    ],
                 ],
                 'required' => true,
             ],
