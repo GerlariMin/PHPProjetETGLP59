@@ -33,7 +33,7 @@ class RequetesInscription extends Model {
      * @param String $password
      * @return bool
      */
-    public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $aboUser, String $password): bool
+    public function insererUtilisateur(String $uuid, String $nom, String $prenom, String $user, String $email, String $password, int $aboUser = 1): bool
     {
         // vérification séparée pour bien indiquer à l'utilisateur quel est le problème
         // Si l'adresse e-mail saisie est déjà stockée en base, on retourne false
@@ -47,7 +47,7 @@ class RequetesInscription extends Model {
             return false;
         }
         // Texte SQL qui va alimenter la requête
-        $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, abonnementUtilisateur, motDePasseChiffreUtilisateur,motDePasseOublie, motDePasseOublieToken, expirationToken, motDePasseModifie, loginModifie, emailModifie) VALUES (:identifiant, :nom, :prenom, :login, :email, :abonnement, :motDePasse, 0, NULL, NULL, NULL, NULL, NULL)";
+        $sql = "INSERT INTO utilisateurs (identifiantUtilisateur,nomUtilisateur, prenomUtilisateur, loginUtilisateur, emailUtilisateur, abonnementUtilisateur, motDePasseChiffreUtilisateur,motDePasseOublie, motDePasseOublieToken, expirationToken, motDePasseModifie, loginModifie, emailModifie) VALUES (:identifiant, :nom, :prenom, :login, :email, :abonnement, :motDePasse, FALSE, NULL, NULL, NULL, NULL, NULL)";
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($sql);
         $this->logs->messageLog('Requete SQL préparée: "' . $sql . '".', $this->logs->typeDebug);
@@ -62,6 +62,46 @@ class RequetesInscription extends Model {
         $this->logs->messageLog('Paramètres: [identifiant: ' . $uuid . ', login: ' . $user . '].', $this->logs->typeDebug);
         // La fonction retourne le résultat de l'exécution de la requête préparée
         return $requete->execute();
+    }
+
+    /**
+     * @param String $user
+     * @return mixed
+     */
+    private function verifierLogin(String $user): mixed
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'SELECT identifiantUtilisateur FROM utilisateurs WHERE loginUtilisateur IN (:user);';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(":user", $user);
+        $this->logs->messageLog('Paramètres: [user: ' . $user . '].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        $requete->execute();
+        // La fonction retourne le résultat de la requête
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param String $uuid
+     * @return int
+     */
+    public function isUuid(String $uuid): int
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'SELECT COUNT(identifiantUtilisateur) as BOOL FROM utilisateurs WHERE identifiantUtilisateur = :identifiant;';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(':identifiant', $uuid);
+        $this->logs->messageLog('Paramètres: [identifiant: "' . $uuid . '"].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        $requete->execute();
+        // La fonction retourne le résultat de la requête
+        return (int) $requete->fetch(PDO::FETCH_ASSOC)['BOOL'];
     }
 
 }

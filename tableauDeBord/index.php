@@ -1,16 +1,12 @@
 <?php
     session_start();
     // Cette partie n'est accessible que si l'utilisateur est connecté
-    if(isset($_SESSION['login'])) {
+    if (isset($_SESSION['login'])) {
         include("../ressources/php/fichiers_communs.php");
-        /*
-        var_dump(
-            shell_exec('c:\\"Program Files"\\Tesseract-OCR\\tesseract.exe c:\Users\gerla\Downloads\tesseract2.jpeg c:\Users\gerla\Downloads\resultat3SHELLEXEC'),
-            exec('c:\"Program Files"\Tesseract-OCR\tesseract.exe c:\Users\gerla\Downloads\tesseract2.jpeg c:\Users\gerla\Downloads\resultat3EXEC')
-        );
-        */
+        require_once('requetes.php');
+        $requetes = new RequetesTableauDeBord($config, $logs);
         $traitement = new TraitementTableauDeBord($render);
-        $traitement->traitementRendu();
+        $traitement->traitementRendu($requetes, $erreur, $succes);
     } else {
         header('Location: ../connexion/?erreur=5');
         exit();

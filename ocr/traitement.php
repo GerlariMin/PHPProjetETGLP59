@@ -58,6 +58,12 @@ class TraitementOCR
                 $erreur[$this->small] = 'Formulaire';
                 $erreur[$this->message] = 'Au moins un des champs du formulaire est vide ou bien incorrect!';
                 break;
+            case '2':
+                $erreur[$this->iClass] = 'fa-solid fa-print fa-spin-pulse';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Traitement OCR';
+                $erreur[$this->message] = 'Un problème est survenu lors de l\'opération! Veuillez réessayer dans quelques instants.';
+                break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb';
                 $erreur[$this->strong] = 'Erreur';
@@ -143,12 +149,16 @@ class TraitementOCR
      */
     public function traitementRendu(String $codeErreur = '', String $codeSucces = ''): void
     {
+        if ((int) $this->requetes->recupererNbTraitementOCR($_SESSION['identifiant']) >= (int) $this->requetes->recupererLimiteTraitementOCR($_SESSION['identifiant'])) {
+            header('Location: ../tableauDeBord/?erreur=arocr');
+            exit();
+        }
         $this->traitementFichiers();
         $data = $this->texte->texteFinal();
         // Ajout des variables et valeurs utiles dans $data pour l'affichage du module
         $data['chemin'] = $this->config['variables']['chemin'];
         $data['ocr'] = true;
-        $data['blocDemonstration'] = true;
+        $data['blocDemonstration'] = false;
         $data['utilisateur'] = $_SESSION['login'];
         // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
         if ($codeErreur) {

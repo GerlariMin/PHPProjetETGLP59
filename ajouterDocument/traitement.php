@@ -21,6 +21,7 @@ class TraitementAjouterDocument
      * @var TexteAjouterDocument texte
      */
     private TexteAjouterDocument $texte;
+    private RequetesAjouterDocument $requetes;
     /**
      * @var string dédiées à la gestion des erreurs
      */
@@ -41,6 +42,7 @@ class TraitementAjouterDocument
         $this->logs = $logs;
         $this->render = $rendu;
         $this->texte = new TexteAjouterDocument($this->config);
+        $this->requetes = new RequetesAjouterDocument($config, $logs);
     }
 
     /**
@@ -71,6 +73,12 @@ class TraitementAjouterDocument
                 $erreur[$this->strong] = 'Erreur';
                 $erreur[$this->small] = 'Document non ajouté';
                 $erreur[$this->message] = 'Un problème est survenu lors du téléchargement de vos fichiers vers notre serveur!';
+                break;
+            case 'fsize':
+                $erreur[$this->iClass] = 'fa-solid fa-database';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Taille Document';
+                $erreur[$this->message] = 'Un ou plusieurs documents est trop volumineux! Veuillez sélectionner un document n\'excédant pas ' . ini_get('upload_max_filesize');
                 break;
             default:
                 $erreur[$this->iClass] = 'fa-solid fa-bomb';
@@ -112,6 +120,45 @@ class TraitementAjouterDocument
     }
 
     /**
+     * Calcul de la taille qu'occupe l'ensemble des fichiers du répertoire donné en paramètre (en octet).
+     * @param String $repertoire
+     * @return int
+     */
+    private function calculTailleFichiersRepertoire(String $repertoire)
+    {
+        $tailleRepertoire = 0;
+        // Accès au répertoire
+        if (is_dir($repertoire) && $iteration = opendir($repertoire)) {
+            // On parcourt chaque fichier du répertoire
+            while (($fichier = readdir($iteration)) !== false) {
+                // On trie les fichiers correspondants aux répertoires ou autres fichiers non liés au site
+                if ($fichier !== "Thumbs.db" && !is_dir($repertoire . $fichier)) {
+                    $tailleRepertoire += filesize($repertoire . $fichier);
+                }
+            }
+            // On ferme l'accès au répertoire
+            closedir($iteration);
+        }
+        return $tailleRepertoire;
+    }
+
+    private function traitementFichiersRepertoiresUtilisateur()
+    {
+        // On récupère le répertoire et sous répertoire dans lesquels les fichiers de l'utilisateur connecté sont stockés
+        $repertoires = str_split($_SESSION['identifiant'], 5);
+        // On récupère le chemin complet de l'endroit où sont stockés les fichiers de l'utilisateur connecté
+        $repertoireUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/';
+        // On récupère le chemin complet de l'endroit où sont stockés les fichiers résultats de l'utilisateur connecté
+        $repertoireResultatsUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/resultats/';
+        $nombreDocumentsSurDisque = $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);
+        $limiteDocuments = (int) $this->requetes->recupererLimiteDocuments($_SESSION['identifiant']);
+        if ($nombreDocumentsSurDisque >= $limiteDocuments) {
+            header('Location: ../tableauDeBord/?erreur=ardoc');
+            exit();
+        }
+    }
+
+    /**
      * Affichage de la page de connexion.
      * @param string $codeErreur
      * @param string $codeSucces
@@ -119,6 +166,8 @@ class TraitementAjouterDocument
     public function traitementRendu(string $codeErreur = '', string $codeSucces = ''): void
     {
         try {
+            // Vérification des limites avant d'effectuer les traitements pour afficher la page d'ajout d'un fichier
+            $this->traitementFichiersRepertoiresUtilisateur();
             // On récupère le tableau formaté pour Mustache
             $data = $this->texte->texteFinal();
             // On rajoute des clés au tableau dédié à Mustache pour afficher la page de connexion

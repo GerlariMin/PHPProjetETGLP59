@@ -35,4 +35,21 @@ class RequetesAjouterDocument extends Model
         $req->bindValue(":identifiant", $identifiantUtilisateur);
         return $req->execute();
     }
+
+    public function recupererLimiteDocuments(String $identifiant)
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'SELECT limiteDocuments AS LDOC FROM abonnements WHERE identifiantAbonnement = (SELECT abonnementUtilisateur FROM utilisateurs WHERE identifiantUtilisateur = :identifiant);';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(':identifiant', $identifiant);
+        //$requete->bindValue(':identifiantsDocuments', $identifiantsDocuments);
+        $this->logs->messageLog('Paramètres: [identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        $requete->execute();
+        // La fonction retourne le résultat de la requête
+        return $requete->fetch(PDO::FETCH_ASSOC)['LDOC'];
+    }
 }

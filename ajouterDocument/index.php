@@ -4,6 +4,7 @@
     if(isset($_SESSION['login'])) {
         // Chargement des ressources utiles
         include('../ressources/php/fichiers_communs.php');
+        require_once('requetes.php');
         // Initialisation de la classe de traitement dédiée au module de connexion
         $traitement = new TraitementAjouterDocument($logs, $render);
         // Appel de la méthode générant l'affichage du module de connexion

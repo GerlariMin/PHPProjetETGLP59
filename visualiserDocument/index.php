@@ -22,6 +22,7 @@
                 0 => 'application/pdf',
                 1 => 'image/jpeg',
                 2 => 'image/png',
+                3 => 'text/plain',
             ];
         // Si on a un document résultat, on adapte le chemin source du document
         if (isset($_GET['resultat'])) {

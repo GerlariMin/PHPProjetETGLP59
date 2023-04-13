@@ -17,35 +17,24 @@
     session_regenerate_id();
     include('../ressources/php/Logs.php');
     include("../ressources/config/config.inc.php");
+    include_once('mail.php');
     global $config;
     include($config['variables']['chemin'] . "ressources/php/Model.php");
 
     $logs = new Logs($config);
+    $mailMDPO = new MailMotDePasseOublie($config, $logs);
     
     if(isset($email)){
 
         $model = Model::getModel($config, $logs);
         $_SESSION['email'] = $email;
 
-        // message formaté en HTML
-        $message = '
-        <html>
-        <head>
-        <title>Bonjour</title>
-        </head>
-        <body>
-        <p>Bonjour ,</p>
-        <p>Vous venez de faire la demande de réinitialisation de mot de passe. Pour le renouveler cliquer <a href="http://'. $config['variables']['redirection']['mail']['ip'] .'/PHPProjetETGLP59-sandbox/reinitialisationMotDePasse?token='. $token .'">ici</a>.</p>
-        <p>Merci,</p>
-        <p>L\'équipe OCRSQUARE<p>
-        </body>
-        </html>
-        ';
+        $lienMail = 'http://'. $config['variables']['redirection']['mail']['ip'] .'/'. $config['variables']['redirection']['mail']['dossier'] .'reinitialisationMotDePasse?token='. $token;
 
         // verification si mail dans la bdd
         if($model-> verifierEmail($email)){
             $model->motDePasseOublie($email, $token);
-            $model->envoyerMail($email, $sujet, $message, $headers);
+            $mailMDPO->templateEmailMotDePasseOublie($email, $lienMail);
             $logs->messageLog('l\'email : '.$email.' existe en base');
             header("Location: ../motDePasseOublie/confirmationMotDePasseOublie.php");
         }else{
