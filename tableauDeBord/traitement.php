@@ -18,6 +18,13 @@ class TraitementTableauDeBord
      * @var TexteTableauDeBord texte
      */
     private TexteTableauDeBord $texte;
+    /**
+     * @var string dédiées à la gestion des erreurs
+     */
+    private String $iClass = 'iClass';
+    private String $strong = 'strong';
+    private String $small = 'small';
+    private String $message = 'message';
 
     /**
      * Traitement_Accueil constructor.
@@ -149,9 +156,9 @@ class TraitementTableauDeBord
      */
     private function calculsPourcentageStockage(array $limites)
     {
-        // Conversion en Giga
-        $nombreLimiteVolumeStockage = (float) $limites['LSTOCK'] * 1000000000;
-        $volumeTotalFichiersUtilisateur = 0;
+        // Limite en Giga
+        $nombreLimiteVolumeStockage = (float) $limites['LSTOCK'];
+        $volumeTotalFichiersUtilisateur = 0.0; //3 * 1000000000;
         // On récupère le répertoire et sous répertoire dans lesquels les fichiers de l'utilisateur connecté sont stockés
         $repertoires = str_split($_SESSION['identifiant'], 5);
         // On récupère le chemin complet de l'endroit où sont stockés les fichiers de l'utilisateur connecté
@@ -159,7 +166,7 @@ class TraitementTableauDeBord
         // On récupère le chemin complet de l'endroit où sont stockés les fichiers résultats de l'utilisateur connecté
         $repertoireResultatsUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/resultats/';
         // Calcul de la taille des fichiers dans les répertoires de l'utilisateur
-        $volumeTotalFichiersUtilisateur += $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);
+        $volumeTotalFichiersUtilisateur += (float)$this->calculTailleFichiersRepertoire($repertoireUtilisateur) + (float)$this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);
         // Conversion en Giga
         $volumeTotalFichiersUtilisateur /= 1000000000;
         // Calcul pourcentage
@@ -223,7 +230,7 @@ class TraitementTableauDeBord
             // On récupère le chemin complet de l'endroit où sont stockés les fichiers résultats de l'utilisateur connecté
             $repertoireResultatsUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/resultats/';
             // Calcul de la taille des fichiers dans les répertoires de l'utilisateur
-            $volumeTotalFichiersUtilisateur = $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);
+            $volumeTotalFichiersUtilisateur = (float) $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);// round(($this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur)) / 1000000000, 2);
             // Calcul du nombre de fichiers dans les répertoires de l'utilisateur
             $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
             // On récupère le nombre de traitements qu'a effectué l'utilisateur à la date actuelle
@@ -231,7 +238,7 @@ class TraitementTableauDeBord
             // Vérification des conditions pour faire un traitement OCR ou non (a dépassé son nombre de traitements quotidien OU a dépassé le nombre de fichiers stockés)
             $desactiverBoutonAjoutFichier = $desactiverBoutonOCR = false;
             if (($nombreTotalFichiersUtilisateur >= (int) $limites['LDOC'])
-                || ($volumeTotalFichiersUtilisateur >= ((int) $limites['LSTOCK'] * 1000000000))) {
+                || ($volumeTotalFichiersUtilisateur >= ((float) $limites['LSTOCK'] * 1000000000))) {
                 $desactiverBoutonAjoutFichier = true;
                 $desactiverBoutonOCR = true;
             }
@@ -268,9 +275,71 @@ class TraitementTableauDeBord
     }
 
     /**
+     * Gestion des erreurs pour prévenir l'utilisateur.
+     * @param string $codeErreur
+     * @return array
+     */
+    private function traitementErreur(string $codeErreur = ''): array
+    {
+        // Initialisation du tableau d'erreur a retourner
+        $erreur = array();
+        // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
+        switch ($codeErreur) {
+            case 'nfsup':
+                $erreur[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Suppression Fichier';
+                $erreur[$this->message] = 'Aucun document n\'a été soumis pour la suppression!';
+                break;
+            case 'pfsup':
+                $erreur[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'Suppression Fichier';
+                $erreur[$this->message] = 'Problème lors de la suppression du fichier! Veuillez réessayer dans quelques instants.';
+                break;
+            default:
+                $erreur[$this->iClass] = 'fa-solid fa-bomb fa-shake';
+                $erreur[$this->strong] = 'Erreur';
+                $erreur[$this->small] = 'inconnue';
+                $erreur[$this->message] = 'Une erreur est survenue!';
+                break;
+        }
+        // On retourne le tableau d'erreur formaté
+        return $erreur;
+    }
+
+    /**
+     * Gestion des succès pour prévenir l'utilisateur.
+     * @param string $codeSucces
+     * @return array
+     */
+    private function traitementSucces(string $codeSucces = ''): array
+    {
+        // Initialisation du tableau de succès a retourner
+        $succes = array();
+        // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
+        switch ($codeSucces) {
+            case 'fsup':
+                $succes[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
+                $succes[$this->strong] = 'Succès';
+                $succes[$this->small] = 'Suppression du fichier';
+                $succes[$this->message] = 'Opération effectuée avec succès!';
+                break;
+            default:
+                $succes[$this->iClass] = 'fa-solid fa-circle-check';
+                $succes[$this->strong] = 'Succès';
+                $succes[$this->small] = 'succès';
+                $succes[$this->message] = 'Opération effectuée avec succès!';
+                break;
+        }
+        // On retourne le tableau de succès formaté
+        return $succes;
+    }
+
+    /**
      * Affichage de la page de connexion.
      */
-    public function traitementRendu(RequetesTableauDeBord $requetes, $codeErreur = ''): void
+    public function traitementRendu(RequetesTableauDeBord $requetes, String $codeErreur = '', String $codeSucces = ''): void
     {
         $limites = $this->traitementRequetes($requetes);
         $this->traitementFichiers();
@@ -279,8 +348,16 @@ class TraitementTableauDeBord
         // Ajout des variables et valeurs utiles dans $data pour l'affichage du module
         $data['chemin'] = $this->config['variables']['chemin'];
         $data['tableauDeBord'] = true;
-        $data['blocDemonstration'] = true;
+        $data['blocDemonstration'] = false;
         $data['utilisateur'] = $_SESSION['login'];
+        // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
+        if ($codeErreur) {
+            $data['blocErreur'] = $this->traitementErreur($codeErreur);
+        }
+        // Si un codeSucces existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
+        if ($codeSucces) {
+            $data['blocSucces'] = $this->traitementSucces($codeSucces);
+        }
         // Envoi de la variable $data à la classe Mustache
         $this->render->actionRendu($data);
     }

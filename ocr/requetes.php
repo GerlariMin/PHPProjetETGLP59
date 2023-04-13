@@ -58,6 +58,7 @@ class RequetesOCR extends Model {
 
     public function nouveauTraitement(String $identifiantUtilisateur, bool $traitementAbouti): bool
     {
+        // Conversion du bolléen pour le tinyInt
         $traitementAbouti = ($traitementAbouti) ? '1' : '0';
         // Texte SQL qui va alimenter la requête
         $texteRequete = 'INSERT INTO traitements (utilisateurLie, date, traitementAbouti) VALUES (:identifiantUtilisateur, CURRENT_DATE, :traitementAbouti)';

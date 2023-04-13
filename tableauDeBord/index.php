@@ -6,7 +6,7 @@
         require_once('requetes.php');
         $requetes = new RequetesTableauDeBord($config, $logs);
         $traitement = new TraitementTableauDeBord($render);
-        $traitement->traitementRendu($requetes);
+        $traitement->traitementRendu($requetes, $erreur, $succes);
     } else {
         header('Location: ../connexion/?erreur=5');
         exit();

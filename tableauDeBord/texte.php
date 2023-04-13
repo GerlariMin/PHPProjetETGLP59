@@ -75,7 +75,7 @@ class TexteTableauDeBord
                   'progressbarPourcentage' => $limites['stockage']['pourcentage'],
                   'progressbarMin' => '0',
                   'progressbarMax' => $limites['stockage']['max'],
-                  'progressbarText' => $limites['stockage']['actuel'] . ' Go - (' . $limites['stockage']['pourcentage'] . '%)'
+                  'progressbarText' => $limites['stockage']['pourcentage'] . '%' // $limites['stockage']['actuel'] . ' Go - (' . $limites['stockage']['pourcentage'] . '%)'
             ],
             1 => [
                 'cardTitleClass' => 'card-title',

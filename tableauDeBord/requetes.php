@@ -57,7 +57,7 @@ class RequetesTableauDeBord extends Model {
     public function recupererTraitementsUtilisateur(String $identifiant): mixed
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = 'SELECT count(*) AS NBT FROM traitements WHERE utilisateurLie = :identifiant AND traitementAbouti = 1;';
+        $texteRequete = 'SELECT count(*) AS NBT FROM traitements WHERE utilisateurLie = :identifiant AND date = CURRENT_DATE AND traitementAbouti = 1;';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
