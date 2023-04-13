@@ -166,6 +166,8 @@ class TraitementAjouterDocument
     public function traitementRendu(string $codeErreur = '', string $codeSucces = ''): void
     {
         try {
+            // Vérification des limites avant d'effectuer les traitements pour afficher la page d'ajout d'un fichier
+            $this->traitementFichiersRepertoiresUtilisateur();
             // On récupère le tableau formaté pour Mustache
             $data = $this->texte->texteFinal();
             // On rajoute des clés au tableau dédié à Mustache pour afficher la page de connexion
