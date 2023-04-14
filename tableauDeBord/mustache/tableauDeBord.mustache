@@ -1,0 +1,210 @@
+<div class="container mt-5 mb-5">
+
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Bienvenue sur votre tableau de bord, <strong>{{utilisateur}}</strong>!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="row mb-5">
+
+        <div class="col-8">
+            <div class="card text-white bg-dark mb-3 h-100">
+                <div class="card-header">
+                    <h4><i class="fa-regular fa-folder-open"></i> Votre espace</h4>
+                </div>
+                <div class="card-body">
+                    {{#statistiques}}
+                        <h5 class="{{cardTitleClass}}">
+                            <i class="{{cardTitleFontAwesome}}"></i> {{cardTitleText}}
+                        </h5>
+                        <div class="{{cardTextClass}}">
+                            <div class="{{progressbarClass}}" role="{{progressbarRole}}" aria-label="Barre de progression" style="width: {{progressbarPourcentage}}%;" aria-valuenow="{{progressbarText}}" aria-valuemin="{{progressbarMin}}" aria-valuemax="{{progressbarMax}}">
+                                {{progressbarText}}
+                            </div>
+                        </div>
+                    {{/statistiques}}
+                    {{^statistiques}}
+                        <div class="alert alert-warning text-center" role="alert">
+                            <p class="fw-bolder"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Problème lors de la récupération de vos données!</p>
+                        </div>
+                    {{/statistiques}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white bg-dark mb-3 h-100">
+                <div class="card-header">
+                    <h4><i class="fa-solid fa-chart-gantt"></i> Mon abonnement</h4>
+                </div>
+                <div class="card-body">
+                    {{#abonnement}}
+                        <h5 class="card-title">
+                            Abonnement {{typeAbonnement}}
+                        </h5>
+                        <p class="card-text">
+                            Limitation de l'espace de stockage à une volumétrie ou un nombre de fichiers déposés maximum et limitation du nombre de traitements quotidiens possibles.
+                        </p>
+                        <p class="card-text">
+                            Votre abonnement comprend:
+                        </p>
+                        <ul class="card-text">
+                            <li>{{volumetrieMax}} Go d'espace disque <b>ou</b> {{nombreFichiersMax}} fichiers sur votre espace</li>
+                            <li>{{traitementsMax}} traitements par jour</li>
+                        </ul>
+
+                    {{/abonnement}}
+                    {{^abonnement}}
+                        <div class="alert alert-warning text-center" role="alert">
+                            <p class="fw-bolder"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Problème lors de la récupération de vos données!</p>
+                        </div>
+                    {{/abonnement}}
+                    <div class="d-grid gap-2 mt-5">
+                        <a class="btn btn-outline-warning mt-5" href="../souscription"><i class="fa-solid fa-list"></i> Modifier l'abonnement</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mb-5">
+
+        <div class="col-8">
+
+            <div class="card bg-dark mb-3 h-100">
+
+                <div class="card-header text-white fw-bolder">
+                    <h4><i class="fa-solid fa-file"></i> Vos documents</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+
+                        {{#repertoire}}
+                            <div class="col">
+                                <div class="card border-white text-white bg-dark mb-3">
+                                    <div class="card-header fw-bolder">
+                                        <i class="fa-solid fa-upload"></i> Fichier(s) déposé(s)
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group">
+                                            {{#fichiers}}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
+                                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
+                                                    <a class="text-decoration-none text-danger fw-bolder" href="../supprimerDocument/?document={{text}}"><i class="fa-solid fa-trash-can"></i></a>
+                                                </li>
+                                            {{/fichiers}}
+                                            {{^fichiers}}
+                                                <div class="alert alert-warning text-center" role="alert">
+                                                    <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked fa-beat-fade"></i> C'est bien vide ici!</p>
+                                                    <p>Ajoutez des fichiers pour qu'ils apparaissent ici.</p>
+                                                </div>
+                                            {{/fichiers}}
+                                        </ul>
+
+                                        {{#desactiverBoutonAjoutFichier}}
+                                            <div class="alert alert-warning text-center mt-2" role="alert">
+                                                <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked fa-beat-fade"></i> Ajout de fichier désactivé!</p>
+                                                <p>Sinon, supprimez des fichiers pour respecter le quota de fichiers ou volumétrique ou modifiez votre abonnement.</p>
+                                            </div>
+                                            <div class="d-grid gap-2 mt-2">
+                                                <a class="btn btn-outline-light disabled mt-2" href=""><i class="fa-solid fa-download"></i> Ajouter des fichiers</a>
+                                            </div>
+                                        {{/desactiverBoutonAjoutFichier}}
+                                        {{^desactiverBoutonAjoutFichier}}
+                                            <div class="d-grid gap-2 mt-5">
+                                                <a class="btn btn-outline-warning mt-2" href="../ajouterDocument"><i class="fa-solid fa-download"></i> Ajouter des fichiers</a>
+                                            </div>
+                                        {{/desactiverBoutonAjoutFichier}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/repertoire}}
+
+                        {{#repertoireResultats}}
+                            <div class="col">
+                                <div class="card border-white text-white bg-dark mb-3">
+                                    <div class="card-header fw-bolder">
+                                        <i class="fa-solid fa-square-poll-vertical"></i> Résultat(s) traitement(s) OCR
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group">
+                                            {{#fichiersResultats}}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <a class="text-decoration-none" href="{{href}}" target="_blank"><i class="fa-solid fa-file"></i> {{text}}</a>
+                                                    <span class="badge bg-dark rounded-pill">{{taille}} bytes</span>
+                                                    <!-- <a class="text-decoration-none text-danger fw-bolder" href="../supprimerDocument/?document={{text}}&resultat=true"><i class="fa-solid fa-trash-can"></i></a> -->
+                                                </li>
+                                            {{/fichiersResultats}}
+                                            {{^fichiersResultats}}
+                                                <div class="alert alert-warning text-center" role="alert">
+                                                    <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked fa-beat-fade"></i> C'est bien vide ici!</p>
+                                                    <p>Effectuez des traitements OCR et les résultats apparaitront ici.</p>
+                                                </div>
+                                            {{/fichiersResultats}}
+                                        </ul>
+
+                                        {{#desactiverBoutonOCR}}
+                                            <div class="alert alert-warning text-center mt-2" role="alert">
+                                                <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked fa-beat-fade"></i> Traitement OCR désactivé!</p>
+                                                <p>Si vous avez dépassé votre quota de traitements quotidiens, attendez demain afin de pouvoir effectuer un traitement ou modifiez votre abonnement.</p>
+                                                <p>Sinon, supprimez des fichiers pour respecter le quota de fichiers ou volumétrique.</p>
+                                            </div>
+                                            <div class="d-grid gap-2 mt-2">
+                                                <a class="btn btn-outline-light disabled mt-5" href=""><i class="fa-solid fa-magnifying-glass"></i> Effectuer Traitement OCR</a>
+                                            </div>
+                                        {{/desactiverBoutonOCR}}
+                                        {{^desactiverBoutonOCR}}
+                                            <div class="d-grid gap-2 mt-2">
+                                                <a class="btn btn-outline-warning mt-5" href="../ocr"><i class="fa-solid fa-magnifying-glass"></i> Effectuer Traitement OCR</a>
+                                            </div>
+                                        {{/desactiverBoutonOCR}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/repertoireResultats}}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white bg-dark mb-3 h-100">
+                <div class="card-header">
+                    <h4><i class="fa-solid fa-magnifying-glass"></i> Reconnaissance</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fa-solid fa-floppy-disk"></i> Soummettre des documents
+                    </h5>
+                    <p class="card-text">
+                        Notre service vous permet de soummettre des documents (format PDF, JPEG, PNG) et d'en extraire le texte et/ ou les images automatiquement via la reconnaissance optique (OCR).
+                    </p>
+                    {{#desactiverBoutonOCR}}
+                        <div class="alert alert-warning text-center mt-2" role="alert">
+                            <p class="fw-bolder"><i class="fa-solid fa-boxes-stacked fa-beat-fade"></i> Traitement OCR désactivé!</p>
+                            <p>Si vous avez dépassé votre quota de traitements quotidiens, attendez demain afin de pouvoir effectuer un traitement ou modifiez votre abonnement.</p>
+                            <p>Sinon, supprimez des fichiers pour respecter le quota de fichiers ou volumétrique.</p>
+                        </div>
+                        <div class="d-grid gap-2 mt-2">
+                            <a class="btn btn-outline-light disabled mt-5" href=""><i class="fa-solid fa-magnifying-glass"></i> Effectuer Traitement OCR</a>
+                        </div>
+                    {{/desactiverBoutonOCR}}
+                    {{^desactiverBoutonOCR}}
+                        <div class="d-grid gap-2 mt-2">
+                            <a class="btn btn-outline-warning mt-5" href="../ocr"><i class="fa-solid fa-magnifying-glass"></i> Effectuer Traitement OCR</a>
+                        </div>
+                    {{/desactiverBoutonOCR}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

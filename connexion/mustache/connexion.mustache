@@ -1,0 +1,32 @@
+<div class="card w-50 mx-auto mt-5">
+    <div class="card-header text-center">
+        <p><i class="fas fa-fingerprint"></i> Formulaire de connexion<p>
+    </div>
+    <div class="card-body">    
+        {{#form}}
+            <form action="{{formAction}}" method="{{formMethod}}">
+                {{#inputs}}
+                    <div class="{{divClass}}">
+                        <input class="{{inputClass}}" id="{{inputId}}" name="{{inputName}}" placeholder="{{inputPlaceholder}}" required="{{inputRequired}}" type="{{inputType}}">
+                        <label for="{{labelFor}}"><i class="{{labelIClass}}"></i> {{labelText}}</label>
+                    </div>
+                {{/inputs}}
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            {{#button}}
+                                <button class="{{buttonClass}}" type="{{buttonType}}"><i class="{{buttonIClass}}"></i> {{buttonText}}</button>
+                            {{/button}}
+                        </div>
+                        {{#redirections}}
+                            <div class="{{divClass}}">
+                                <p>{{pText}} {{#anchor}}<a href="{{HREF}}" class="{{CLASS}}">{{TEXT}} <i class="{{FONTAWESOME}}"></i></a>{{/anchor}}</p>
+                            </div>
+                        {{/redirections}}
+                    </div>
+                </div>
+            </form>
+        {{/form}}
+    </div>
+</div>

@@ -3,11 +3,31 @@
 
     {{>Navbar}}
 
+    {{#blocDeveloppement}}
+        {{>blocDeveloppement}}
+    {{/blocDeveloppement}}
+
+    {{#blocDemonstration}}
+        {{>blocDemonstration}}
+    {{/blocDemonstration}}
+
+    {{#blocErreur}}
+        {{>blocErreur}}
+    {{/blocErreur}}
+
+    {{#blocSucces}}
+        {{>blocSucces}}
+    {{/blocSucces}}
+
     {{#accueil}}
         {{>accueil}}
     {{/accueil}}
 
     <div class="container mt-2">
+
+        {{#ajouterDocument}}
+            {{>ajouterDocument}}
+        {{/ajouterDocument}}
 
         {{#cgu}}
             {{>cgu}}
@@ -29,13 +49,29 @@
             {{>inscription}}
         {{/inscription}}
 
+        {{#souscription}}
+            {{>souscription}}
+        {{/souscription}}
+
         {{#profil}}
             {{>profil}}
         {{/profil}}
 
-        {{#tableau-de-bord}}
-            {{>tableau-de-bord}}
-        {{/tableau-de-bord}}
+        {{#tableauDeBord}}
+            {{>tableauDeBord}}
+        {{/tableauDeBord}}
+
+        {{#motDePasseOublie}}
+            {{>motDePasseOublie}}
+        {{/motDePasseOublie}}
+
+        {{#ocr}}
+            {{>ocr}}
+        {{/ocr}}
+
+        {{#reinitialisationMotDePasse}}
+            {{>reinitialisationMotDePasse}}
+        {{/reinitialisationMotDePasse}}
 
     </div>
 
