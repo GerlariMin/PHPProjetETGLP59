@@ -5,4 +5,4 @@
     // Initialisation de la classe de traitement dédiée au module de connexion
     $traitement = new TraitementConnexion($logs, $render);
     // Appel de la méthode générant l'affichage du module de connexion
-    $traitement->traitementRendu($erreur);
+    $traitement->traitementRendu($erreur, $succes);

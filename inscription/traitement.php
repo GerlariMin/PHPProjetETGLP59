@@ -43,18 +43,59 @@
             $erreur = array();
             // En fonction du code d'erreur reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc d'erreur
             switch($codeErreur) {
-                case 'mauvais-email':
-                    $erreur['i_class'] = 'fa-solid fa-id-badge';
-                    $erreur['strong'] = 'Erreur';
-                    $erreur['small'] = 'email';
-                    $erreur['message'] = 'L\'adresse mail renseignée n\'existe pas.';
-                    $erreur['lien'] = '<a href="../inscription/"> Créer un compte </a>';
-                    break;
                 case 'post':
                     $erreur['i_class'] = 'fa-solid fa-bug';
                     $erreur['strong'] = 'Erreur';
                     $erreur['small'] = 'Données formulaire';
                     $erreur['message'] = 'Une erreur est survenue lors du traitement de vos saisies. Veuilez réessayer.';
+                    break;
+                case 'nnom':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ nom vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'nprenom':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ prénom vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'npseudo':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ nom utilisateur vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'nemail':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ e-mail vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'nmdp':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ mot de passe vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'ncmdp':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Champ vide';
+                    $erreur['message'] = 'Champ confirmation du mot de passe vide. Veuilez remplir le formulaire à nouveau.';
+                    break;
+                case 'mail':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Mail de confirmation';
+                    $erreur['message'] = 'Un problème est survenu lors de l\'envoi du mail de confirmation. Votre compte a bien été créé néanmoins.';
+                    break;
+                case 'inscription':
+                    $erreur['i_class'] = 'fa-solid fa-bug';
+                    $erreur['strong'] = 'Erreur';
+                    $erreur['small'] = 'Inscription';
+                    $erreur['message'] = 'Le compte n\'a pas pu être créé. Veuilez remplir le formulaire à nouveau.';
                     break;
                 default:
                     $erreur['i_class'] = 'fa-solid fa-bomb';
@@ -101,12 +142,19 @@
             // Décomposition de l'identifiant de l'utilisateur pour créer son répertoire.
             $dir = substr($uuid,0,5);
             $subdir=substr($uuid,5,10);
-            $repertoireUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}";
-
+            $repertoireUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/";
+            $repertoireResultatsUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/resultats/";
+            // Création du répertoire utilisateur
             if (!mkdir($repertoireUtilisateur, 0777, true) && !is_dir($repertoireUtilisateur)){
                 $logs->messageLog('Le répertoire utilisateur "' . $repertoireUtilisateur .'" n\'a pas pu être créé.', $logs->typeError);
             } else {
-
+                $logs->messageLog('Le répertoire utilisateur "' . $repertoireUtilisateur .'" a été créé.', $logs->typeNotice);
+            }
+            // Création du répertoire résultats du répertoire utilisateur
+            if (!mkdir($repertoireResultatsUtilisateur, 0777, true) && !is_dir($repertoireResultatsUtilisateur)){
+                $logs->messageLog('Le répertoire utilisateur "' . $repertoireResultatsUtilisateur .'" n\'a pas pu être créé.', $logs->typeError);
+            } else {
+                $logs->messageLog('Le répertoire utilisateur "' . $repertoireResultatsUtilisateur .'" a été créé.', $logs->typeNotice);
             }
         }
 

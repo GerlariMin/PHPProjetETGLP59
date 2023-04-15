@@ -7,10 +7,10 @@
     include_once($config['variables']['chemin'] . 'ressources/mustache/Render.php');
     include_once($config['variables']['chemin'] . 'ressources/php/Logs.php');
     // On récupère les fichiers utiles pour afficher une page
-    if(file_exists('traitement.php')) {
+    if (file_exists('traitement.php')) {
         include_once('traitement.php');
     }
-    if(file_exists('texte.php')){
+    if (file_exists('texte.php')){
         include_once('texte.php');
     }
     // Initialisation de la classe Logs
@@ -22,11 +22,11 @@
     // variable dédiée au code de succès
     $succes = '';
     // Si il existe une clé erreur dans le lien
-    if(isset($_GET['erreur'])) {
+    if (isset($_GET['erreur'])) {
         // On affecte la valeur associée à la clé à la variable dédiée
         $erreur = $_GET['erreur'];
     // Sinon, si il existe une clé succes dans le lien
-    } else if(isset($_GET['succes'])) {
+    } elseif (isset($_GET['succes'])) {
         // On affecte la valeur associée à la clé à la variable dédiée
         $succes = $_GET['succes'];
     }

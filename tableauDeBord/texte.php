@@ -66,7 +66,7 @@ class TexteTableauDeBord
     {
         return [
             0 => [
-                  'cardTitleClass' => 'card-title',
+                  'cardTitleClass' => 'card-title mt-5',
                   'cardTitleFontAwesome' => 'fa-solid fa-floppy-disk',
                   'cardTitleText' => 'Espace disque utilisé (Max: ' . $limites['stockage']['max'] . ' Go)',
                   'cardTextClass' => 'card-text progress mb-3',
@@ -78,7 +78,7 @@ class TexteTableauDeBord
                   'progressbarText' => $limites['stockage']['pourcentage'] . '%' // $limites['stockage']['actuel'] . ' Go - (' . $limites['stockage']['pourcentage'] . '%)'
             ],
             1 => [
-                'cardTitleClass' => 'card-title',
+                'cardTitleClass' => 'card-title mt-5',
                 'cardTitleFontAwesome' => 'fa-regular fa-file',
                 'cardTitleText' => 'Fichiers stockés (Max: ' . $limites['fichiers']['max'] . ' fichiers)',
                 'cardTextClass' => 'card-text progress mb-3',
@@ -90,7 +90,7 @@ class TexteTableauDeBord
                 'progressbarText' => $limites['fichiers']['actuel'] . ' Fichier(s) - (' . $limites['fichiers']['pourcentage'] . '%)'
             ],
             2 => [
-                'cardTitleClass' => 'card-title',
+                'cardTitleClass' => 'card-title mt-5',
                 'cardTitleFontAwesome' => 'fa-solid fa-chart-line',
                 'cardTitleText' => 'Traitements quotidiens (Max: ' . $limites['traitements']['max'] . '/j)',
                 'cardTextClass' => 'card-text progress mb-3',
