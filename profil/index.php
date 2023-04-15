@@ -1,17 +1,14 @@
 <?php
     session_start();
-
-    include_once("../ressources/php/fichiers_communs.php");
-    include_once("requetes.php");
-
-    $erreur = '';
-    global $render;
-
-    if(isset($_GET['erreur'])) {
-        $erreur = $_GET['erreur'];
+    // Cette partie n'est accessible que si l'utilisateur est connecté
+    if (isset($_SESSION['login'])) {
+        include_once("../ressources/php/fichiers_communs.php");
+        include_once("requetes.php");
+        $requetes = new RequetesProfil($config, $logs);
+        $traitement = new TraitementProfil($render);
+        $traitement->traitementRendu($requetes, $erreur);
+    } else {
+        header('Location: ../connexion/?erreur=5');
+        exit();
     }
-
-    $requetes = new RequetesProfil($config, $logs);
-
-    $traitement = new TraitementProfil($render);
-    $traitement->traitementRendu($requetes, $erreur);
+    

@@ -7,9 +7,11 @@
             <form action="{{form_action}}" method="{{form_method}}" name="myForm">
                 {{#div}}
                     <div class="{{div_class}}">
-                        <input class="form-control" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" type="{{input_type}}" {{#onChange}}onChange="{{onChange}}"{{/onChange}} 
-                        {{#pattern}}pattern="{{pattern}}"{{/pattern}} {{#onBlur}}onBlur="{{onBlur}}"{{/onBlur}}>
+                        <input class="form-control" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" type="{{input_type}}" {{#pattern}}pattern="{{pattern}}"{{/pattern}}>
                         <label for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}}</label>
+                        {{#aide}}
+                            <div id="{{aideId}}" class="{{aideClass}}"><i class="{{aideFontawesome}}"></i> {{aideText}}</div>
+                        {{/aide}}
                     </div>
                 {{/div}}
 
@@ -20,6 +22,11 @@
                                 <button class="{{button_class}}" type="{{button_type}}"><i class="{{button_i_class}}"></i> {{button_text}}</button>
                             {{/button}}
                         </div>
+                        {{#redirections}}
+                            <div class="{{divClass}}">
+                                <p>{{pText}} {{#anchor}}<a href="{{HREF}}" class="{{CLASS}}">{{TEXT}} <i class="{{FONTAWESOME}}"></i></a>{{/anchor}}</p>
+                            </div>
+                        {{/redirections}}
                     </div>
                 </div>
             </form>
@@ -27,175 +34,4 @@
     </div>
 </div>
 
-<script>
-       window.addEventListener("load", function () {
-
-        if (validateForm()){
-            function sendData() {
-                var XHR = new XMLHttpRequest();
-
-                // Liez l'objet FormData et l'élément form
-                var FD = new FormData(form);
-
-                // Définissez ce qui se passe si la soumission s'est opérée avec succès
-                XHR.addEventListener("load", function(event) {
-                alert(event.target.responseText);
-                //redirection vers le login
-                });
-
-                // Definissez ce qui se passe en cas d'erreur
-                XHR.addEventListener("error", function(event) {
-                alert('Erreur interne');
-                });
-
-                // Configurez la requête
-                XHR.open("POST", "post-ok.php");
-
-                // Les données envoyées sont ce que l'utilisateur a mis dans le formulaire
-                XHR.send(FD);
-            }
-
-            // Accédez à l'élément form …
-            var form = document.getElementById("myForm");
-
-            // … et prenez en charge l'événement submit.
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                sendData();
-            });
-
-        }
-        
-    });
-
-    /*
-    * Nom : checkEmail
-    * Type : Boolean
-    * Desc : Verification de l'email
-    */
-    function checkEmail(){
-            // Get form via form name:
-            var myForm = document.forms["myForm"];
-            // Récupération de l'e-mail saisi
-            var email = document.getElementById('email').value;
-            // Initialisation de la variable qui contiendra le retour de fonction.php
-            var reponse = "";
-            // Initialisation XMLHttpRequest
-            const xhttp = new XMLHttpRequest();
-            // Preparation de la requete
-            xhttp.open("GET", "fonction.php?email="+ email);
-            //Verification de l'email   
-            xhttp.onload = function(){
-                // Récupération valeur de retour
-                reponse = xhttp.responseText;
-                //
-                if (xhttp.readyState === xhttp.DONE) {
-
-                    if (xhttp.status === 200){
-                        // Si le mail saisi est le même que celui reçu en réponse, cela veut dire que l'e-mail saisi est déjà utilisé
-                        if(email === reponse) {
-                            // Pop-up stylisée SweetAlert pour informer l'utilisateur que l'adresse e-mail saisie est déjà affectée à un compte
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Adresse e-mail',
-                                text: 'Cette adresse e-mail est déjà utilisée! Veuillez en choisir une autre!',
-                            })
-                            document.getElementById('email').focus(); // Focus
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            xhttp.send();
-            return true;
-    }
-
-    /*
-    * Nom : randomIntFromInterval
-    * Type : fonction
-    * Desc : retourne un nombre sur un interval definis
-    */
-    function randomIntFromInterval(min, max) { // min and max included 
-            return Math.floor(Math.random() * (max - min + 1) + min)
-    }
-
-    /*
-    * Nom : generateUsername
-    * Type : procedure
-    * Desc : suggestion d'un pseudo
-    */
-    function generateUsername(){
-        {{#form}}
-            let user = document.getElementsByName("username");
-            let nom = document.getElementsByName("nom");
-            let prenom = document.getElementsByName("prenom");
-        {{/form}}
-
-        if(user[0].value =='' && nom[0].value !='' && prenom[0].value !='') {
-            
-            var username = '';
-            
-            if(nom[0].value >= 4) {
-
-                username = prenom[0].value.substr(0,1) + nom[0].value.substr(0,49);
-            } else {
-
-                username = prenom[0].value.substr(0,4) + nom[0].value.substr(0,49);
-            }
-            username = username.replace(/\s+/g, '');
-            username = username.replace(/\'+/g, '');
-            username = username.replace(/-+/g, '');
-            username = username.toLowerCase();
-
-            const rand = randomIntFromInterval(1, 10);
-            user[0].value = username + rand; 
-            
-        }
-    }
-
-    /*
-    * Nom : ValidatePassword
-    * Type : Boolean
-    * Desc : Vérification des mots de passes
-    */
-    function validatePassword(){
-        {{#form}}
-            let confirmation = document.getElementsByName("confirm");
-        {{/form}}
-
-        let password = document.getElementsByName("password");
-
-        if(password[0].value !== confirmation[0].value){
-            alert("les mots de passes ne sont pas conformes");
-            confirmation.focus;
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    /*
-    * Nom : ValidateForm
-    * Type : procedure
-    * Desc : verification du formulaire avant son envoie
-    */
-    function validateForm(){
-
-        {{#form}}
-            let user = document.getElementsByName("username");
-            let nom = document.getElementsByName("nom");
-            let prenom = document.getElementsByName("prenom");
-            let email = document.getElementsByName("email");
-            let password = document.getElementsByName("password");
-        {{/form}}
-
-        if(!validatePassword()){
-            return false;
-        }
-
-        return true;
-    }
-    
-</script>
+<script src="./js/inscription.js"></script>

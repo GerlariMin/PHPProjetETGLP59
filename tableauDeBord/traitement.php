@@ -188,8 +188,14 @@ class TraitementTableauDeBord
         // On récupère le chemin complet de l'endroit où sont stockés les fichiers résultats de l'utilisateur connecté
         $repertoireResultatsUtilisateur = $this->config['variables']['repertoires']['utilisateurs'] . $repertoires[0] . '/' . $repertoires[1] . '/resultats/';
         // On comptes les fichiers dans les différents espaces qu'utilise l'utilisateur connecté
-        $nombreFichiersDansRepertoireUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats')));
-        $nombreFichiersDansRepertoireResultatsUtilisateur = count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
+        $nombreFichiersDansRepertoireUtilisateur = 0;
+        $nombreFichiersDansRepertoireResultatsUtilisateur = 0;
+        if (is_dir($repertoireUtilisateur)) {
+            $nombreFichiersDansRepertoireUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats')));
+        }
+        if (is_dir($repertoireResultatsUtilisateur)) {
+            $nombreFichiersDansRepertoireResultatsUtilisateur = count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
+        }
         // Affectation du nombre total de fichiers stockés sur l'espace utilisateur dans un attribut de la classe
         $nombreTotalFichiersUtilisateur = $nombreFichiersDansRepertoireResultatsUtilisateur + $nombreFichiersDansRepertoireUtilisateur;
         // Calcul d'un pourcentage arrondi au centième
@@ -232,7 +238,10 @@ class TraitementTableauDeBord
             // Calcul de la taille des fichiers dans les répertoires de l'utilisateur
             $volumeTotalFichiersUtilisateur = (float) $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);// round(($this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur)) / 1000000000, 2);
             // Calcul du nombre de fichiers dans les répertoires de l'utilisateur
-            $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
+            $nombreTotalFichiersUtilisateur = 0;
+            if (is_dir($repertoireUtilisateur)) {
+                $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
+            }
             // On récupère le nombre de traitements qu'a effectué l'utilisateur à la date actuelle
             $traitements = (int) $requetes->recupererTraitementsUtilisateur($_SESSION['identifiant']);
             // Vérification des conditions pour faire un traitement OCR ou non (a dépassé son nombre de traitements quotidien OU a dépassé le nombre de fichiers stockés)

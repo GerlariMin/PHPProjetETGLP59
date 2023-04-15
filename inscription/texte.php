@@ -14,52 +14,52 @@
          * @var array
          */
         private array $config;
-        private String $button_class = "button_class";
-        private String $button_i_class = "button_i_class";
-        private String $button_text = "button_text";
-        private String $button_type = "button_type";
+        private String $buttonClass = "button_class";
+        private String $buttonIClass = "button_i_class";
+        private String $buttonText = "button_text";
+        private String $buttonType = "button_type";
         /**
          * @var String div_class
          */
-        private String $div_class = "div_class";
-        private String $form_action = "form_action";
-        private String $form_method = "form_method";
+        private String $divClass = "div_class";
+        private String $formAction = "form_action";
+        private String $formMethod = "form_method";
         /**
          * @var string input_class
          */
-        private String $input_class = "input_class";
+        private String $inputClass = "input_class";
         /**
          * @var string input_id
          */
-        private String $input_id = "input_id";
+        private String $inputId = "input_id";
         /**
          * @var string input_name
          */
-        private String $input_name = "input_name";
+        private String $inputName = "input_name";
         /**
          * @var string input_placeholder
          */
-        private String $input_placeholder = "input_placeholder";
+        private String $inputPlaceholder = "input_placeholder";
         /**
          * @var string input_required
          */
-        private String $input_required = "input_required";
+        private String $inputRequired = "input_required";
         /**
          * @var string input_type
          */
-        private String $input_type = "input_type";
+        private String $inputType = "input_type";
         /**
          * @var string label_for
          */
-        private String $label_for = "label_for";
+        private String $labelFor = "label_for";
         /**
          * @var string label_i_class
          */
-        private String $label_i_class = "label_i_class";
+        private String $labelIClass = "label_i_class";
         /**
          * @var string label_text
          */
-        private String $label_text = "label_text";
+        private String $labelText = "label_text";
 
         /**
          * @var String onchange
@@ -87,10 +87,10 @@
         {
             return
                 [
-                    $this->button_class => "btn btn-outline-success",
-                    $this->button_i_class => "fas fa-paper-plane",
-                    $this->button_text => "Envoyer",
-                    $this->button_type => "submit"
+                    $this->buttonClass => "btn btn-outline-success",
+                    $this->buttonIClass => "fas fa-user-plus",
+                    $this->buttonText => "S'inscrire",
+                    $this->buttonType => "submit"
                 ];
         }
 
@@ -104,90 +104,95 @@
             return
                 [ 0 =>
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "nom",
-                        $this->input_name => "nom",
-                        $this->input_placeholder => "Nom",
-                        $this->input_required => "true",
-                        $this->input_type => "text",
-                        $this->label_for => "Nom",
-                        $this->label_i_class => "fa-solid fa-user",
-                        $this->label_text => "Nom",
-                        $this->onBlur => "generateUsername()"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "nom",
+                        $this->inputName => "nom",
+                        $this->inputPlaceholder => "Nom",
+                        $this->inputRequired => "true",
+                        $this->inputType => "text",
+                        $this->labelFor => "Nom",
+                        $this->labelIClass => "fa-solid fa-user",
+                        $this->labelText => "Nom",
                     ],
 
                   1 => 
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "prenom",
-                        $this->input_name => "prenom",
-                        $this->input_placeholder => "Prenom",
-                        $this->input_required => "true",
-                        $this->input_type => "text",
-                        $this->label_for => "Prenom",
-                        $this->label_i_class => "fa-solid fa-user",
-                        $this->label_text => "Prenom"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "prenom",
+                        $this->inputName => "prenom",
+                        $this->inputPlaceholder => "Prenom",
+                        $this->inputRequired => "true",
+                        $this->inputType => "text",
+                        $this->labelFor => "Prenom",
+                        $this->labelIClass => "fa-solid fa-user",
+                        $this->labelText => "Prenom"
                     ],
 
                   2 => 
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "username",
-                        $this->input_name => "username",
-                        $this->input_placeholder => "Nom d'utilisateur",
-                        $this->input_required => "true",
-                        $this->input_type => "text",
-                        $this->label_for => "username",
-                        $this->label_i_class => "fa-solid fa-user",
-                        $this->label_text => "Nom d'utilisateur"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "username",
+                        $this->inputName => "username",
+                        $this->inputPlaceholder => "Nom d'utilisateur",
+                        $this->inputRequired => "true",
+                        $this->inputType => "text",
+                        $this->labelFor => "username",
+                        $this->labelIClass => "fa-solid fa-user",
+                        $this->labelText => "Nom d'utilisateur"
                         
                     ],
 
                   3 => 
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "email",
-                        $this->input_name => "email",
-                        $this->input_placeholder => "Adresse Email",
-                        $this->input_required => "true",
-                        $this->input_type => "email",
-                        $this->label_for => "Adresse Email",
-                        $this->label_i_class => "fa-solid fa-at",
-                        $this->label_text => "Adresse Email",
-                        $this->onChange => "checkEmail()"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "email",
+                        $this->inputName => "email",
+                        $this->inputPlaceholder => "Adresse Email",
+                        $this->inputRequired => "true",
+                        $this->inputType => "email",
+                        $this->labelFor => "Adresse Email",
+                        $this->labelIClass => "fa-solid fa-at",
+                        $this->labelText => "Adresse Email",
                     ],
 
                   4 => 
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "password",
-                        $this->input_name => "password",
-                        $this->input_placeholder => "Mot de passe",
-                        $this->input_required => "true",
-                        $this->input_type => "password",
-                        $this->label_for => "Mot de passe",
-                        $this->label_i_class => "fa-solid fa-lock",
-                        $this->label_text => "Mot de passe",
-                        $this->pattern => "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "password",
+                        $this->inputName => "password",
+                        $this->inputPlaceholder => "Mot de passe",
+                        $this->inputRequired => "true",
+                        $this->inputType => "password",
+                        $this->labelFor => "Mot de passe",
+                        $this->labelIClass => "fa-solid fa-lock",
+                        $this->labelText => "Mot de passe",
+                        $this->pattern => "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
+                        'aide' => [
+                            'aideId' => 'aideMDP',
+                            'aideClass' => 'form-text text-warning fw-bolder',
+                            'aideFontawesome' => 'fa-solid fa-circle-info',
+                            'aideText' => 'Le mot de passe doit contenir au moins 8 caractères avec un chiffre, un caratère spécial et une majuscule au minimum.',
+                        ]
                     ],
 
                   5 => 
                     [
-                        $this->div_class => "form-floating mb-3",
-                        $this->input_class => "form-control",
-                        $this->input_id => "confirm",
-                        $this->input_name => "confirm",
-                        $this->input_placeholder => "Confirmation",
-                        $this->input_required => "true",
-                        $this->input_type => "password",
-                        $this->label_for => "Confirmation",
-                        $this->label_i_class => "fa-solid fa-lock",
-                        $this->label_text => "Confirmation"
+                        $this->divClass => "form-floating mb-3",
+                        $this->inputClass => "form-control",
+                        $this->inputId => "confirm",
+                        $this->inputName => "confirm",
+                        $this->inputPlaceholder => "Confirmation",
+                        $this->inputRequired => "true",
+                        $this->inputType => "password",
+                        $this->labelFor => "Confirmation",
+                        $this->labelIClass => "fa-solid fa-lock",
+                        $this->labelText => "Confirmation",
+                        $this->pattern => "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
                     ]
 
                 ];
@@ -202,8 +207,27 @@
         {
             return
                 [
-                    $this->form_action => "action.php",
-                    $this->form_method => "POST"
+                    $this->formAction => "action.php",
+                    $this->formMethod => "POST"
+                ];
+        }
+
+        private function texteRedirections(): array
+        {
+            return
+                [
+                    0 =>
+                        [
+                            'divClass' => 'col',
+                            'pText' => 'Vous avez déjà un compte ?',
+                            'anchor' =>
+                                [
+                                    'HREF' => '../connexion/',
+                                    'CLASS' => 'text-decoration-none text-success fw-bolder',
+                                    'TEXT' => 'Connectez-vous ici',
+                                    'FONTAWESOME' => 'fa-solid fa-up-right-from-square'
+                                ]
+                        ]
                 ];
         }
 
@@ -218,7 +242,8 @@
                 [
                     "form" => $this->texteForm(),
                     "div" => $this->texteDivs(),
-                    "button" => $this->texteButtons()
+                    "button" => $this->texteButtons(),
+                    'redirections' => $this->texteRedirections(),
                 ];
         }
 

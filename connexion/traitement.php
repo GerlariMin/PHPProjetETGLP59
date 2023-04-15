@@ -96,10 +96,38 @@
         }
 
         /**
+         * Gestion des succès pour prévenir l'utilisateur.
+         * @param string $codeSucces
+         * @return array
+         */
+        private function traitementSucces(string $codeSucces = ''): array
+        {
+            // Initialisation du tableau de succès a retourner
+            $erreur = array();
+            // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
+            switch ($codeSucces) {
+                case 'inscription':
+                    $erreur[$this->iClass] = 'fa-solid fa-thumbs-up';
+                    $erreur[$this->strong] = 'Inscription Réussie';
+                    $erreur[$this->small] = 'Compte créé';
+                    $erreur[$this->message] = 'Votre compte a été créé avec succès! Vous pouvez maintenant vous connecter.!';
+                    break;
+                default:
+                    $erreur[$this->iClass] = 'fa-solid fa-circle-check';
+                    $erreur[$this->strong] = 'Succès';
+                    $erreur[$this->small] = 'succès';
+                    $erreur[$this->message] = 'Opération effectuée avec succès!';
+                    break;
+            }
+            // On retourne le tableau de succès formaté
+            return $erreur;
+        }
+
+        /**
          * Affichage de la page de connexion.
          * @param string $codeErreur
          */
-        public function traitementRendu(string $codeErreur = ''): void
+        public function traitementRendu(string $codeErreur = '', string $codeSucces = ''): void
         {
             try {
                 // On récupère le tableau formaté pour Mustache
@@ -108,8 +136,12 @@
                 $data['chemin'] = $this->config['variables']['chemin'];
                 $data['connexion'] = true;
                 // Si un codeErreur existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
-                if($codeErreur) {
+                if ($codeErreur) {
                     $data['blocErreur'] = $this->traitementErreur($codeErreur);
+                }
+                // Si un codeSucces existe, on ajoute les donées au tableau Mustache pour afficher le blocErreur
+                if ($codeSucces) {
+                    $data['blocSucces'] = $this->traitementSucces($codeSucces);
                 }
                 // On génère l'affichage Mustache
                 $this->render->actionRendu($data);
