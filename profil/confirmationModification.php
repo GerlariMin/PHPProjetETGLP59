@@ -18,7 +18,7 @@ $returnLink = '<a href="../connexion"><p>Retour à la page de connexion</p></a>'
 if (isset($_GET['identifiant'], $_GET['token'])) {
   $motif = $requetes->confirmerModification($_GET['identifiant'], $_GET['token']);
   $messageConfirmation = $texte->messageConfirmation($motif);
-  $texte->templateMessageSucces('', $messageConfirmation, $returnLink);
+  RequetesProfil::templateMessageSucces('', $messageConfirmation, $returnLink);
 } else {
   header("Location: ./?token");
   //$logs->messageLog("Token ou identifiant non renseigné dans l'URL");

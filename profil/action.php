@@ -16,11 +16,11 @@ $returnLink = '<a href="../connexion"><p>Retour à la page de connexion</p></a>'
 
 if(isset($_POST['nom']) && $_POST['nom'] !== ''){
     $requetes->modificationNom($_SESSION['identifiant'], $_POST['nom']);
-    $texte->templateMessageSucces('', "Votre nom a bien été modifié", $returnLink);
+    RequetesProfil::templateMessageSucces('', "Votre nom a bien été modifié", $returnLink);
 }
 if(isset($_POST['prenom']) && $_POST['prenom'] !== ''){
     $requetes->modificationPrenom($_SESSION['identifiant'], $_POST['prenom']);
-    $texte->templateMessageSucces('', "Votre prénom a bien été modifié", $returnLink);
+    RequetesProfil::templateMessageSucces('', "Votre prénom a bien été modifié", $returnLink);
 }
 if(isset($_POST['login'])){
     $_SESSION['loginModif'] = $_POST['login'];
