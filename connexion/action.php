@@ -37,6 +37,11 @@
                     $requetesSuppression->horodatageConnexion($_SESSION['login']);
                     $requetesSuppression->verificationDeadlineUtilisateur($_SESSION['login']);
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
+                    $logs->messageLog('Vérification abonnement.', $logs->typeInfo);
+                    if (!$requetes->dateAbonnementEncoreValide($identifiant)) {
+                        $logs->messageLog('Actualisation abonnement, retour à l\'abonnement gratuit car fin de l\'abonnement payant.', $logs->typeInfo);
+                        $requetes->actualiserAbonnementutilisateur($identifiant);
+                    }
                     header('Location: ../tableauDeBord/');
                 } else {
                     $logs->messageLog('Utilisateur introuvable.', $logs->typeError);

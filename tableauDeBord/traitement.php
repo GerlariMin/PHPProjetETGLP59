@@ -340,6 +340,12 @@ class TraitementTableauDeBord
         $succes = array();
         // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
         switch ($codeSucces) {
+            case 'aok':
+                $succes[$this->iClass] = 'fa-solid fa-cart-shopping fa-shake';
+                $succes[$this->strong] = 'Succès';
+                $succes[$this->small] = 'Souscription à un abonnement';
+                $succes[$this->message] = 'Souscritpion effectuée avec succès!';
+                break;
             case 'fsup':
                 $succes[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
                 $succes[$this->strong] = 'Succès';

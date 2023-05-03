@@ -79,4 +79,40 @@ class RequetesConnexion extends Model {
         // La fonction retourne le résultat de la requête
         return $requete->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function dateAbonnementEncoreValide(string $identifiant): mixed
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'SELECT identifiantFacturation AS IDFACTURATION FROM Facturations WHERE utilisateurLie = :identifiant AND dateDeFinAchat > SYSDATE();';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(':identifiant', $identifiant);
+        $this->logs->messageLog('Paramètres: [identifiant: ' . $identifiant . '].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        $requete->execute();
+        // La fonction retourne le résultat de la requête
+        return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $identifiantUtilisateur
+     * @param $abonnement
+     * @return bool
+     */
+    public function actualiserAbonnementutilisateur($identifiantUtilisateur): bool
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'UPDATE utilisateurs SET abonnementUtilisateur = :abonnement WHERE identifiantUtilisateur IN (:identifiant);';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(':abonnement', 1);
+        $requete->bindValue(':identifiant', $identifiantUtilisateur);
+        $this->logs->messageLog('Paramètres: [identifiant: "' . $identifiantUtilisateur . '"].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        return $requete->execute();
+    }
 }
