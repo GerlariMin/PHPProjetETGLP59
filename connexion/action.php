@@ -38,9 +38,28 @@
                     $requetesSuppression->verificationDeadlineUtilisateur($_SESSION['login']);
                     $logs->messageLog('Sessions initialisées.', $logs->typeNotice);
                     $logs->messageLog('Vérification abonnement.', $logs->typeInfo);
+                    // Vérification de la validité de l'abonnement
                     if (!$requetes->dateAbonnementEncoreValide($identifiant)) {
                         $logs->messageLog('Actualisation abonnement, retour à l\'abonnement gratuit car fin de l\'abonnement payant.', $logs->typeInfo);
+                        // Si abonnement expiré, on repasse à l'abonnement gratuit
                         $requetes->actualiserAbonnementutilisateur($identifiant);
+                    }
+                    // Décomposition de l'identifiant de l'utilisateur pour créer son répertoire.
+                    $dir = substr($identifiant,0,5);
+                    $subdir=substr($identifiant,5,10);
+                    $repertoireUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/";
+                    $repertoireResultatsUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/resultats/";
+                    // Création du répertoire utilisateur
+                    if (!mkdir($repertoireUtilisateur, 0777, true) && !is_dir($repertoireUtilisateur)){
+                        $logs->messageLog('Le répertoire utilisateur "' . $repertoireUtilisateur .'" n\'a pas pu être créé.', $logs->typeError);
+                    } else {
+                        $logs->messageLog('Le répertoire utilisateur "' . $repertoireUtilisateur .'" a été créé.', $logs->typeNotice);
+                    }
+                    // Création du répertoire résultats du répertoire utilisateur
+                    if (!mkdir($repertoireResultatsUtilisateur, 0777, true) && !is_dir($repertoireResultatsUtilisateur)){
+                        $logs->messageLog('Le répertoire utilisateur "' . $repertoireResultatsUtilisateur .'" n\'a pas pu être créé.', $logs->typeError);
+                    } else {
+                        $logs->messageLog('Le répertoire utilisateur "' . $repertoireResultatsUtilisateur .'" a été créé.', $logs->typeNotice);
                     }
                     header('Location: ../tableauDeBord/');
                 } else {
