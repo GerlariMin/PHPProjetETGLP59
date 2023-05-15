@@ -47,8 +47,8 @@
                     // Décomposition de l'identifiant de l'utilisateur pour créer son répertoire.
                     $dir = substr($identifiant,0,5);
                     $subdir=substr($identifiant,5,10);
-                    $repertoireUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/";
-                    $repertoireResultatsUtilisateur =  $this->config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/resultats/";
+                    $repertoireUtilisateur =  $config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/";
+                    $repertoireResultatsUtilisateur =  $config['variables']['repertoires']['utilisateurs']."./{$dir}/{$subdir}/resultats/";
                     // Création du répertoire utilisateur
                     if (!mkdir($repertoireUtilisateur, 0777, true) && !is_dir($repertoireUtilisateur)){
                         $logs->messageLog('Le répertoire utilisateur "' . $repertoireUtilisateur .'" n\'a pas pu être créé.', $logs->typeError);
