@@ -104,6 +104,7 @@
                                 'COULEUR' => $couleur,
                                 'DOCUMENTS' => $limiteDocuments,
                                 'HREF' => $href,
+                                'IDENTIFIANT' => $abonnement['IDENTIFIANT'],
                                 'PRIX' => $prix,
                                 'REDUCTION' => $reduction,
                                 'STOCKAGE' => $limiteStockage,

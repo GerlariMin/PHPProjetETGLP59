@@ -239,9 +239,11 @@ class TraitementTableauDeBord
             $volumeTotalFichiersUtilisateur = (float) $this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur);// round(($this->calculTailleFichiersRepertoire($repertoireUtilisateur) + $this->calculTailleFichiersRepertoire($repertoireResultatsUtilisateur)) / 1000000000, 2);
             // Calcul du nombre de fichiers dans les répertoires de l'utilisateur
             $nombreTotalFichiersUtilisateur = 0;
-            if (is_dir($repertoireUtilisateur)) {
+            // On vérifie l'existence des répertoires
+            if (is_dir($repertoireUtilisateur) && is_dir($repertoireResultatsUtilisateur)) {
+                // On cacul le nombre de fichiers que ces répertoires contiennent
                 $nombreTotalFichiersUtilisateur = count(array_diff(scandir($repertoireUtilisateur), array('.', '..', 'resultats'))) + count(array_diff(scandir($repertoireResultatsUtilisateur), array('.', '..')));
-            }
+            } // TODO
             // On récupère le nombre de traitements qu'a effectué l'utilisateur à la date actuelle
             $traitements = (int) $requetes->recupererTraitementsUtilisateur($_SESSION['identifiant']);
             // Vérification des conditions pour faire un traitement OCR ou non (a dépassé son nombre de traitements quotidien OU a dépassé le nombre de fichiers stockés)
@@ -340,6 +342,12 @@ class TraitementTableauDeBord
         $succes = array();
         // En fonction du code de succès reçu en paramètre, on rempli le tableau dédié à l'affichage du bloc succès
         switch ($codeSucces) {
+            case 'aok':
+                $succes[$this->iClass] = 'fa-solid fa-cart-shopping fa-shake';
+                $succes[$this->strong] = 'Succès';
+                $succes[$this->small] = 'Souscription à un abonnement';
+                $succes[$this->message] = 'Souscritpion effectuée avec succès!';
+                break;
             case 'fsup':
                 $succes[$this->iClass] = 'fa-solid fa-trash-can fa-bounce';
                 $succes[$this->strong] = 'Succès';

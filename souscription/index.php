@@ -1,6 +1,6 @@
 <?php
     session_start();
-// Cette partie n'est accessible que si l'utilisateur est connecté
+    // Cette partie n'est accessible que si l'utilisateur est connecté
     if(isset($_SESSION['login'])) {
         // Chargement des ressources utiles
         include('../ressources/php/fichiers_communs.php');

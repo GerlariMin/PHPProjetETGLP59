@@ -2,6 +2,10 @@
     {{>blocErreur}}
 {{/blocErreur}}
 
+<!-- Replace "test" with your own sandbox Business account app client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=Abg7jei8i5waaAGsrCPry-eEf8jxVN0Ux9L38uXUHOkUtgaXGrEHzOyL8r0q9XIp8kbZN3QDBT3-Kj0F&currency=EUR"></script>
+<script src="./js/souscription.js"></script>
+
 <div class="container text-center py-5">
     <h1 class="display-4">Abonnement</h1>
     <p class="lead">Veuillez choisir la formule qui vous intéresse</p>
@@ -28,7 +32,7 @@
                         </ul>
 
                         {{#BOUTON}}
-                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}} onclick="showPaypalButton()">Souscrire</a>
+                            <a class="btn btn-outline-{{COULEUR}}" role="button" {{#HREF}}href="{{HREF}}" rel="noreferrer noopener" {{/HREF}} onclick="showPaypalButton({{PRIX}}, {{IDENTIFIANT}})">Souscrire</a>
                         {{/BOUTON}}
                         {{^BOUTON}}
                             <span class="badge bg-{{COULEUR}}"><i class="fa-solid fa-circle-check"></i> Offre par défaut</span>
@@ -70,64 +74,7 @@
 
 </div>
 
-<!-- Replace "test" with your own sandbox Business account app client ID -->
-<script src="https://www.paypal.com/sdk/js?client-id=Abg7jei8i5waaAGsrCPry-eEf8jxVN0Ux9L38uXUHOkUtgaXGrEHzOyL8r0q9XIp8kbZN3QDBT3-Kj0F&currency=EUR"></script>
-
 <center style="display:none" id="paypal">
     <!-- Set up a container element for the button -->
     <div id="paypal-button-container"></div>
 </center>
-<script>
-
-    function showPaypalButton(){
-        document.getElementById('paypal').style.display = 'block';
-    }
-
-    paypal.Buttons({
-    // Sets up the transaction when a payment button is clicked
-    createOrder: (data, actions) => {
-      return actions.order.create({
-         "purchase_units": [{
-
-            "items": [
-              {
-                "name": "OCR SQUARE PREMIUM", /* Shows within upper-right dropdown during payment approval */
-                "description": "Abonnement au service payant", /* Item details will also be in the completed paypal.com transaction view */
-                "unit_amount": {
-                  "currency_code": "EUR",
-                  "value": "9.99"
-                },
-                "quantity": "1"
-              },
-            ],
-
-            "amount": {
-              "currency_code": "EUR",
-              "value": "9.99",
-              "breakdown": {
-                "item_total": {  /* Required when including the items array */
-                  "currency_code": "EUR",
-                  "value": "9.99"
-                }
-              }
-            }
-            
-          }]
-      });
-    },
-    // Finalize the transaction after payer approval
-    onApprove: (data, actions) => {
-        return actions.order.capture().then(function(orderData) {
-        // Successful capture! For dev/demo purposes:
-        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-        const transaction = orderData.purchase_units[0].payments.captures[0];
-        alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-        window.location.href = "http://localhost/PHPProjetETGLP59/tableauDeBord/";
-        // When ready to go live, remove the alert and show a success message within this page. For example:
-        // const element = document.getElementById('paypal-button-container');
-        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-        // Or go to another URL:  actions.redirect('thank_you.html');
-        });
-    }
-    }).render('#paypal-button-container');
-</script>
