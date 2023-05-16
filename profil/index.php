@@ -6,7 +6,7 @@
         include_once("requetes.php");
         $requetes = new RequetesProfil($config, $logs);
         $traitement = new TraitementProfil($render);
-        $traitement->traitementRendu($requetes, $erreur);
+        $traitement->traitementRendu($requetes, $erreur, $succes);
     } else {
         header('Location: ../connexion/?erreur=5');
         exit();

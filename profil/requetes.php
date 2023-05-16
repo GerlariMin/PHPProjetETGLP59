@@ -1,5 +1,7 @@
 <?php
-require_once('../ressources/php/Model.php');
+if (file_exists('../ressources/php/Model.php')) {
+    require_once('../ressources/php/Model.php');
+}
 /**
  * Classe dédiée aux requête propres au module profil.
  */
@@ -51,7 +53,7 @@ class RequetesProfil extends Model {
     public function modificationPrenom(String $identifiant, String $nouveauPrenom): bool
     {
         // Texte SQL qui va alimenter la requête
-        $texteRequete = 'UPDATE utilisateurs SET nomUtilisateur = :nouveauPrenom WHERE identifiantUtilisateur IN (:identifiant);';
+        $texteRequete = 'UPDATE utilisateurs SET prenomUtilisateur = :nouveauPrenom WHERE identifiantUtilisateur IN (:identifiant);';
         // Requête SQL a exécuter
         $requete = $this->model->bdd->prepare($texteRequete);
         $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
@@ -81,6 +83,26 @@ class RequetesProfil extends Model {
         $requete->execute();
         // La fonction retourne le résultat de la requête
         return $requete->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param String $identifiant
+     * @return mixed
+     */
+    public function recupererEmailUtilisateur(String $identifiant): mixed
+    {
+        // Texte SQL qui va alimenter la requête
+        $texteRequete = 'SELECT emailUtilisateur FROM utilisateurs WHERE identifiantUtilisateur IN (:identifiant);';
+        // Requête SQL a exécuter
+        $requete = $this->model->bdd->prepare($texteRequete);
+        $this->logs->messageLog('Requete SQL préparée: ' . $texteRequete . '.', $this->logs->typeDebug);
+        // Attribution des valeurs de la requête préparée
+        $requete->bindValue(":identifiant", $identifiant);
+        $this->logs->messageLog('Paramètres: [identifiant: "' . $identifiant . '"].', $this->logs->typeDebug);
+        // Exécution de la requête préparée
+        $requete->execute();
+        // La fonction retourne le résultat de la requête
+        return $requete->fetch(PDO::FETCH_ASSOC)['emailUtilisateur'];
     }
 
     /**
@@ -229,9 +251,9 @@ class RequetesProfil extends Model {
     /**
      * @param String $identifiant
      * @param String $token
-     * @return mixed
+     * @return bool
      */
-    public function confirmerModification(String $identifiant, String $token): mixed
+    public function confirmerModification(String $identifiant, String $token): bool
     {
         // récupération de la nouvelle modification via le token
         $modification = $this->recupererModification($token);
@@ -244,11 +266,12 @@ class RequetesProfil extends Model {
             $this->logs->messageLog('Suppression table modifications: ' . $suppressionModification . '.', $this->logs->typeDebug);
             if ($modificationUtilisateurs && $suppressionModification) {
                 $this->logs->messageLog('Modification table utilisateurs et suppression table modifications réalisées sans problèmes.', $this->logs->typeDebug);
+                return true;
             } else {
                 $this->logs->messageLog('La modification de la table utilisateurs et/ ou la suppression de la table modifications a/ ont rencontrée/s un problème.', $this->logs->typeWarning);
+                return false;
             }
         }
-        return $modification['typeModification'];
     }
 
 }

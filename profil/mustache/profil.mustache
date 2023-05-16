@@ -4,37 +4,40 @@
 
 
 <div class="card w-75 mx-auto mt-5">
-  <div class="card-header text-center">
-    <i class="fa-solid fa-user"></i> Informations personnelles
-  </div>
-  <ul class="list-group list-group-flush">
-    {{#liste}}
-        <li class="list-group-item">
-          <div class="container">
-            <div class="row">
-              <div class="col"> <b>{{type_information}}</b> :</div>
-              <div class="col">{{information_personnelle}}</div>
-              <div class="col"> <div class="float-end"> <a class="btn btn-primary border" id="{{id_bouton_modifier}}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">modifier</a></div></div>
-            </div>
-            <div class="collapse" id="{{id_collapse}}">
-              <form action="action.php" method="POST">
-                <div class="input-group mb-3 w-50">
-                  <input type="{{type_input}}" class="form-control" name="{{name_input}}" placeholder="{{placeholder_input}}">
-                  <input type="{{type_input_2}}" class="form-control" name="{{name_input_2}}" placeholder="{{placeholder_input_2}}">
-                  <button type="submit" class="btn btn-primary border "> Enregistrer </button>
+    <div class="card-header text-center">
+        <i class="fa-solid fa-user"></i> Informations personnelles
+    </div>
+    <ul class="list-group list-group-flush">
+        {{#liste}}
+            <li class="list-group-item">
+                <div class="container">
+                    <div class="row">
+                        <!-- Type d'information affichée (Nom, login, e-mail, etc...) -->
+                        <div class="col"> <b>{{type_information}}</b> :</div>
+                        <!-- Valeur stockée en base -->
+                        <div class="col" id="{{id_infos_perso}}">{{information_personnelle}}</div>
+                        <div class="col"> <div class="float-end"> <a class="btn btn-primary border" id="{{id_bouton_modifier}}" data-toggle="collapse" {{#href_bouton_modifier}}href="{{href_bouton_modifier}}"{{/href_bouton_modifier}} role="button" aria-expanded="false" aria-controls="collapseExample">modifier</a></div></div>
+                    </div>
+                    {{! Si pas la clé concernant la modification d'abonnement }}
+                    {{^modificationAbonneent}}
+                        <div class="collapse" id="{{id_collapse}}">
+                            <div class="input-group mb-3 w-50">
+                                <input id="{{id_input_1}}" type="{{type_input}}" class="form-control" name="{{name_input}}" placeholder="{{placeholder_input}}">
+                                <input id="{{id_input_2}}" type="{{type_input_2}}" class="form-control" name="{{name_input_2}}" placeholder="{{placeholder_input_2}}">
+                                <button id={{id_bouton_submit}} type="submit" class="btn btn-primary border "> Enregistrer </button>
+                            </div>
+                        </div>
+                    {{/modificationAbonneent}}
                 </div>
-              </form>
-            </div>
-          </div>
-        </li>
-    {{/liste}}
-  </ul>
+            </li>
+        {{/liste}}
+    </ul>
 </div>
 
 <div class="mt-5 text-center">
-  <button type="button" class="btn btn-danger border " id="resiliation"> Résilier abonnement </button>
-  <button type="button" class="btn btn-danger border " id="suppression"> Supprimer mon compte </button>
+    <button type="button" class="btn btn-danger border " id="resiliation"> Résilier abonnement </button>
+    <button type="button" class="btn btn-danger border " id="suppression"> Supprimer mon compte </button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="scriptProfil.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="./js/scriptProfil.js"></script>
