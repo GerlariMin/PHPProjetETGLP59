@@ -7,8 +7,8 @@
             <form action="{{form_action}}" method="{{form_method}}" name="myForm">
                 {{#div}}
                     <div class="{{div_class}}">
-                        <input class="form-control" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" type="{{input_type}}" {{#pattern}}pattern="{{pattern}}"{{/pattern}}>
-                        <label for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}}</label>
+                        <input class="{{input_class}}" id="{{input_id}}" name="{{input_name}}" placeholder="{{input_placeholder}}" required="{{input_required}}" {{#inputRole}}role="{{inputRole}}"{{/inputRole}} type="{{input_type}}" {{#pattern}}pattern="{{pattern}}"{{/pattern}}>
+                        <label {{#labelClass}}class="{{labelClass}}"{{/labelClass}} for="{{label_for}}"><i class="{{label_i_class}}"></i> {{label_text}} {{{labelHTML}}}</label>
                         {{#aide}}
                             <div id="{{aideId}}" class="{{aideClass}}"><i class="{{aideFontawesome}}"></i> {{aideText}}</div>
                         {{/aide}}

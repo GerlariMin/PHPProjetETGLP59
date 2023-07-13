@@ -189,11 +189,33 @@
                         $this->inputPlaceholder => "Confirmation",
                         $this->inputRequired => "true",
                         $this->inputType => "password",
-                        $this->labelFor => "Confirmation",
+                        $this->labelFor => "confirm",
                         $this->labelIClass => "fa-solid fa-lock",
-                        $this->labelText => "Confirmation",
+                        $this->labelText => "Confirmer mot de passe",
                         $this->pattern => "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
-                    ]
+                        'aide' => [
+                            'aideId' => 'aideMDP',
+                            'aideClass' => 'form-text text-warning fw-bolder',
+                            'aideFontawesome' => 'fa-solid fa-circle-info',
+                            'aideText' => 'Le mot de passe doit contenir au moins 8 caractères avec un chiffre, un caratère spécial et une majuscule au minimum.',
+                        ]
+                    ],
+                    6 =>
+                        [
+                            $this->divClass => "form-check form-switch mb-3",
+                            $this->inputClass => "form-check-input",
+                            $this->inputId => "cgu",
+                            $this->inputName => "cgu",
+                            $this->inputPlaceholder => "CGU",
+                            $this->inputRequired => "true",
+                            'inputRole' => 'switch',
+                            $this->inputType => "checkbox",
+                            'labelClass' => 'form-check-label',
+                            $this->labelFor => "cgu",
+                            $this->labelIClass => "fa-solid fa-scale-balanced fa-bounce",
+                            $this->labelText => "En vous inscrivant, vous acceptez ",
+                            'labelHTML' => '<a class="text-decoration-none text-info fw-bolder" href="../cgu/" target="_blank" rel="noopener" title="CGU">les Conditions Générales d\'Utilisation (CGU) suivantes.</a>',
+                        ]
 
                 ];
         }
