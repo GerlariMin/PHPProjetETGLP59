@@ -1,33 +1,75 @@
 <div class="container h-100 mt-5">
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <i class="fa-solid fa-door-open"></i> Afin d'effectuer votre traitemnt, vous devez sélectionner <strong>un fichier à traiter</strong>!
+        <i class="fa-solid fa-circle-info fa-bounce"></i> Afin d'effectuer votre traitement, vous devez sélectionner <strong>un fichier à traiter</strong> (en cliquant sur la carte associée)
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {{#form}}
-    <form {{#action}}action="{{action}}"{{/action}} {{#method}}method="{{method}}"{{/method}}>
-        {{#select}}
-        <div class="input-group mb-3">
-            {{#label}}
-            <label {{#class}}class="{{class}}"{{/class}} {{#for}}for="{{for}}"{{/for}}><span>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{text}}</span></label>
-            {{/label}}
-            <select {{#ariaLabel}}aria-label="{{ariaLabel}}"{{/ariaLabel}} {{#class}}class="{{class}}"{{/class}} {{#id}}id="{{id}}"{{/id}} {{#multiple}}multiple{{/multiple}} {{#name}}name="{{name}}"{{/name}} {{#required}}required{{/required}}>
-                {{#optiondefaut}}
-                    <option {{#disabled}}disabled{{/disabled}} {{#selected}}selected{{/selected}} value="">{{#texte}}{{texte}}{{/texte}}</option>
-                {{/optiondefaut}}
-                {{#options}}
-                    <option value="{{{value}}}">{{{text}}}</option>
-                {{/options}}
-                {{^options}}
-                    <option disabled selected>Vous n'avez déposé aucun fichier</option>
-                {{/options}}
-            </select>
-        </div>
-        {{/select}}
-        {{#submit}}
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button {{#class}}class="{{class}}"{{/class}} {{#type}}type="{{type}}"{{/type}}>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{texte}}</button>
-        </div>
-        {{/submit}}
-    </form>
+        <form {{#action}}action="{{action}}"{{/action}} {{#method}}method="{{method}}"{{/method}}>
+            {{#extraction}}
+                <div class="input-group mb-3">
+                    {{#label}}
+                        <label {{#class}}class="{{class}}"{{/class}} {{#for}}for="{{for}}"{{/for}}><span>{{#fontawesome}}<i class="{{fontawesome}}"></i> {{/fontawesome}}{{text}}</span></label>
+                    {{/label}}
+                    <select {{#ariaLabel}}aria-label="{{ariaLabel}}"{{/ariaLabel}} {{#class}}class="{{class}}"{{/class}} {{#id}}id="{{id}}"{{/id}}  {{#multiple}}multiple{{/multiple}} {{#name}}name="{{name}}"{{/name}} {{#required}}required{{/required}}>
+                        {{#optiondefaut}}
+                            <option {{#disabled}}disabled{{/disabled}} {{#selected}}selected{{/selected}} value="">{{#texte}}{{texte}}{{/texte}}</option>
+                        {{/optiondefaut}}
+                        {{#options}}
+                            <option value="{{{value}}}">{{{text}}}</option>
+                        {{/options}}
+                        {{^options}}
+                            <option disabled selected>Aucune extraction possible pour le moment.</option>
+                        {{/options}}
+                    </select>
+                </div>
+            {{/extraction}}
+            {{#documents}}
+                <div class="card text-center mb-5">
+                    {{#titre}}
+                        <div class="card-header">
+                            {{#fontawesome}}<i class="{{fontawesome}}"></i>{{/fontawesome}} {{texte}}
+                        </div>
+                    {{/titre}}
+                    <div class="card-body">
+
+                        <div class="row">
+                            {{#fichiers}}
+                                <div class="col col-4">
+                                    {{#label}}
+                                        <!-- label remplace div pour le rôle de la card, il suffira alors de cliquer sur la carte pour cocher l'input qu'il contient -->
+                                    <label class="form-check-label card text-center mb-3" {{#for}}for="{{for}}{{{value}}}"{{/for}}>
+                                    {{/label}}
+                                    <div class="card-header">
+                                        {{#fontawesomeFichierCourant}}<i class="{{fontawesomeFichierCourant}}"></i>{{/fontawesomeFichierCourant}} {{{text}}}
+                                    </div>
+                                    <div class="card-body">
+                                        {{#input}}
+                                            <input {{#autocomplete}}autocomplete="{{autocomplete}}"{{/autocomplete}} {{#class}}class="{{class}}"{{/class}} {{#id}}id="{{id}}{{{value}}}"{{/id}} {{#name}}name="{{name}}"{{/name}} {{#type}}type="{{type}}"{{/type}} {{#value}}value="{{{value}}}"{{/value}}>
+                                        {{/input}}
+                                        {{#label}}
+                                            <label {{#class}}class="{{class}}"{{/class}} {{#for}}for="{{for}}{{{value}}}"{{/for}}>{{#fontawesome}}<i class="{{fontawesome}}"></i>{{/fontawesome}} {{#label}}{{{label}}}{{/label}}</label>
+                                        {{/label}}
+                                    </div>
+                                    {{#label}}
+                                    </label>
+                                    {{/label}}
+                                </div>
+                            {{/fichiers}}
+                        </div>
+
+                    </div>
+                    {{#nombreFichier}}
+                        <div class="card-footer text-body-secondary">
+                            {{nombreFichier}} fichier(s) disponible(s)
+                        </div>
+                    {{/nombreFichier}}
+                </div>
+            {{/documents}}
+            {{#submit}}
+                <div class="d-grid gap-2 col-12 mx-auto">
+                    <button {{#class}}class="{{class}}"{{/class}} {{#type}}type="{{type}}"{{/type}}>{{#fontawesome}}<i class="{{fontawesome}}"></i>{{/fontawesome}} {{texte}}</button>
+                </div>
+            {{/submit}}
+        </form>
     {{/form}}
 </div>

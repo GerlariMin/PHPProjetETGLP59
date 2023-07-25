@@ -1,5 +1,8 @@
 <?php
     session_start();
+
+    var_dump($_POST);
+    exit();
     // LIEN PHP SSH2 WINDOWS: https://windows.php.net/downloads/pecl/releases/ssh2/1.3.1/
     // INSTALLER SSH2 WINDOWS: https://stackoverflow.com/questions/15134421/php-install-ssh2-on-windows-machine
     include("../ressources/php/fichiers_communs.php");

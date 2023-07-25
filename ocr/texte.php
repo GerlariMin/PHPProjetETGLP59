@@ -35,79 +35,81 @@ class TexteOCR
         return
         [
             'action' => 'action.php',
+            'documents' => $this->texteFichiers(),
+            'extraction' => $this->texteExtraction(),
             'method' => 'post',
-            'select' => $this->texteSelect(),
             'submit' => $this->texteSubmitButton(),
         ];
     }
 
-    private function texteSelect(): array
+    private function texteExtraction()
     {
-        return
-        [
-            0 =>
-            [
-                'ariaLabel' => 'Type de traitement OCR',
-                'class' => 'form-select',
-                'id' => 'traitement',
-                'label' => [
-                    'class' => 'input-group-text',
-                    'fontawesome' => 'fa-solid fa-gears',
-                    'for' => 'traitement',
-                    'text' => 'Extraction',
-                ],
-                'multiple' => false,
-                'name' => 'traitement',
-                'optiondefaut' => [
-                    'disabled' => true,
-                    'selected' => true,
-                    'texte' => 'Sélectionnez le type de traitement à effectuer',
-                ],
-                'options' =>
-                [
-                    0 => [
-                        'value' => 1,
-                        'text' => 'Extraction du texte du fichier',
+        return [
+                    'ariaLabel' => 'Type de traitement OCR',
+                    'class' => 'form-select',
+                    'id' => 'traitement',
+                    'label' => [
+                        'class' => 'input-group-text',
+                        'fontawesome' => 'fa-solid fa-gears',
+                        'for' => 'traitement',
+                        'text' => 'Extraction',
                     ],
-                    1 => [
-                        'value' => 2,
-                        'text' => 'Extraction d\'image(s) du fichier',
+                    'multiple' => false,
+                    'name' => 'traitement',
+                    'optiondefaut' => [
+                        'disabled' => true,
+                        'selected' => true,
+                        'texte' => 'Sélectionnez le type de traitement à effectuer',
                     ],
-                    2 => [
-                        'value' => 3,
-                        'text' => 'Extraction d\'image(s) et du texte du fichier (sans mise en forme)',
-                    ],
-                    3 => [
-                        'value' => 4,
-                        'text' => 'Extraction du texte manuscrit de l\'image',
-                    ],
-                    4 => [
-                        'value' => 'CNI',
-                        'text' => 'Extraction des données d\'une CNI',
-                    ],
-                ],
-                'required' => true,
-            ],
-            1 =>
-            [
-                'ariaLabel' => 'Sélection du fichier à soummettre au traitement OCR',
-                'class' => 'form-select',
+                    'options' =>
+                        [
+                            0 => [
+                                'value' => 1,
+                                'text' => 'Extraction du texte du fichier',
+                            ],
+                            1 => [
+                                'value' => 2,
+                                'text' => 'Extraction d\'image(s) du fichier',
+                            ],
+                            2 => [
+                                'value' => 3,
+                                'text' => 'Extraction d\'image(s) et du texte du fichier (sans mise en forme)',
+                            ],
+                            3 => [
+                                'value' => 4,
+                                'text' => 'Extraction du texte manuscrit de l\'image',
+                            ],
+                            4 => [
+                                'value' => 'CNI',
+                                'text' => 'Extraction des données d\'une CNI',
+                            ],
+                        ],
+                    'required' => true,
+        ];
+    }
+
+    private function texteFichiers()
+    {
+        return [
+            'input' => [
+                'autocomplete' => 'off',
+                'class' => 'btn-check',
                 'id' => 'fichierOCR',
-                'label' => [
-                    'class' => 'input-group-text',
-                    'fontawesome' => 'fa-solid fa-file-arrow-up',
-                    'for' => 'fichierOCR',
-                    'text' => 'Fichier',
-                ],
-                'multiple' => false,
                 'name' => 'fichierOCR[]',
-                'optiondefaut' => [
-                    'disabled' => true,
-                    'selected' => true,
-                    'texte' => 'Sélectionnez un fichier à traiter',
-                ],
-                'options' => $this->fichiers,
-                'required' => true,
+                'type' => 'checkbox',
+            ],
+            'fichiers' => $this->fichiers,
+            'fontawesomeFichierCourant' => 'fa-regular fa-file',
+            'label' => [
+                'class' => 'btn btn-outline-secondary',
+                'for' => 'fichierOCR',
+                'fontawesome' => 'fa-regular fa-circle-check',
+                'label' => 'Choisir ce fichier',
+            ],
+            'nombreFichier' => count($this->fichiers),
+            'titre' => [
+                'fontawesome' => 'fa-solid fa-file-arrow-up',
+                'texte' => 'Fichier(s) disponible(s) pour extraction',
             ],
         ];
     }
@@ -118,7 +120,7 @@ class TexteOCR
         [
             'class' => 'btn btn-outline-secondary',
             'type' => 'submit',
-            'fontawesome' => 'fa-solid fa-wand-magic-sparkles',
+            'fontawesome' => 'fa-solid fa-wand-magic-sparkles fa-beat',
             'texte' => 'Extraire le texte',
         ];
     }
@@ -133,7 +135,6 @@ class TexteOCR
         return
             [
                 "repertoire" => true,
-                //"fichiers" => $this->fichiers,
                 "form" => $this->texteForm(),
             ];
     }
