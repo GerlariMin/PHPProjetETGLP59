@@ -84,6 +84,32 @@ class TraitementTableauDeBord
     }
 
     /**
+     * @param $octets
+     * @return string
+     * Titre : Affiche la taille d'un fichier en Ko, Mo, Go, To, Po, Eo, Zo
+
+     * URL   : https://phpsources.net/code_s.php?id=613
+     * Auteur           : forty
+     * Website auteur   : http://www.toplien.fr/
+     * Date édition     : 30 Oct 2010
+     * Date mise à jour : 12 Aout 2019
+     * Rapport de la maj:
+     * - fonctionnement du code vérifié
+     */
+    private function tailleFichierAffichee($octets) {
+        $resultat = $octets;
+        for ($i=0; $i < 8 && $resultat >= 1024; $i++) {
+            $resultat = $resultat / 1024;
+        }
+        if ($i > 0) {
+            return preg_replace('/,00$/', '', number_format($resultat, 2, ',', ''))
+                . ' ' . substr('KMGTPEZY',$i-1,1) . 'o';
+        }
+
+        return $resultat . ' o';
+    }
+
+    /**
      * Permet de passer un tableau formaté à la classe Texte dédiée contenant les informations des fichiers contenus dans le répertoire principal de l'utilisateur.
      * @return void
      */
@@ -110,11 +136,13 @@ class TraitementTableauDeBord
                         $type = 0;
                     }
                     $href = '../visualiserDocument/?document=' . $fichier . '&type=' . $type;
+                    $tailleBrute = filesize($repertoireUtilisateur . $fichier); // Taille du fichier
+                    $tailleNette = $this->tailleFichierAffichee($tailleBrute);
                     $fichiers[] =
                         [
                             'href' => $href,
                             'text' => $fichier, // Nom du fichier
-                            'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
+                            'taille' => $tailleNette,
                         ];
                 }
             }
