@@ -68,11 +68,13 @@ class TraitementTableauDeBord
                         $type = 0;
                     }
                     $href = '../visualiserDocument/?document=' . $fichier . '&type=' . $type . '&resultat=true';
+                    $tailleBrute = filesize($repertoireUtilisateur . $fichier); // Taille du fichier
+                    $tailleNette = $this->tailleFichierAffichee($tailleBrute);
                     $fichiers[] =
                         [
                             'href' => $href,
                             'text' => $fichier, // Nom du fichier
-                            'taille' => filesize($repertoireUtilisateur . $fichier) // Taille du fichier
+                            'taille' => $tailleNette
                         ];
                 }
             }
